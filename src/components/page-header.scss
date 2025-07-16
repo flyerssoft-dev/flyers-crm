@@ -1,0 +1,82 @@
+.app-drawer {
+    .ant-drawer-body {
+        padding: 0;
+    }
+
+    .drawer-container {
+        .ant-menu {
+            border-inline-end: 0;
+            background-color: transparent;
+
+            .ant-menu-item {
+                padding: 10px 20px;
+                border-radius: 6px;
+                transition: 0.2s;
+
+                &:hover {
+                    background-color: #f4f6fa;
+                }
+
+                svg {
+                    font-size: 16px;
+                    color: #666;
+                }
+
+                .ant-menu-title-content {
+                    font-weight: 500;
+                    color: #333;
+                }
+            }
+
+            .logout-button {
+                color: #e53935;
+                font-weight: 500;
+
+                svg {
+                    color: #e53935;
+                }
+
+                &:hover {
+                    background-color: #fff0f0;
+                }
+            }
+        }
+    }
+}
+
+.title-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .AppHeader-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .name_role {
+        display: flex;
+        flex-direction: column;
+
+        .name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .role {
+            font-size: 13px;
+            color: #888;
+        }
+    }
+}
+
+.pointer-icons {
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}

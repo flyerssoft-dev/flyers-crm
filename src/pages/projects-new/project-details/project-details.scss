@@ -1,0 +1,152 @@
+.project_details_container {
+	// height: 100%;
+	// height: calc(100vh - 60px);
+	// overflow-y: scroll;
+	padding-top: 10px;
+	background: #f6f6fa;
+	height: 100%;
+}
+
+.project_details_viewer {
+	.ant-tabs {
+		.ant-tabs-nav {
+			margin-bottom: 0;
+			.ant-tabs-nav-wrap {
+				.ant-tabs-nav-list {
+					.ant-tabs-tab {
+						background-color: #fff;
+					}
+					.ant-tabs-tab {
+						padding: 5px 20px;
+						&.ant-tabs-tab-active {
+							background-color: #006fd9;
+							.ant-tabs-tab-btn {
+								color: #fff;
+							}
+						}
+					}
+				}
+			}
+		}
+		.ant-tabs-content-holder {
+			background-color: #fff;
+			padding: 10px 20px;
+		}
+	}
+}
+
+.project_detail_drawer {
+	.ant-drawer-body {
+		padding: 0;
+	}
+}
+
+.ticket {
+	height: 100%;
+	&_list_container {
+		border-right: 1px solid #e5e5e5;
+		overflow-y: scroll;
+		height: calc(100vh - 48px);
+		.ticket_list {
+			padding: 10px 20px;
+			cursor: pointer;
+			&.selected {
+				background-color: #f5f5f5;
+			}
+		}
+	}
+	.images_container {
+		// height: 70vh;
+		// overflow-y: scroll;
+		.ant-card-body {
+			padding: 10px;
+			.ant-image {
+				width: 100%;
+				img {
+					object-fit: cover;
+				}
+			}
+		}
+	}
+	&_viewer {
+		padding: 20px;
+		.close {
+			background: white;
+			border: 1px solid #e5e5e5;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+.ticket_heading_container {
+	padding: 20px;
+}
+
+.ticket_details_overview {
+	.ant-form-item {
+		margin-bottom: 0px;
+	}
+	.ant-form-item-control-input-content {
+		.ant-input[disabled] {
+			background-color: transparent;
+			border-color: transparent;
+			color: #000;
+			font-weight: 600;
+			// padding: 0;
+		}
+	}
+}
+
+.file_container {
+	display: flex;
+	align-items: center;
+	color: #006fd9;
+	.icon {
+		color: tomato;
+		margin-left: 10px;
+		cursor: pointer;
+	}
+	.name {
+		// text-decoration: underline;
+	}
+}
+
+.project_details_viewer {
+	padding: 20px;
+	padding-top: 0;
+}
+
+.right_content_area {
+	background-color: #ffffff;
+	padding: 0 20px;
+	border-radius: 10px;
+}
+
+.notes_card_container {
+	padding: 10px;
+	overflow-y: scroll;
+	height: calc(100vh - 200px);
+	.card {
+		padding: 10px;
+		border-radius: 4px;
+		box-shadow: rgba(149, 157, 165, 0.2) 2px 3px 7px;
+		border-radius: 6px;
+		border: none;
+		cursor: pointer;
+		.title {
+			font-weight: bold;
+		}
+		.created {
+			font-size: 12px;
+			color: #888;
+		}
+		.remarks {
+			font-size: 12px;
+			margin-top: 5px;
+		}
+	}
+}

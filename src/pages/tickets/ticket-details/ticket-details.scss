@@ -1,0 +1,65 @@
+.ticket_details_container {
+	// height: 100%;
+	// height: calc(100vh - 60px);
+	// overflow-y: scroll;
+}
+
+.ticket {
+	height: 100%;
+	&_list_container {
+		border-right: 1px solid #e5e5e5;
+		overflow-y: scroll;
+		height: calc(100vh - 48px);
+		.ticket_list {
+			padding: 10px 20px;
+			cursor: pointer;
+			&.selected {
+				background-color: #f5f5f5;
+			}
+		}
+	}
+	.images_container {
+		height: 70vh;
+		overflow-y: scroll;
+		.ant-card-body {
+			padding: 10px;
+			.ant-image {
+				width: 100%;
+				img {
+					object-fit: cover;
+				}
+			}
+		}
+	}
+	&_viewer {
+		padding: 20px;
+		.close {
+			background: white;
+			border: 1px solid #e5e5e5;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+.ticket_heading_container {
+	padding: 20px;
+}
+
+.ticket_details_overview {
+	.ant-form-item {
+		margin-bottom: 0px;
+	}
+	.ant-form-item-control-input-content {
+		.ant-input[disabled] {
+			background-color: #ffffff;
+			border-color: white;
+			color: #000;
+			font-weight: 600;
+			// padding: 0;
+		}
+	}
+}

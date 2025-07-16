@@ -1,0 +1,126 @@
+.ant-drawer {
+	.ant-drawer-header {
+		// padding: 10px;
+		.ant-drawer-header-title {
+			.ant-drawer-close {
+				width: 32px;
+				height: 32px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 6px;
+				transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+				transition-property: color, background-color, border-color;
+				position: absolute !important;
+				top: 10px;
+				right: 0;
+				z-index: 1;
+				&:hover {
+					background: #f3f4f6;
+				}
+			}
+		}
+	}
+}
+.app-drawer {
+	.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+		background-color: #e6f7ff;
+	}
+	.ant-menu {
+		.ant-divider {
+			background: rgba(208, 215, 222, 0.48);
+		}
+		.ant-menu-item {
+			font-size: 14px;
+		}
+	}
+	.ant-drawer-mask {
+		background: #e7ebee3d;
+	}
+	.ant-drawer-content-wrapper {
+		border-radius: 12px;
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+		.ant-drawer-content {
+			border-radius: 12px;
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+			height: 100vh;
+			.ant-drawer-wrapper-body {
+				padding: 10px;
+				.ant-drawer-header {
+					padding: 10px;
+					padding-top: 0;
+					.ant-drawer-header-title {
+						.ant-drawer-close {
+							width: 32px;
+							height: 32px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: 6px;
+							transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+							transition-property: color, background-color, border-color;
+							position: absolute;
+							top: 10px;
+							right: 0;
+							z-index: 1;
+							&:hover {
+								background: #f3f4f6;
+							}
+						}
+					}
+				}
+				.ant-drawer-body {
+					padding: 10px 0;
+					overflow-x: hidden;
+					.drawer-container {
+						ul {
+							padding: 0;
+							li {
+								cursor: pointer;
+								list-style: none;
+								display: flex;
+								align-items: center;
+								padding: 10px !important;
+								border-radius: 6px;
+								margin-bottom: 5px;
+								span {
+									margin-left: 10px;
+								}
+								&:hover {
+									background: #f1f2f4;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.pointer-icons {
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.title-area {
+	display: flex;
+	align-items: center;
+	.avatar {
+		border-radius: 50%;
+	}
+	.name_role {
+		padding-left: 10px;
+		.name {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: initial;
+		}
+		.role {
+			font-size: 14px;
+			line-height: initial;
+		}
+	}
+}

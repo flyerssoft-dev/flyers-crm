@@ -1,0 +1,28 @@
+.invoice {
+	padding: 20px;
+	&_row {
+		padding: 10px 0;
+		display: flex;
+		align-items: center;
+	}
+}
+
+.list {
+	padding: 10px 20px;
+	margin: 5px;
+	box-sizing: border-box;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	border-radius: 10px;
+	p {
+		margin-bottom: 0;
+	}
+}
+
+.add_student {
+	.ant-form-item {
+		margin-bottom: 10px;
+		.ant-form-item-label {
+			padding: 0;
+		}
+	}
+}

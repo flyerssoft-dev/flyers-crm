@@ -1,0 +1,62 @@
+.files_upload_modal {
+	.ant-modal-content {
+		padding: 0;
+		.ant-modal-close {
+			top: 8px;
+		}
+		.ant-modal-header {
+			padding: 10px 20px !important;
+			background: #f4f4f5;
+			border-bottom: 1px solid #e8e8e8;
+			.ant-modal-title {
+				font-size: 16px;
+				font-weight: 500;
+				color: #333;
+				width: -moz-fit-content;
+				width: fit-content;
+			}
+		}
+		.ant-modal-body {
+			.files_upload_modal_container {
+				.content_area {
+					height: 50vh;
+					overflow-y: scroll;
+					.content_area_container {
+						.content {
+							padding: 10px 20px;
+							border-color: rgb(232, 233, 236);
+							border-width: 0px 0px 1px;
+							border-style: solid;
+							.ant-progress {
+								.ant-progress-text {
+									font-size: 12px;
+								}
+							}
+							.left_area {
+								display: flex;
+								align-items: center;
+								.anticon {
+									font-size: 24px;
+									color: #b2b7c4;
+								}
+								.file_name {
+									margin-left: 10px;
+									font-size: 12px;
+								}
+								.file_size {
+									margin-left: 10px;
+									font-size: 10px;
+									color: rgb(178, 183, 196);
+								}
+							}
+						}
+					}
+				}
+				.footer_area {
+					padding: 10px;
+					background: #f4f4f5;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,43 @@
+.ticket_list_container {
+	.ticket {
+		.ant-table-tbody {
+			tr {
+				background-color: white !important;
+			}
+			tr {
+				&:hover {
+					// background-color:
+				}
+			}
+			.completed {
+				background-color: #b7e79f !important;
+			}
+			.pending {
+				background-color: #fcd792 !important;
+			}
+			.cancelled {
+				background-color: #ffdedb !important;
+			}
+			.open {
+				background-color: #e6f6ff !important;
+			}
+		}
+		.auto-refresh-area {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			.text {
+				margin: 0 10px;
+			}
+		}
+	}
+	.auto-refresh-area-container {
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		.text {
+			margin: 0 10px;
+		}
+	}
+}

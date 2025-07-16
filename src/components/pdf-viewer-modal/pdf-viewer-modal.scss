@@ -1,0 +1,31 @@
+.pdf-viewer-modal {
+	.pdf-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 16px;
+	}
+
+	iframe {
+		border: 1px solid #f0f0f0;
+		border-radius: 6px;
+	}
+
+	.pdf-skeleton-loader {
+		width: 100%;
+	}
+
+	.ant-modal-content {
+		border-radius: 0 !important;
+		padding: 0;
+		.ant-modal-body {
+			.pdf-header {
+				padding: 20px 20px 0 20px;
+			}
+		}
+	}
+
+	.pdf-viewer-modal-iframe {
+		border: 0 !important;
+	}
+}
