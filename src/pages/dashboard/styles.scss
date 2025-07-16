@@ -1,0 +1,171 @@
+.dashboard_container {
+	padding: 24px;
+	background-color: #f0f2f5;
+	height: calc(100vh - 65px);
+	overflow-y: auto;
+
+	.title {
+		font-size: 1.5rem;
+		color: #1d1b51;
+		font-weight: 600;
+		margin-bottom: 16px;
+	}
+
+	.title {
+		h4 {
+			margin: 0;
+		}
+	}
+
+	.dashboard_card {
+		background: #ffffff;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		border-radius: 8px;
+		padding: 20px 16px;
+		transition: all 0.3s ease;
+		cursor: pointer;
+
+		&:hover {
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+			transform: translateY(-2px);
+
+			.icon {
+				transform: scale(1.15);
+				// box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+				// animation: pulse-icon 0.6s ease-in-out;
+			}
+		}
+
+		.value {
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: #1d1b51;
+		}
+
+		.name {
+			font-size: 0.7rem;
+			color: #6c757d;
+			font-weight: 500;
+		}
+
+		.desc {
+			padding-top: 6px;
+			font-size: 0.75rem;
+			color: #8a8fa3;
+		}
+
+		.icon {
+			height: 40px;
+			width: 40px;
+			border-radius: 50%;
+			font-size: 1rem;
+			max-width: 40px;
+			color: #3f51b5;
+			background-color: #eff4ff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-left: auto;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+	}
+
+	/* Special cases */
+	.dashboard_card.gradient {
+		background-size: 300% 300%;
+		animation: gradientMove 6s ease infinite;
+		color: #fff;
+
+		.value,
+		.name,
+		.icon {
+			color: #fff !important;
+		}
+
+		.icon {
+			background-color: transparent;
+			// background-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+
+	/* Gradient themes */
+	.receive-card {
+		background: linear-gradient(135deg, #16a34a, #31da6f, #16a34a);
+
+		.icon {
+			background-color: rgba(22, 163, 74, 0.2);
+			color: #d1fae5 !important;
+		}
+	}
+
+	.pay-card {
+		background: linear-gradient(135deg, #dc2626, #e64a4a, #dc2626);
+
+		.icon {
+			background-color: rgba(220, 38, 38, 0.2);
+			color: #fecaca !important;
+		}
+	}
+
+	.orders-overview {
+		margin-top: 32px;
+
+		.dashboard_card {
+			background: linear-gradient(to right, #f8fafc, #ffffff);
+			border: 1px solid #e3e8ef;
+
+			.icon {
+				background-color: #ecfdf5;
+				color: #059669;
+			}
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.dashboard_card {
+			padding: 12px;
+
+			.value {
+				font-size: 1.1rem;
+			}
+
+			.name {
+				font-size: 0.75rem;
+			}
+		}
+	}
+}
+
+/* Animations */
+@keyframes gradientMove {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes pulse-icon {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.15);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.chart-card {
+	.ant-card-body {
+		padding: 0;
+		h4 {
+			margin-top: 0;
+		}
+	}
+}

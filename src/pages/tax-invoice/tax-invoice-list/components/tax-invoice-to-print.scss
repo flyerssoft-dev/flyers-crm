@@ -1,0 +1,173 @@
+.invoice-pdf-container {
+	max-width: 800px;
+	margin: auto;
+	padding: 20px;
+	table {
+		border: none !important;
+	}
+	// box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	background-color: #fff;
+	font-size: 11px;
+	line-height: 24px;
+	// font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+	color: #555;
+	.tax-table {
+		tr {
+			td {
+				padding: 5px;
+			}
+		}
+	}
+	.top-heading {
+		tr {
+			td {
+				border-width: 1px;
+				border-style: solid;
+				border-color: black;
+				.content {
+					line-height: normal;
+					padding: 5px;
+					.value {
+						font-weight: bold;
+					}
+					.title {
+						font-weight: bold;
+					}
+					.mobile {
+						padding-top: 10px;
+					}
+					.gst {
+						font-weight: bold;
+					}
+					.declaration-list {
+						padding-left: 15px;
+						padding-right: 5px;
+						// padding: 0;
+						// margin: 0;
+					}
+					.sign-list {
+						padding: 0;
+						padding-top: 30px;
+						display: flex;
+						margin: 0;
+						justify-content: space-between;
+						li {
+							list-style-type: none;
+						}
+					}
+				}
+			}
+		}
+		.value_container {
+			line-height: normal;
+			padding: 5px;
+			.value {
+				font-weight: bold;
+			}
+		}
+	}
+	.bordered-bottom {
+		border: none !important;
+		border-bottom: 1px solid #eee;
+	}
+	.voucher-footer {
+		display: flex;
+		justify-content: space-between;
+		font-weight: bold;
+		padding-top: 80px;
+	}
+}
+
+.invoice-pdf-container table {
+	width: 100%;
+	line-height: inherit;
+	text-align: left;
+}
+
+@media only screen and (max-width: 600px) {
+	.invoice-pdf-container table tr.top table td {
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+
+	.invoice-pdf-container table tr.information table td {
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+}
+
+/** RTL **/
+.invoice-pdf-container.rtl {
+	direction: rtl;
+	// font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+}
+
+.invoice-pdf-container.rtl table {
+	text-align: right;
+}
+
+.invoice-pdf-container.rtl table tr td:nth-child(2) {
+	text-align: left;
+}
+
+.heading,
+.item,
+.total {
+	td:nth-child(2) {
+		text-align: right;
+	}
+}
+
+.information {
+	td {
+		table {
+			tr {
+				td {
+					padding: 10px;
+					&:nth-child(2),
+					&:nth-child(4) {
+						// font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+}
+
+.heading,
+.item,
+.total {
+	td {
+		padding: 10px;
+	}
+}
+
+.top {
+	td {
+		// padding-top: 10px;
+		// border-bottom: 1px solid #eee;
+	}
+}
+
+.row {
+	width: 100%;
+	display: flex;
+	.label {
+		width: 45%;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	.value {
+		padding-left: 0;
+		width: 55%;
+		font-weight: bold;
+	}
+}
+
+@media print {
+	body {
+		-webkit-print-color-adjust: exact;
+	}
+}

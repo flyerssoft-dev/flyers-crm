@@ -1,0 +1,42 @@
+.customer-statement-container {
+	// padding: 24px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+.filter-section {
+	margin-bottom: 24px;
+	background-color: #f8f9fb;
+	border-radius: 6px;
+	padding: 16px;
+
+	.fieldGroup {
+		display: flex;
+		flex-direction: column;
+
+		label {
+			font-size: 13px;
+			color: #4c4c4c;
+			margin-bottom: 6px;
+			font-weight: 600;
+		}
+
+		.input {
+			width: 100%;
+			border-radius: 6px !important;
+			box-shadow: none !important;
+			background-color: #fff;
+		}
+	}
+}
+
+.table-section {
+	background-color: #fff;
+
+	.custom-table {
+		border-radius: 8px;
+	}
+}
+

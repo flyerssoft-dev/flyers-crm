@@ -1,0 +1,28 @@
+.labelInput {
+	background: #fff !important;
+	border-color: #fff !important;
+	color: #000 !important;
+	width: 100%;
+	padding: 0 !important;
+}
+
+.add-purchase {
+	.ant-form-item {
+		.ant-form-item-label {
+			padding-bottom: 0;
+		}
+		// .ant-form-item-label {
+		// 	text-wrap: auto;
+		// 	font-size: 10px;
+		// }
+	}
+}
+.add_purchase_drawer {
+	.ant-drawer-wrapper-body {
+		.ant-drawer-body {
+			padding: 0;
+		}
+	}
+}
+
+  

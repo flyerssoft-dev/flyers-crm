@@ -1,0 +1,327 @@
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import moment from 'moment';
+import { useReactToPrint } from 'react-to-print';
+import { useSelector, useDispatch } from 'react-redux';
+import { Tag, Tooltip, Row, Col } from 'antd';
+import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { SERVER_IP } from 'assets/Config';
+import { getApi } from 'redux/sagas/getApiDataSaga';
+import HighlightComponent from 'components/HighlightComponent';
+import { ACTIONS, API_STATUS, DATE_FORMAT, STATUS } from 'constants/app-constants';
+import ComponentToPrint from 'components/component-to-print';
+import { resetApiStatus } from 'redux/reducers/globals/globalActions';
+// import { deleteApi } from 'redux/sagas/deleteApiSaga';
+// import { CloseOutlined, EditOutlined } from '@ant-design/icons';
+// import { deleteApi } from 'redux/sagas/deleteApiSaga';
+import EstimatesListPresentational from './estimates-list-presenatational';
+
+const initialPageSize = 10;
+const intialPageSizeOptions = [10, 15, 20];
+
+const EstimatesListFunctional = React.memo(() => {
+	const estimates = useSelector((state) => state?.estimatesRedux?.estimates);
+	const globalRedux = useSelector((state) => state.globalRedux);
+	const [state, setState] = useState({
+		visible: false,
+	});
+	const componentRef = React.useRef();
+	const [searchKey, setSearchKey] = useState('');
+	const [selectedRecordToPrint, setSelectedRecordToPrint] = useState(null);
+	const [selectedRow, setSelectedRow] = useState(null);
+	const [selectedViewRow, setSelectedViewRow] = useState(null);
+	const [tableData, setTableData] = useState(estimates);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [pageSize, setPageSize] = useState(initialPageSize);
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const dispatch = useDispatch();
+
+	const getEstimates = useCallback(() => {
+		dispatch(getApi(ACTIONS.GET_ESTIMATES, `${SERVER_IP}order?orgId=${globalRedux?.selectedOrganization?._id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+
+	const filteredData = useMemo(() => {
+		if (searchKey === '') {
+			return tableData;
+		}
+		return tableData.filter((record) => {
+			return (
+				(record?.estimateNumber || '')?.toString()?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(moment(record?.estimateDate).format(DATE_FORMAT.DD_MM_YYYY)?.toString() || '')?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(moment(record?.dueDate).format(DATE_FORMAT.DD_MM_YYYY)?.toString() || '')?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(record?.status || '')?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(parseFloat(record?.totalAmount)?.toFixed(2) || '')?.toString()?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(record?.remarks || '')?.toLowerCase().includes(searchKey.toLowerCase()) ||
+				(record?.customerId?.displayName || '')?.toLowerCase().includes(searchKey.toLowerCase())
+			);
+		});
+	}, [tableData, searchKey]);
+
+	const column = [
+		{
+			title: '#',
+			dataIndex: 'orderNumber',
+			key: 'orderNumber',
+			width: '5%',
+			sorter: (a, b) => a?.orderNumber - b?.orderNumber,
+			align: 'center',
+			render: (value) => (
+				<HighlightComponent
+					highlightClassName="highlightClass"
+					searchWords={[searchKey]}
+					autoEscape={true}
+					textToHighlight={value?.toString()}
+				/>
+			),
+		},
+		{
+			title: 'Customer',
+			dataIndex: 'customerId',
+			key: 'customerId',
+			width: '15%',
+			sorter: (a, b) => a?.customerId?.displayName?.localeCompare(b?.customerId?.displayName),
+			render: (value) => (
+				<HighlightComponent
+					highlightClassName="highlightClass"
+					searchWords={[searchKey]}
+					autoEscape={true}
+					textToHighlight={value?.displayName || ''}
+				/>
+			),
+		},
+		{
+			title: 'Estimate Date',
+			dataIndex: 'estimateDate',
+			key: 'estimateDate',
+			width: '10%',
+			sorter: (a, b) => new Date(a.estimateDate) - new Date(b.estimateDate),
+			render: (value) => (
+				<HighlightComponent
+					highlightClassName="highlightClass"
+					searchWords={[searchKey]}
+					autoEscape={true}
+					textToHighlight={moment(value).format(DATE_FORMAT.DD_MM_YYYY)}
+				/>
+			),
+		},
+		{
+			title: 'Due Date',
+			dataIndex: 'dueDate',
+			key: 'dueDate',
+			width: '10%',
+			sorter: (a, b) => new Date(a.dueDate) - new Date(b.dueDate),
+			render: (value) => (
+				<HighlightComponent
+					highlightClassName="highlightClass"
+					searchWords={[searchKey]}
+					autoEscape={true}
+					textToHighlight={moment(value).format(DATE_FORMAT.DD_MM_YYYY)}
+				/>
+			),
+		},
+		{
+			title: 'Total Amount',
+			dataIndex: 'totalAmount',
+			key: 'totalAmount',
+			width: '10%',
+			sorter: (a, b) => a?.totalAmount - b?.totalAmount,
+			align: 'right',
+			render: (value) => (
+				<HighlightComponent
+					highlightClassName="highlightClass"
+					searchWords={[searchKey]}
+					autoEscape={true}
+					textToHighlight={parseFloat(value)?.toFixed(2)}
+				/>
+			),
+		},
+		{
+			title: 'Status',
+			dataIndex: 'status',
+			key: 'status',
+			width: '10%',
+			align: 'center',
+			sorter: (a, b) => a?.status?.localeCompare(b?.status),
+			render: (value) => (value ? <Tag color={STATUS[value]}>{value}</Tag> : null),
+			// render: (value) => (
+			// 	<HighlightComponent highlightClassName="highlightClass" searchWords={[searchKey]} autoEscape={true} textToHighlight={value || ''} />
+			// ),
+		},
+		{
+			title: 'Remarks',
+			dataIndex: 'remarks',
+			key: 'remarks',
+			width: '15%',
+			sorter: (a, b) => a?.remarks?.localeCompare(b?.remarks),
+			render: (value) => (
+				<HighlightComponent highlightClassName="highlightClass" searchWords={[searchKey]} autoEscape={true} textToHighlight={value || ''} />
+			),
+		},
+		{
+			title: 'Action',
+			align: 'center',
+			dataIndex: 'estimateNumber',
+			width: '10%',
+			render: (value, row) => {
+				return (
+					<Row gutter={10} justify="center">
+						{row?.items?.length > 0 && (
+							<Tooltip placement="left" title={`View ${row?.items?.length} Item${row?.items?.length > 1 ? 's' : ''}`}>
+								<Col
+									onClick={() => {
+										handleViewRow(row);
+									}}
+									className="edit_icon">
+									<EyeOutlined />
+								</Col>
+							</Tooltip>
+						)}
+						<Col onClick={() => handleSelectRow(row)} className="edit_icon">
+							<EditOutlined />
+						</Col>
+						{/* <Col className="edit_icon" onClick={() => setSelectedRecordToPrint(row)}>
+							<PrinterOutlined />
+						</Col> */}
+
+						{/* <Popconfirm
+							title={`Are you sure to delete this Estimate: ${value}?`}
+							okText="Delete"
+							cancelText="No"
+							placement="rightTop"
+							onConfirm={() => {
+								let url = `${SERVER_IP}estimate/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+								dispatch(deleteApi('DELETE_ESTIMATE', url));
+							}}>
+							<Col className="delete_icon">
+								<CloseOutlined />
+							</Col>
+						</Popconfirm> */}
+					</Row>
+				);
+			},
+		},
+	];
+
+	// eslint-disable-next-line
+	const handleSelectRow = (row) => {
+		setSelectedRow(row);
+	};
+
+	const handleViewRow = (row) => {
+		setSelectedViewRow(row);
+	};
+
+	const handleTableChange = (currentPage, pageSize) => {
+		setCurrentPage(currentPage === 0 ? 1 : currentPage);
+		setPageSize(pageSize);
+	};
+
+	const getStartingValue = () => {
+		if (currentPage === 1) return 1;
+		else {
+			return (currentPage - 1) * pageSize + 1;
+		}
+	};
+
+	const getEndingValue = () => {
+		if (currentPage === 1) return tableData.length < pageSize ? tableData.length : pageSize;
+		else {
+			let end = currentPage * pageSize;
+			return end > tableData.length ? tableData.length : end;
+		}
+	};
+
+	const onSelectChange = (selectedRowKeys) => {
+		setSelectedRowKeys(selectedRowKeys);
+	};
+
+	const rowSelection = {
+		selectedRowKeys,
+		onChange: onSelectChange,
+		columnWidth: '5%',
+	};
+
+	const handleAfterPrint = () => {
+		setSelectedRecordToPrint(null);
+	};
+
+	useEffect(() => {
+		getEstimates();
+	}, [getEstimates]);
+
+	useEffect(() => {
+		setTableData(estimates);
+	}, [estimates]);
+
+	const reactToPrintContent = React.useCallback(() => {
+		return componentRef.current;
+	}, []);
+
+	const handlePrint = useReactToPrint({
+		content: reactToPrintContent,
+		documentTitle: 'Receipt',
+		onAfterPrint: handleAfterPrint,
+		removeAfterPrint: true,
+	});
+
+	useEffect(() => {
+		selectedRecordToPrint && handlePrint();
+	}, [selectedRecordToPrint, handlePrint]);
+
+	useEffect(() => {
+		selectedRow &&
+			setState((state) => ({
+				...state,
+				visible: true,
+			}));
+	}, [selectedRow]);
+
+	useEffect(() => {
+		let doIt = false;
+		if (globalRedux.apiStatus.DELETE_ESTIMATE === 'SUCCESS') {
+			dispatch(resetApiStatus('DELETE_ESTIMATE'));
+			doIt = true;
+		}
+		if (doIt) {
+			getEstimates();
+		}
+	}, [globalRedux.apiStatus, getEstimates, dispatch]);
+
+	useEffect(() => {
+		!state?.visible && setSelectedRow(null);
+	}, [state?.visible]);
+
+	const tableLoading = useMemo(() => globalRedux.apiStatus.GET_ESTIMATES === API_STATUS.PENDING, [globalRedux.apiStatus]);
+
+	return (
+		<>
+			<div style={{ display: 'none' }}>
+				<ComponentToPrint ref={componentRef} data={selectedRecordToPrint} />
+			</div>
+			<EstimatesListPresentational
+				{...{
+					column,
+					filteredData,
+					handleTableChange,
+					getStartingValue,
+					getEndingValue,
+					pageSize,
+					intialPageSizeOptions,
+					initialPageSize,
+					currentPage,
+					refreshList: getEstimates,
+					tableLoading,
+					state,
+					setState,
+					editData: selectedRow,
+					setSearchKey,
+					rowSelection,
+					selectedRowKeys,
+					selectedViewRow,
+					setSelectedViewRow,
+				}}
+			/>
+		</>
+	);
+});
+
+export default EstimatesListFunctional;

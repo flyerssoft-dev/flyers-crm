@@ -1,0 +1,368 @@
+.invoice-pdf {
+	height: 100%;
+	.label_value {
+		display: flex;
+		.label {
+			width: 50%;
+			text-align: right;
+		}
+		.colon {
+			width: 20%;
+			text-align: center;
+		}
+		.value {
+			width: 30%;
+			text-align: right;
+		}
+	}
+	.heading {
+		font-size: 14px;
+		border-top: 1px solid #000;
+	}
+	.heading,
+	.item,
+	.total {
+		td {
+			text-align: center;
+		}
+		td:nth-child(2) {
+			text-align: center;
+		}
+	}
+	.heading {
+		font-size: 10px;
+	}
+	.custom-heading {
+		td {
+			font-size: 10px;
+		}
+	}
+	.custom-item {
+		td {
+			font-size: 10px;
+			padding: 0 5px;
+		}
+	}
+	.invoice-pdf-container {
+		border: 1px solid #000;
+		padding: 0;
+		border-radius: 10px;
+	}
+	max-width: 800px;
+	margin: auto;
+	padding: 30px;
+	border: 1px solid #000;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	font-size: 16px;
+	line-height: 24px;
+	// font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+	color: #000;
+	.bordered-bottom {
+		border: none !important;
+		border-bottom: 1px solid #000;
+	}
+	.invoice-footer {
+		display: flex;
+		justify-content: space-between;
+		font-weight: bold;
+		padding: 10px;
+		padding-top: 20px;
+		.amount_gst_area {
+			display: flex;
+			.amount_area {
+				width: 60%;
+				&_container {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+				}
+			}
+			.gst_area {
+				width: 40%;
+			}
+		}
+	}
+	.signArea {
+		display: flex;
+		border-top: 1px solid #000;
+		margin-top: 20px;
+		.left {
+			padding: 10px;
+			width: 70%;
+			border-right: 1px solid #000;
+			min-height: 100px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.title {
+				font-size: 14px;
+			}
+			.paragraph {
+				font-size: 10px;
+				line-height: normal;
+			}
+		}
+		.sign {
+			padding: 10px;
+			width: 30%;
+			color: #f77b3b;
+			font-size: 10px !important;
+			font-weight: bold !important;
+		}
+	}
+	table {
+		border: none !important;
+	}
+}
+
+.invoice-pdf table {
+	width: 100%;
+	line-height: inherit;
+	text-align: left;
+}
+
+.invoice-pdf table td {
+	padding: 5px;
+	vertical-align: top;
+}
+
+.invoice-pdf table tr.top table td {
+	padding-bottom: 20px;
+}
+
+.invoice-pdf table tr.top table td.title {
+	font-size: 15px;
+	text-align: center;
+	// line-height: 45px;
+	font-weight: bold;
+	color: #000;
+	display: flex;
+	padding: 10px;
+    border-bottom: 1px solid #000;
+	.left {
+		width: 75%;
+		display: flex;
+		align-items: center;
+		img {
+			width: 100px;
+		}
+		.content {
+			height: max-content;
+			.name {
+				font-size: 20px;
+				color: orange;
+			}
+			text-align: left;
+			.address,
+			.contact {
+				font-size: 12px;
+				line-height: normal;
+			}
+		}
+	}
+	.right {
+		text-align: right;
+		width: 25%;
+		font-weight: bold;
+		font-size: 12px;
+		display: flex;
+		justify-content: flex-end;
+		.content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: max-content;
+			.tax-invoice {
+				font-size: 18px;
+				font-weight: normal;
+			}
+			.copy {
+				font-size: 10px;
+			}
+		}
+	}
+}
+
+.invoice-pdf table tr.information table td {
+	padding-bottom: 20px;
+}
+
+.invoice-pdf table tr.heading td {
+	background: #eee;
+	border-bottom: 1px solid #000;
+	font-weight: bold;
+}
+
+.invoice-pdf table tr.details td {
+	padding-bottom: 20px;
+}
+
+.invoice-pdf table tr.item td {
+	border-bottom: 1px solid #000;
+}
+
+.invoice-pdf table tr.item.last td {
+	border-bottom: none;
+}
+
+.invoice-pdf table tr.total td:nth-child(2) {
+	border-top: 2px solid #000;
+	font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+	.invoice-pdf table tr.top table td {
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+
+	.invoice-pdf table tr.information table td {
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+}
+
+/** RTL **/
+.invoice-pdf.rtl {
+	direction: rtl;
+	// font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+}
+
+.invoice-pdf.rtl table {
+	text-align: right;
+}
+
+.invoice-pdf.rtl table tr td:nth-child(2) {
+	text-align: left;
+}
+
+.information {
+	td {
+		table {
+			tr {
+				td {
+					padding: 10px;
+					&:nth-child(2),
+					&:nth-child(4) {
+						font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+
+	.row {
+		width: 100%;
+		display: flex;
+		.label {
+			width: 50%;
+			font-weight: bold;
+			font-size: 14px;
+			text-align: right;
+		}
+		.value {
+			padding-left: 0;
+			width: 50%;
+			font-size: 14px;
+			text-align: left;
+			font-weight: normal;
+		}
+	}
+	.no_padding {
+		padding-right: 0;
+		.row {
+			margin-right: 0;
+			.value {
+				padding-right: 0;
+			}
+		}
+	}
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+	// -moz-appearance: textfield;
+}
+
+.toArea {
+	p {
+		margin-bottom: 5px;
+	}
+	.details {
+		font-size: 12px;
+		line-height: 1.3rem;
+	}
+}
+
+@media print {
+	.invoice-pdf {
+		height: 100%;
+	}
+}
+
+@media print {
+	.watermark {
+		position: fixed;
+		top: 50vh;
+		z-index: 9;
+		width: 50vw;
+		page-break-after: always;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 0.1;
+	}
+	div.page-footer {
+		position: fixed;
+		z-index: 9;
+		bottom: 0;
+		width: 100%;
+		height: 60px;
+		font-size: 15px;
+		color: #000;
+		page-break-after: always;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.signArea {
+			display: flex;
+			border-top: 1px solid #000;
+			margin-top: 20px;
+			.left {
+				padding: 10px;
+				width: 70%;
+				border-right: 1px solid #000;
+				min-height: 100px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				.title {
+					font-size: 14px;
+				}
+				.paragraph {
+					font-size: 10px;
+					line-height: normal;
+				}
+			}
+			.sign {
+				padding: 10px;
+				width: 30%;
+				color: #f77b3b;
+				font-size: 10px !important;
+				font-weight: bold !important;
+			}
+		}
+		table {
+			border: none !important;
+		}
+	}
+}

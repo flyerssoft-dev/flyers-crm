@@ -1,0 +1,240 @@
+.ant-form-item {
+	margin-bottom: 10px;
+}
+
+.ant-divider.ant-divider-horizontal {
+	margin: 0;
+	// margin: 5px 0;
+}
+
+.ant-table {
+	font-size: 14px !important;
+}
+
+.custom-table {
+	.ant-table-thead > tr > th,
+	.ant-table-tbody > tr > .ant-table-row .ant-table tfoot > tr > th,
+	.ant-table tfoot > tr > .ant-table-row {
+		padding: 8px 8px 8px 8px !important;
+	}
+	th {
+		border-top: 0 !important;
+		padding: 0 0 0 30px !important;
+		background: white !important;
+		border-bottom: 1px solid #dddddd !important;
+		font-weight: bold !important;
+		color: #61616b !important;
+		line-height: 1.42857 !important;
+		letter-spacing: 0.7px !important;
+		max-height: 35px !important;
+		font-size: 14px !important;
+	}
+
+	tbody tr:hover td {
+		background-color: #f5f5f5 !important;
+	}
+
+	tr > .ant-table-row {
+		line-height: 1.42857 !important;
+		padding: 8px !important;
+		vertical-align: top !important;
+		color: #2e2e2e !important;
+		font-size: 10px !important;
+	}
+}
+
+tbody {
+	tr {
+		td {
+			height: 10px !important;
+			padding: 6px !important;
+		}
+	}
+}
+
+.custom-table tr:nth-child(even) {
+	// background-color: #e6f5ff;
+	.ant-table-cell-fix-left {
+		// background-color: #e6f5ff;
+	}
+}
+.admin-content {
+	height: calc(100vh - 48px);
+}
+
+.ft-12 {
+	font-size: 12px !important;
+}
+.ft-10 {
+	font-size: 10px !important;
+}
+.bold {
+	font-weight: bold;
+}
+
+.Toastify {
+	.Toastify__toast-container {
+		width: 400px;
+		.Toastify__toast {
+			.Toastify__toast-body {
+				.push-notification {
+					display: flex;
+					&.SUCCESS {
+						.indicator {
+							background: #21a47a;
+						}
+						.icon {
+							color: #21a47a;
+						}
+					}
+					&.INFO {
+						.indicator {
+							background: #0a74b5;
+						}
+						.icon {
+							color: #0a74b5;
+						}
+					}
+					&.ERROR {
+						.indicator {
+							background: #ea2a6b;
+						}
+						.icon {
+							color: #ea2a6b;
+						}
+					}
+					&.WARNING {
+						.indicator {
+							background: #eba631;
+						}
+						.icon {
+							color: #eba631;
+						}
+					}
+					.indicator {
+						height: auto;
+						width: 1.5%;
+						border-radius: 10px;
+						margin-right: 10px;
+					}
+					.icon {
+						display: flex;
+						align-items: center;
+						margin-right: 10px;
+						font-size: 20px;
+					}
+					.push-notification-content {
+						width: 98.5%;
+						.push-notification-title {
+							font-weight: bold;
+							color: #000;
+						}
+						.push-notification-text {
+							margin: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.ant-tabs-tab-btn {
+	color: #000;
+}
+
+.ant-table-measure-row {
+	// display: none !important;
+	td {
+		padding: 0 !important;
+		height: 0 !important;
+	}
+}
+
+.anticon {
+	svg {
+		display: inline;
+		vertical-align: baseline;
+	}
+}
+
+// border-radius style
+.ant-input,
+.ant-picker,
+.ant-tag,
+.ant-btn,
+.ant-input-affix-wrapper {
+	border-radius: 4px !important;
+}
+.ant-select {
+	.ant-select-selector {
+		border-radius: 4px !important;
+	}
+}
+.ant-checkbox {
+	.ant-checkbox-inner {
+		border-radius: 4px !important;
+		border-color: #7d7d7d;
+		&:hover {
+			border-radius: 4px !important;
+		}
+	}
+}
+.ant-input-group-wrapper {
+	.ant-input {
+		border-top-right-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+	}
+	.ant-input-group-addon {
+		border-top-right-radius: 4px !important;
+		border-bottom-right-radius: 4px !important;
+	}
+}
+
+.ant-select-dropdown {
+	padding: 0 !important;
+}
+.ant-modal-root {
+	.ant-modal-wrap {
+		.ant-modal {
+			.ant-modal-content {
+				border-radius: 8px;
+				.ant-modal-close {
+					width: 32px;
+					height: 32px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 6px;
+					transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+					transition-property: color, background-color, border-color;
+					&:hover {
+						background: #f3f4f6;
+					}
+				}
+				.ant-modal-header {
+					padding: 10px 0;
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+.ant-picker-dropdown {
+	.ant-picker-panel-container {
+		border-radius: 8px;
+	}
+}
+
+.preference_tab {
+	.ant-tabs-nav {
+		.ant-tabs-nav-wrap {
+			.ant-tabs-nav-list {
+				.ant-tabs-tab {
+					padding: 4px 10px 4px 0;
+				}
+			}
+		}
+	}
+}

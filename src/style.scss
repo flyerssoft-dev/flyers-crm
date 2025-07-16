@@ -1,0 +1,326 @@
+@import url('https://cdn.syncfusion.com/ej2/material.css');
+
+$theme-color: #006fd9;
+$theme-color-hover: #bae4ce;
+$dark-theme-color: #00753f;
+
+body {
+  margin: 0;
+}
+
+// Input focus style
+.ant-input:focus,
+.ant-input-focused {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+h1, h2, h3 {
+	font-family: 'Roboto' !important;
+}
+
+// Table customization
+.ant-table-wrapper {
+  .ant-spin-nested-loading .ant-spin-spinning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ant-table-thead .ant-table-cell {
+    padding: 10px !important;
+    background-color: $theme-color;
+    color: white;
+  }
+  .ant-table-summary .ant-table-cell {
+    padding: 6px !important;
+    text-align: center;
+    &:first-child {
+      text-align: left !important;
+    }
+  }
+}
+
+.text_right {
+  text-align: right !important;
+}
+
+// Drawer styles
+.ant-drawer-header {
+  padding: 16px 24px;
+  z-index: 99999;
+  color: rgba(0, 0, 0, 0.65);
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  border-radius: 4px 4px 0 0;
+}
+.ant-drawer-body {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+// Scrollbar mixin
+@mixin scrollbar() {
+  &::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid transparent;
+    border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0.15);
+    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.05), inset 1px 1px 0 rgba(0, 0, 0, 0.05);
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+// Layout and sider menu
+.ant-layout {
+  .ant-layout-sider {
+    padding-bottom: 0 !important;
+    background-color: #fff !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+
+    &.ant-layout-sider-collapsed {
+      .ant-layout-sider-children {
+        background-color: #21273c !important;
+        .ant-menu {
+          border: none !important;
+        }
+      }
+      .ant-layout-sider-trigger {
+        background: #191c2e !important;
+        span svg {
+          color: #fff !important;
+        }
+      }
+    }
+
+    .ant-layout-sider-children {
+      background: #21273c;
+      .ant-menu {
+        padding: 0 5px;
+        background: #21273c;
+        color: #fff;
+
+        .ant-menu-submenu-title {
+          color: #fff;
+          padding-left: 18px !important;
+          &:hover {
+            background: #e0e0e4 !important;
+            color: #303030 !important;
+          }
+        }
+
+        .ant-menu-item {
+          border-radius: 10px;
+          padding-left: 18px !important;
+          .ant-menu-title-content,
+          svg {
+            color: #fff !important;
+            font-size: 13px !important;
+          }
+          &.ant-menu-item-selected {
+            background: $theme-color !important;
+            svg,
+            span {
+              color: #fff !important;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-layout-sider-trigger {
+      background: #191c2e !important;
+      span svg {
+        color: #fff !important;
+      }
+    }
+  }
+}
+
+// Collapsed menu label hidden
+.ant-menu-inline-collapsed {
+  .ant-menu-item,
+  .ant-menu-submenu {
+    .ant-menu-title-content {
+      display: none !important;
+    }
+  }
+}
+
+// General menu icon size
+.ant-menu-item svg,
+.ant-menu-item-icon {
+  font-size: 14px !important;
+}
+
+// Page header
+.ant-page-header {
+  background-color: #fff !important;
+  color: #000 !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  .ant-dropdown-trigger {
+    color: #000 !important;
+  }
+}
+
+// Card shadow
+.box_shadow {
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+}
+
+// Card background variants
+.card_container {
+  .card {
+    padding: 20px;
+    &:nth-child(1) .facility_container_card { background: radial-gradient(#1fe4f5, #3fbafe); }
+    &:nth-child(2) .facility_container_card { background: radial-gradient(#fbc1cc, #fa99b2); }
+    &:nth-child(3) .facility_container_card { background: radial-gradient(#76b2fe, #b69efe); }
+    &:nth-child(4) .facility_container_card { background: radial-gradient(#60efbc, #58d5c9); }
+    &:nth-child(5) .facility_container_card { background: radial-gradient(#f588d8, #c0a3e5); }
+    &:nth-child(6) .facility_container_card { background: radial-gradient(#1fe4f5, #3fbafe); }
+    &:nth-child(7) .facility_container_card { background: radial-gradient(#76b2fe, #b69efe); }
+  }
+  &_card {
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    color: #fff;
+    font-size: 1.5rem;
+    transform: scale(0.95);
+    &:hover {
+      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+      transform: scale(1);
+    }
+  }
+}
+
+// Form required style
+.ant-form-horizontal.required_in_right .ant-form-item-required,
+.ant-form-vertical.required_in_right .ant-form-item-required {
+  &::after {
+    content: '*';
+    color: #ff4d4f;
+    font-size: 14px;
+    margin-right: 4px;
+    visibility: visible;
+  }
+  &::before {
+    display: none !important;
+  }
+}
+
+// Utility classes
+.bold { font-weight: 700; }
+.space-between { display: flex; justify-content: space-between !important; }
+.textAlignRight { text-align: right !important; input { text-align: right !important; } }
+.error { border-color: red !important; .ant-select-selector { border-color: red !important; } }
+.link-style { color: skyblue; text-decoration: underline; }
+.inwords { text-transform: capitalize; }
+
+// Icons
+.edit_icon,
+.delete_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+.edit_icon { background-color: #006fd9; margin-right: 5px; }
+.delete_icon { background-color: #eb5353; }
+
+// Login card
+.app_container {
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  .login_card {
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	-webkit-backdrop-filter: blur(3.5px);
+    backdrop-filter: blur(3.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+// Spinner input cleanup
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ant-input-number .ant-input-number-handler-wrap {
+  display: none !important;
+}
+
+// Hide label
+.hideFormLabel .ant-form-item-label {
+  display: none !important;
+}
+
+// Badge
+.badge {
+  background-color: tomato;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+}
+
+// Gradient themes
+$primaryGradient1: linear-gradient(135deg, #cce7ff 0%, #027bce 100%);
+$primaryGradient2: linear-gradient(135deg, #006393 0%, #0088ca 100%);
+$primaryGradient3: linear-gradient(135deg, #071a57 0%, #006393 98.96%);
+$secondaryGradient1: linear-gradient(135deg, #d52b1e 0%, #ea6257 98.96%);
+$secondaryGradient2: linear-gradient(135deg, #a51105 0%, #d52b1e 98.96%);
+
+// Fade-in animation
+.fade-in {
+	animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+h4 {
+  margin: 0;
+}
