@@ -1,0 +1,13 @@
+.upload-wrapper .ant-upload-drag {
+  background: #f4edff;
+  border: 0.5px dashed #7700c7;
+  border-radius: 10px;
+}
+
+.upload-wrapper .ant-upload {
+  padding: 10px 5px !important;
+}
+
+.upload-wrapper .ant-upload-list-text {
+  display: none;
+}

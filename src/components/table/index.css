@@ -1,0 +1,39 @@
+.table-wrapper .ant-table-thead .ant-table-cell {
+  font-size: 14px !important;
+  /* padding: 12px 14px !important; */
+  max-height: 100%;
+  font-weight: bold;
+  scrollbar-color: rgb(255, 0, 0) !important;
+}
+
+.table-wrapper .ant-table-tbody .ant-table-cell {
+  font-size: 14px;
+  line-height: 25.2px;
+  /* color: #0e0d0e; */
+  padding: 12px 8px !important;
+  scrollbar-color: blue !important;
+}
+
+@media (max-width: 767px) {
+  .responsive-scroll {
+    .ant-table {
+      width: 1200px !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-scroll {
+    .ant-table {
+      width: 1400px !important;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-scroll {
+    .ant-table {
+      width: 1500px !important;
+    }
+  }
+}
