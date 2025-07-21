@@ -42,6 +42,7 @@ import CustomerStatementList from 'pages/customer-statement';
 import FaqExtractor from 'pages/FaqExtractor';
 import ExportInvoiceList from 'pages/export-invoice';
 import ExportGstJsonList from 'pages/export-gst-json';
+import ContactList from 'pages/contacts/contact-list';
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -170,168 +171,174 @@ const MENUS = [
 		key: '2',
 	},
 	{
-		name: 'Customers',
+		name: 'Contacts',
 		icon: <FI.FiUsers />,
-		route: '/customers',
+		route: '/contacts',
 		key: '3',
 	},
 	{
-		name: 'Sales',
+		name: 'Customers',
 		icon: <FI.FiUsers />,
-		route: '/sales',
+		route: '/customers',
 		key: '4',
-		submenus: [
-			{
-				name: 'Estimate',
-				icon: <BsBoxSeam />,
-				route: '/estimate',
-				key: '6',
-			},
-			{
-				name: 'Sales Order',
-				icon: <BsBoxSeam />,
-				route: '/sales-order',
-				key: '7',
-			},
-			{
-				name: 'Invoice',
-				icon: <BsBoxSeam />,
-				route: '/invoice',
-				key: '5',
-			},
-			{
-				name: 'Tax Invoice',
-				icon: <BsBoxSeam />,
-				route: '/tax-invoice',
-				key: '8',
-			},
-			{
-				name: 'Customer Payments',
-				icon: <BsBoxSeam />,
-				route: '/customer-payments',
-				key: '9',
-			},
-			{
-				name: 'Customer statements',
-				icon: <BsBoxSeam />,
-				route: '/customer-statements',
-				key: '25',
-			},
-			{
-				name: 'Export Invoice',
-				icon: <BsBoxSeam />,
-				route: '/export-invoice',
-				key: '26',
-			},
-			{
-				name: 'Export Gst Json',
-				icon: <BsBoxSeam />,
-				route: '/export-gst-json',
-				key: '27',
-			},
-		],
 	},
-	{
-		name: 'Purchases',
-		icon: <BsBoxSeam />,
-		route: '/purchase',
-		key: '10',
-		submenus: [
-			{
-				name: 'Purchases Entry',
-				icon: <BsBoxSeam />,
-				route: '/purchases',
-				key: '11',
-			},
-			{
-				name: 'Vendor Payment',
-				icon: <BsBoxSeam />,
-				route: '/vendor-payment',
-				key: '12',
-			},
-		],
-	},
-	{
-		name: 'Inventory',
-		icon: <BsBoxSeam />,
-		route: '/inventory',
-		key: '13',
-		submenus: [
-			{
-				name: 'Items',
-				icon: <BsBoxSeam />,
-				route: '/items',
-				key: '14',
-			},
-			{
-				name: 'Stocks',
-				icon: <BsBoxSeam />,
-				route: '/stocks',
-				key: '15',
-			},
-			// {
-			// 	name: 'Stock Adjustment',
-			// 	icon: <BsBoxSeam />,
-			// 	route: '/stock-adjustment',
-			// 	key: '24',
-			// },
-			{
-				name: 'Production Entry',
-				icon: <BsBoxSeam />,
-				route: '/production-entry',
-				key: '16',
-			},
-		],
-	},
-	{
-		name: 'Schedulers',
-		icon: <FI.FiUsers />,
-		route: '/schedulers',
-		key: '17',
-	},
-	{
-		name: 'Composite',
-		icon: <FI.FiUsers />,
-		route: '/composites',
-		key: '18',
-	},
-	{
-		name: 'Tickets',
-		icon: <RI.RiBillLine />,
-		route: '/tickets',
-		key: '19',
-	},
-	{
-		name: 'Suppliers',
-		icon: <FI.FiUsers />,
-		route: '/suppliers',
-		key: '20',
-	},
-	{
-		name: 'Tasks',
-		icon: <MD.MdAddTask />,
-		route: '/tasks',
-		key: '21',
-	},
-	{
-		name: 'Projects',
-		icon: <FI.FiSettings />,
-		route: '/projects',
-		key: '22',
-	},
-	{
-		name: 'Voucher',
-		icon: <FA.FaReceipt />,
-		// icon: <RI.RiBillLine />,
-		route: '/voucher',
-		key: '23',
-	},
-	{
-		name: 'Masters',
-		icon: <FI.FiSettings />,
-		route: '/masters',
-		key: '24',
-	},
+	// {
+	// 	name: 'Sales',
+	// 	icon: <FI.FiUsers />,
+	// 	route: '/sales',
+	// 	key: '4',
+	// 	submenus: [
+	// 		{
+	// 			name: 'Estimate',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/estimate',
+	// 			key: '6',
+	// 		},
+	// 		{
+	// 			name: 'Sales Order',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/sales-order',
+	// 			key: '7',
+	// 		},
+	// 		{
+	// 			name: 'Invoice',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/invoice',
+	// 			key: '5',
+	// 		},
+	// 		{
+	// 			name: 'Tax Invoice',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/tax-invoice',
+	// 			key: '8',
+	// 		},
+	// 		{
+	// 			name: 'Customer Payments',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/customer-payments',
+	// 			key: '9',
+	// 		},
+	// 		{
+	// 			name: 'Customer statements',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/customer-statements',
+	// 			key: '25',
+	// 		},
+	// 		{
+	// 			name: 'Export Invoice',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/export-invoice',
+	// 			key: '26',
+	// 		},
+	// 		{
+	// 			name: 'Export Gst Json',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/export-gst-json',
+	// 			key: '27',
+	// 		},
+	// 	],
+	// },
+	// {
+	// 	name: 'Purchases',
+	// 	icon: <BsBoxSeam />,
+	// 	route: '/purchase',
+	// 	key: '10',
+	// 	submenus: [
+	// 		{
+	// 			name: 'Purchases Entry',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/purchases',
+	// 			key: '11',
+	// 		},
+	// 		{
+	// 			name: 'Vendor Payment',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/vendor-payment',
+	// 			key: '12',
+	// 		},
+	// 	],
+	// },
+	// {
+	// 	name: 'Inventory',
+	// 	icon: <BsBoxSeam />,
+	// 	route: '/inventory',
+	// 	key: '13',
+	// 	submenus: [
+	// 		{
+	// 			name: 'Items',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/items',
+	// 			key: '14',
+	// 		},
+	// 		{
+	// 			name: 'Stocks',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/stocks',
+	// 			key: '15',
+	// 		},
+	// 		// {
+	// 		// 	name: 'Stock Adjustment',
+	// 		// 	icon: <BsBoxSeam />,
+	// 		// 	route: '/stock-adjustment',
+	// 		// 	key: '24',
+	// 		// },
+	// 		{
+	// 			name: 'Production Entry',
+	// 			icon: <BsBoxSeam />,
+	// 			route: '/production-entry',
+	// 			key: '16',
+	// 		},
+	// 	],
+	// },
+	// {
+	// 	name: 'Schedulers',
+	// 	icon: <FI.FiUsers />,
+	// 	route: '/schedulers',
+	// 	key: '17',
+	// },
+	// {
+	// 	name: 'Composite',
+	// 	icon: <FI.FiUsers />,
+	// 	route: '/composites',
+	// 	key: '18',
+	// },
+	// {
+	// 	name: 'Tickets',
+	// 	icon: <RI.RiBillLine />,
+	// 	route: '/tickets',
+	// 	key: '19',
+	// },
+	// {
+	// 	name: 'Suppliers',
+	// 	icon: <FI.FiUsers />,
+	// 	route: '/suppliers',
+	// 	key: '20',
+	// },
+	// {
+	// 	name: 'Tasks',
+	// 	icon: <MD.MdAddTask />,
+	// 	route: '/tasks',
+	// 	key: '21',
+	// },
+	// {
+	// 	name: 'Projects',
+	// 	icon: <FI.FiSettings />,
+	// 	route: '/projects',
+	// 	key: '22',
+	// },
+	// {
+	// 	name: 'Voucher',
+	// 	icon: <FA.FaReceipt />,
+	// 	// icon: <RI.RiBillLine />,
+	// 	route: '/voucher',
+	// 	key: '23',
+	// },
+	// {
+	// 	name: 'Masters',
+	// 	icon: <FI.FiSettings />,
+	// 	route: '/masters',
+	// 	key: '24',
+	// },
 ];
 
 export const ROUTE_CONSTANTS = {
@@ -413,6 +420,10 @@ const ROUTES = [
 	{
 		route: '/leads',
 		Component: LeadsList,
+	},
+	{
+		route: '/contacts',
+		Component: ContactList,
 	},
 	{
 		route: '/sales-order',
