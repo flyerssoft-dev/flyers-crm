@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 	if (!User.isLogged) {
 		return <Navigate to={'/login'} replace />;
 	}
-	if (!globalRedux?.selectedOrganization?._id) {
+	if (!globalRedux?.selectedOrganization?.id) {
 		return <Navigate to={'/organization'} replace />;
 	}
 	// if (!User.isProfileUpdated) {

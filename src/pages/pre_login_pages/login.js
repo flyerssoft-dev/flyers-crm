@@ -11,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import LoginWithOTP from './login_with_otp';
 import './login.scss';
+import { getApi } from 'redux/sagas/getApiDataSaga';
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -26,13 +27,17 @@ const Login = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+
 	useEffect(() => {
-		if (!!loginRedux.token && loginRedux.isLogged && !globalRedux?.selectedOrganization?._id) {
+		if (!!loginRedux.accessToken && loginRedux.isLogged && !globalRedux?.selectedOrganization?._id) {
+			dispatch(getApi('ME_API'))
 			navigate('/organization');
 		}
 	}, [loginRedux.token, loginRedux.isLogged, globalRedux?.selectedOrganization?._id, navigate]);
 
-	const login = (data) => dispatch(postApi(data, 'LOGIN'));
+	const login = (data) =>{ 
+		dispatch(postApi(data, 'LOGIN'))
+	};
 
 	return (
 		<motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="login-container">
@@ -66,13 +71,13 @@ const Login = () => {
 							<Text type="secondary">Enter your details to continue.</Text>
 
 							<Tabs defaultActiveKey="LOGIN_WITH_PASSWORD" style={{ marginTop: 30 }}>
-								<TabPane tab="Login with OTP" key="LOGIN_WITH_OTP">
+								{/* <TabPane tab="Login with OTP" key="LOGIN_WITH_OTP">
 									<LoginWithOTP />
-								</TabPane>
+								</TabPane> */}
 								<TabPane tab="Login with Password" key="LOGIN_WITH_PASSWORD">
 									<Form form={form} layout="vertical" onFinish={login} {...FormProps}>
-										<Form.Item label="Mobile" name="mobile" rules={[{ required: true, message: 'Please enter your Mobile' }]}>
-											<Input placeholder="Mobile" maxLength={10} />
+										<Form.Item label="Email or Employee ID" name="username" rules={[{ required: true, message: 'Please enter your Mobile' }]}>
+											<Input placeholder="Email Office or Personal Email/Employee ID"/>
 										</Form.Item>
 										<Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your Password' }]}>
 											<Input.Password placeholder="Password" visibilityToggle />

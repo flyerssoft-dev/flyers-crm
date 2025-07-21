@@ -1,10 +1,11 @@
 import toast from 'react-hot-toast';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { setRegisterSuccess } from 'redux/reducers/register/registerActions';
-import { RESTCallError, sendPostRequest } from './utils';
+import { RESTCallError, sendGetRequest, sendPostRequest } from './utils';
 import { store } from '../store';
 import { setApiStatus } from '../reducers/globals/globalActions';
 import { setLoginSuccess } from '../reducers/login/loginActions';
+import API_ENDPOINTS from 'redux/endpoints';
 
 // Constants for API names
 const API_NAMES = {

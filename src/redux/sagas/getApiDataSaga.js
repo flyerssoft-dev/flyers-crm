@@ -53,6 +53,7 @@ import { setComposites } from 'redux/reducers/composites/compositeAction';
 import { setEstimates } from 'redux/reducers/estimates/estimatesActions';
 import { setTaxInvoices } from 'redux/reducers/tax-invoices/taxInvoicesAction';
 import { setReceipts } from 'redux/reducers/receipts/receiptsActions';
+import { loginUserDetails } from 'redux/reducers/login/loginActions';
 
 function getApi(apiName, url, extras) {
 	return {
@@ -84,7 +85,7 @@ function* getApiDataWorker(param) {
 function* getApiDataSuccess(response, apiName, extras) {
 	switch (apiName) {
 		case 'GET_ALL_ORGANIZATION':
-			yield put(setOrganizations(response?.data || []));
+			yield put(setOrganizations(response?.message || []));
 			break;
 		case 'GET_ALL_PROJECTS':
 			yield put(setProjects(response?.data || []));
@@ -238,6 +239,9 @@ function* getApiDataSuccess(response, apiName, extras) {
 			break;
 		case 'GET_STATES':
 			yield put(setStates(response?.data || []));
+			break;
+		case 'ME_API':
+			yield put(loginUserDetails(response || {}));
 			break;
 		default:
 			break;
