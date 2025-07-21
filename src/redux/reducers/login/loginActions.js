@@ -40,6 +40,13 @@ function resetForgotPasswordData() {
 	};
 }
 
+function loginUserDetails(data) {
+	return {
+		type: 'SET_USER_DETAILS',
+		payload: data,
+	};
+}
+
 function logoutAction(data) {
 	return {
 		type: 'LOGOUT',
@@ -47,4 +54,4 @@ function logoutAction(data) {
 	};
 }
 
-export { setLoginStatus, setProfileUpdatedStatus, setUserDetails, setForgotPasswordData, resetForgotPasswordData, logoutAction, setLoginSuccess };
+export { setLoginStatus, setProfileUpdatedStatus, setUserDetails, setForgotPasswordData, resetForgotPasswordData, logoutAction, setLoginSuccess, loginUserDetails };
