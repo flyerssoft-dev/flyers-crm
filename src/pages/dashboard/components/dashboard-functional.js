@@ -25,11 +25,11 @@ const DashboardFunctional = () => {
 
 	const getDashboardData = useCallback(() => {
 		let url = `${SERVER_IP}dashboard/?${objToQs({
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			areaId: selectedBranchId,
 		})}`;
 		dispatch(getApi(ACTIONS.GET_DASHBOARD_DATA, url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id, selectedBranchId]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, selectedBranchId]);
 
 	useEffect(() => {
 		getDashboardData();
