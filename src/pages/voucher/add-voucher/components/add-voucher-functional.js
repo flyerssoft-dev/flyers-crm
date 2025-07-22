@@ -22,9 +22,9 @@ const AddVoucherFunctional = ({ state, setState, refreshList }) => {
 	const dispatch = useDispatch();
 
 	const getVoucherHeads = useCallback(() => {
-		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_VOUCHERS_HEAD', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if (state?.selectedRow) {
@@ -58,7 +58,7 @@ const AddVoucherFunctional = ({ state, setState, refreshList }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 		};
 		dispatch(postApi(request, ACTIONS.ADD_VOUCHER));
@@ -67,7 +67,7 @@ const AddVoucherFunctional = ({ state, setState, refreshList }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		let url = `${SERVER_IP}voucher/${state?.selectedRow?._id}`;
 		dispatch(putApi(data, ACTIONS.EDIT_VOUCHER, url));
@@ -76,24 +76,24 @@ const AddVoucherFunctional = ({ state, setState, refreshList }) => {
 	const loading = globalRedux.apiStatus.ADD_VOUCHER === API_STATUS.PENDING || globalRedux.apiStatus.EDIT_VOUCHER === API_STATUS.PENDING;
 
 	const getProjects = useCallback(() => {
-		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_PROJECTS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getAccountBooks = useCallback(() => {
-		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ACCOUNT_BOOKS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 	
 	const getUsers = useCallback(() => {
-		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_USERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getSubCategories = useCallback(() => {
-		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?._id}&categoryId=${categoryIdValue}`;
+		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?.id}&categoryId=${categoryIdValue}`;
 		dispatch(getApi('GET_SUB_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id, categoryIdValue]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, categoryIdValue]);
 
 	useEffect(() => {
 		if (state?.visible) {

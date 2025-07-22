@@ -81,7 +81,7 @@ const AddAccount = ({
 
   const handleSubmit = (values) => {
     let data = {
-      orgId: globalRedux?.selectedOrganization?._id,
+      orgId: globalRedux?.selectedOrganization?.id,
       type: CUSTOMER_TYPE[2] || "",
       category: values?.category,
       displayName: values?.displayName || "",
@@ -108,7 +108,7 @@ const AddAccount = ({
     if (!editAccount) {
       dispatch(postApi(data, "ADD_LEAD"));
     } else {
-      let url = `${SERVER_IP}customer/${editAccount._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+      let url = `${SERVER_IP}customer/${editAccount._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
       dispatch(putApi(data, "EDIT_LEAD", url));
     }
   };

@@ -33,13 +33,13 @@ const AddAccountBook = ({ accBookAddModal, setAccBookAddModal, editAccountBooks,
 		const payload = {
 			...values,
 			openingDate: values?.openingDate?.format('YYYY-MM-DD'),
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		if (!editAccountBooks) {
 			dispatch(postApi(payload, 'ADD_ACCOUNT_BOOK'));
 		} else {
-			const url = `${SERVER_IP}accBook/${editAccountBooks._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}accBook/${editAccountBooks._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(payload, 'EDIT_ACC_BOOK', url));
 		}
 	};

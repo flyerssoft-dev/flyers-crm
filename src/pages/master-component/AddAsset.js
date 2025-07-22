@@ -15,7 +15,7 @@ const AddAsset = ({ handleClose, editAsset, setAssetsAddModal }) => {
 	const addAsset = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		dispatch(postApi(data, 'ADD_ASSETS'));
 	};
@@ -24,9 +24,9 @@ const AddAsset = ({ handleClose, editAsset, setAssetsAddModal }) => {
 		let data = {
 			...values,
 
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
-		let url = `${SERVER_IP}asset/${editAsset._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}asset/${editAsset._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_ASSET', url));
 	};
 

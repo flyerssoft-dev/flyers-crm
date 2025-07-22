@@ -27,9 +27,9 @@ const AccountsListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getAccounts = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}&type=${CUSTOMER_TYPE[2]}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}&type=${CUSTOMER_TYPE[2]}`;
 		dispatch(getApi('GET_LEADS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getAccounts();

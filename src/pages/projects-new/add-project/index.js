@@ -20,19 +20,19 @@ const AddProject = ({ projectAddModal, width = '40%', editProject, setProjectAdd
 	const customers = useSelector((state) => state.customerRedux?.customers || []);
 
 	const getCustomers = useCallback(() => {
-		const url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getCategories = useCallback(() => {
-		const url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getTags = useCallback(() => {
-		const url = `${SERVER_IP}tag/?orgId=${globalRedux?.selectedOrganization?._id}&module=Project`;
+		const url = `${SERVER_IP}tag/?orgId=${globalRedux?.selectedOrganization?.id}&module=Project`;
 		dispatch(getApi('GET_TAGS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCustomers();
@@ -59,7 +59,7 @@ const AddProject = ({ projectAddModal, width = '40%', editProject, setProjectAdd
 
 	const handleSubmit = (values) => {
 		const data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			startDate: values?.startDate,
 			dueDate: values?.dueDate,
 			projectName: values?.projectName,
@@ -71,7 +71,7 @@ const AddProject = ({ projectAddModal, width = '40%', editProject, setProjectAdd
 		};
 
 		if (editProject) {
-			const url = `${SERVER_IP}project/${editProject._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}project/${editProject._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_PROJECT', url));
 		} else {
 			dispatch(postApi(data, 'ADD_PROJECT'));

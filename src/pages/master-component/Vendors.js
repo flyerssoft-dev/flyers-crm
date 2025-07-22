@@ -27,9 +27,9 @@ const Vendors = React.memo(() => {
 	const [editVendor, setEditAsset] = useState(null);
 
 	const getVendor = useCallback(() => {
-		let url = `${SERVER_IP}vendor?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}vendor?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_VENDORS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getVendor();
@@ -162,7 +162,7 @@ const Vendors = React.memo(() => {
 								cancelText="No"
 								placement="rightTop"
 								onConfirm={() => {
-									let url = `${SERVER_IP}vendor/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}vendor/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_VENDOR', url));
 								}}>
 								<CloseOutlined />

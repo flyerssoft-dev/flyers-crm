@@ -70,7 +70,7 @@ const UserListPresentational = ({
 																	putApi(
 																		{
 																			userId: userDetail?._id,
-																			orgId: globalRedux?.selectedOrganization?._id,
+																			orgId: globalRedux?.selectedOrganization?.id,
 																		},
 																		'DELETE_USER',
 																		url

@@ -21,7 +21,7 @@ const AddVoucher = ({ handleClose, editVoucher, setAccountBookModal }) => {
 	const addAccBook = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		dispatch(postApi(data, 'ADD_VOUCHER_HEAD'));
 	};
@@ -29,16 +29,16 @@ const AddVoucher = ({ handleClose, editVoucher, setAccountBookModal }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
-		let url = `${SERVER_IP}voucherhead/${editVoucher._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}voucherhead/${editVoucher._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_VOUCHER_HEAD', url));
 	};
 
 	const getProjects = useCallback(() => {
-		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_PROJECTS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getProjects();

@@ -27,9 +27,9 @@ const Vehicles = React.memo(() => {
 	const [editVehicle, setEditVehicles] = useState(null);
 
 	const getVehicles = useCallback(() => {
-		let url = `${SERVER_IP}vehicle/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}vehicle/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_VEHICLES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getVehicles();
@@ -106,7 +106,7 @@ const Vehicles = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}vehicle/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}vehicle/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_VEHICLE', url));
 								}}
 								placement="rightTop">

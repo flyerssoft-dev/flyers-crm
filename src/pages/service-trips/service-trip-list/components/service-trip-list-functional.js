@@ -27,9 +27,9 @@ const ServiceTripsListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getServiceTrips = useCallback(() => {
-		let url = `${SERVER_IP}servicetrip?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}servicetrip?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SERVICE_TRIPS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getServiceTrips();

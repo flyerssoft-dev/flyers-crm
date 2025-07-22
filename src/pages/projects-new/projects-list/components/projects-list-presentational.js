@@ -69,7 +69,7 @@ const ProjectListPresentational = ({
 															okText="Delete"
 															cancelText="No"
 															onConfirm={() => {
-																let url = `${SERVER_IP}project/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?._id}`;
+																let url = `${SERVER_IP}project/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?.id}`;
 																dispatch(deleteApi('DELETE_PROJECT', url));
 															}}>
 															<div style={{ textDecoration: 'underline', color: 'red', cursor: 'pointer' }}>Delete</div>

@@ -54,9 +54,9 @@ const Items = React.memo(() => {
 	}, [showAddItemModal]);
 
 	const getUnits = useCallback(() => {
-		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_UNITS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getUnits();

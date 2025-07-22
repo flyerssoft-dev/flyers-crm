@@ -28,9 +28,9 @@ const SubCategories = React.memo(() => {
 	const [editSubCategory, setEditSubCategories] = useState(null);
 
 	const getSubCategories = useCallback(() => {
-		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?._id}&categoryId=${selectedCategory}`;
+		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?.id}&categoryId=${selectedCategory}`;
 		dispatch(getApi('GET_SUB_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id, selectedCategory]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, selectedCategory]);
 
 	useEffect(() => {
 		selectedCategory && getSubCategories(selectedCategory);
@@ -109,7 +109,7 @@ const SubCategories = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}category/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}category/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_SUB_CATEGORY', url));
 								}}
 								placement="rightTop">

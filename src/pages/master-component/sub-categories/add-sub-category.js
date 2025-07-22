@@ -32,13 +32,13 @@ const AddSubCategory = ({ subCategoryAddModal, setSubCategoryAddModal, editSubCa
 	const handleSubmit = (values) => {
 		const data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		if (!editSubCategory) {
 			dispatch(postApi(data, 'ADD_SUB_CATEGORY'));
 		} else {
-			const url = `${SERVER_IP}subcategory/${editSubCategory._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}subcategory/${editSubCategory._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_SUB_CATEGORY', url));
 		}
 	};

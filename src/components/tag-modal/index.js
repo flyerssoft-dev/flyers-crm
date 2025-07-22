@@ -86,7 +86,7 @@ const TagModal = ({ value = null, onChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}tag/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}tag/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_TAG', url));
 	};
 
@@ -94,10 +94,10 @@ const TagModal = ({ value = null, onChange }) => {
 		let data = {
 			...values,
 			module: 'Project',
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}tag/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}tag/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_TAG', url));
 		} else {
 			dispatch(postApi(data, 'ADD_TAG'));
@@ -107,7 +107,7 @@ const TagModal = ({ value = null, onChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			tagName: values?.tagName || '',
 			remarks: values?.remarks || '',
 			categoryId: values?.categoryId?._id || '',
@@ -116,14 +116,14 @@ const TagModal = ({ value = null, onChange }) => {
 	};
 
 	const getCategories = useCallback(() => {
-		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getTags = useCallback(() => {
-		let url = `${SERVER_IP}tag/?orgId=${globalRedux?.selectedOrganization?._id}&module=Project`;
+		let url = `${SERVER_IP}tag/?orgId=${globalRedux?.selectedOrganization?.id}&module=Project`;
 		dispatch(getApi('GET_TAGS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getTags();

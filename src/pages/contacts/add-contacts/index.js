@@ -82,7 +82,7 @@ const AddContact = ({
 
   const handleSubmit = (values) => {
     let data = {
-      orgId: globalRedux?.selectedOrganization?._id,
+      orgId: globalRedux?.selectedOrganization?.id,
       type: CUSTOMER_TYPE[2] || "",
       category: values?.category,
       displayName: values?.displayName || "",
@@ -109,7 +109,7 @@ const AddContact = ({
     if (!editContact) {
       dispatch(postApi(data, "ADD_LEAD"));
     } else {
-      let url = `${SERVER_IP}customer/${editContact._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+      let url = `${SERVER_IP}customer/${editContact._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
       dispatch(putApi(data, "EDIT_LEAD", url));
     }
   };

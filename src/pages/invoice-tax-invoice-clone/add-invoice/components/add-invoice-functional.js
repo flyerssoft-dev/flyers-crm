@@ -124,13 +124,13 @@ const AddInvoiceFunctional = () => {
 				data: null,
 				loading: true,
 			});
-			const data = await sendGetRequest(null, `${SERVER_IP}invoice/${invoiceId}?orgId=${globalRedux?.selectedOrganization?._id}`);
+			const data = await sendGetRequest(null, `${SERVER_IP}invoice/${invoiceId}?orgId=${globalRedux?.selectedOrganization?.id}`);
 			await setInvoiceDetails({
 				data: data?.data,
 				loading: false,
 			});
 		},
-		[globalRedux?.selectedOrganization?._id]
+		[globalRedux?.selectedOrganization?.id]
 	);
 
 	useEffect(() => {
@@ -174,14 +174,14 @@ const AddInvoiceFunctional = () => {
 	}, [dispatch, globalRedux.selectedOrganization._id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getSalesPersons = useCallback(() => {
-		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SALES_PERSONS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getProjects = useCallback(() => {
 		let url = `${SERVER_IP}project?orgId=${globalRedux.selectedOrganization._id}`;
@@ -502,7 +502,7 @@ const AddInvoiceFunctional = () => {
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			projectId: values?.projectId || '',
 			salesPersonId: values?.salesPersonId || '',

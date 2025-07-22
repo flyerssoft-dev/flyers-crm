@@ -133,7 +133,7 @@ const AddCustomer = ({ customerAddModal, width = '60%', editCustomer, setCustome
 
 	const handleSubmit = (values) => {
 		const data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			type: CUSTOMER_TYPE[0] || '',
 			category: values?.category,
 			displayName: values?.displayName || '',
@@ -170,7 +170,7 @@ const AddCustomer = ({ customerAddModal, width = '60%', editCustomer, setCustome
 		};
 
 		if (editCustomer) {
-			const url = `${SERVER_IP}customer/${editCustomer._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}customer/${editCustomer._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_CUSTOMER', url));
 		} else {
 			dispatch(postApi(data, 'ADD_CUSTOMER'));

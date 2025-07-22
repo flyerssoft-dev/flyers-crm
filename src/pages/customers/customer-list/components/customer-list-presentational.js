@@ -100,7 +100,7 @@ const CustomerListPresentational = ({
 											okText="Delete"
 											cancelText="No"
 											onConfirm={() => {
-												const url = `${SERVER_IP}customer/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?._id}`;
+												const url = `${SERVER_IP}customer/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?.id}`;
 												dispatch(deleteApi('DELETE_CUSTOMER', url));
 											}}>
 											<div style={{ textDecoration: 'underline', color: 'red', cursor: 'pointer' }}>Delete</div>

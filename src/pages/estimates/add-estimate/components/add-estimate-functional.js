@@ -78,9 +78,9 @@ const AddEstimateFunctional = ({ state, setState, refreshList, editData }) => {
 	}, [dispatch, globalRedux.selectedOrganization._id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if (state?.visible) {
@@ -126,7 +126,7 @@ const AddEstimateFunctional = ({ state, setState, refreshList, editData }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			subTotal: parseFloat(totalAmount).toFixed(2),
 			roundOff: roundOff?.remain || 0,
@@ -158,7 +158,7 @@ const AddEstimateFunctional = ({ state, setState, refreshList, editData }) => {
 			});
 			const { data } = await sendGetRequest(
 				null,
-				`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?._id}&searchText=${searchString}`
+				`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?.id}&searchText=${searchString}`
 			);
 			setSearchList({
 				...searchList,

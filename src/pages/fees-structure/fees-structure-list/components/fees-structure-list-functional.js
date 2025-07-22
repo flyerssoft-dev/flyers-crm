@@ -68,7 +68,7 @@ const FeesStructureFunctional = React.memo(() => {
 			await setLoading(true);
 			const {
 				data: { data },
-			} = await sendGetRequest(null, `${SERVER_IP}student/fees?orgId=${globalRedux?.selectedOrganization?._id}&classId=${selectedClass}`);
+			} = await sendGetRequest(null, `${SERVER_IP}student/fees?orgId=${globalRedux?.selectedOrganization?.id}&classId=${selectedClass}`);
 			setTableData(data);
 			await setLoading(false);
 		}
@@ -90,7 +90,7 @@ const FeesStructureFunctional = React.memo(() => {
 
 	const handleEdit = (studentId, categoryId, feesAmount) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			batchId: globalRedux?.activeBatch,
 			categoryId,
 			feesAmount,

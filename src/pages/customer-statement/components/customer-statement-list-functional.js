@@ -27,14 +27,14 @@ const CustomerStatementListFunctional = React.memo(() => {
 	const customers = useSelector((state) => state?.customerRedux?.customers);
 
 	const getCustomers = useCallback(() => {
-		const url = `${SERVER_IP}customer?orgId=${globalState?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}customer?orgId=${globalState?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalState?.selectedOrganization?._id]);
+	}, [dispatch, globalState?.selectedOrganization?.id]);
 
 	const fetchCustomerStatements = useCallback(async () => {
 		if (filterOptions?.customerId) {
 			const string = objToQs({
-				orgId: globalState.selectedOrganization?._id,
+				orgId: globalState.selectedOrganization?.id,
 				startDate: filterOptions?.fromDate,
 				endDate: filterOptions?.toDate,
 			});
@@ -43,7 +43,7 @@ const CustomerStatementListFunctional = React.memo(() => {
 			setTableData(data?.statement || []);
 			setLoading(false);
 		}
-	}, [globalState.selectedOrganization?._id, filterOptions]);
+	}, [globalState.selectedOrganization?.id, filterOptions]);
 
 	useEffect(() => {
 		getCustomers();
@@ -122,7 +122,7 @@ const CustomerStatementListFunctional = React.memo(() => {
 		setPageSize(size);
 	};
 
-	const pdfPreviewURL = `${SERVER_IP}statement/preview/${filterOptions?.customerId}?orgId=${globalState?.selectedOrganization?._id}&startDate=${moment(filterOptions?.fromDate).format(DATE_FORMAT.YYYY_MM_DD)}&endDate=${moment(
+	const pdfPreviewURL = `${SERVER_IP}statement/preview/${filterOptions?.customerId}?orgId=${globalState?.selectedOrganization?.id}&startDate=${moment(filterOptions?.fromDate).format(DATE_FORMAT.YYYY_MM_DD)}&endDate=${moment(
 		filterOptions?.toDate
 	).format(DATE_FORMAT.YYYY_MM_DD)}`;
 

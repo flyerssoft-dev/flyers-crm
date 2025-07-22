@@ -29,9 +29,9 @@ const ExportInvoiceListFunctional = React.memo(() => {
 	const [isLoadingPdf, setIsLoadingPdf] = useState(false);
 
 	const getCustomers = useCallback(() => {
-		const url = `${SERVER_IP}customer?orgId=${globalState?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}customer?orgId=${globalState?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalState?.selectedOrganization?._id]);
+	}, [dispatch, globalState?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCustomers();
@@ -39,7 +39,7 @@ const ExportInvoiceListFunctional = React.memo(() => {
 
 	const generatePdfUrl = () => {
 		const { customerId, invoiceType, fromDate, toDate, copyType } = filterOptions;
-		const query = `orgId=${globalState?.selectedOrganization?._id}&customerId=${customerId}&invoiceType=${invoiceType}&fromDate=${moment(fromDate).format(DATE_FORMAT.YYYY_MM_DD)}&toDate=${moment(toDate).format(
+		const query = `orgId=${globalState?.selectedOrganization?.id}&customerId=${customerId}&invoiceType=${invoiceType}&fromDate=${moment(fromDate).format(DATE_FORMAT.YYYY_MM_DD)}&toDate=${moment(toDate).format(
 			DATE_FORMAT.YYYY_MM_DD
 		)}&copyType=${copyType}`;
 		return `${SERVER_IP}invoice/export?${query}`;

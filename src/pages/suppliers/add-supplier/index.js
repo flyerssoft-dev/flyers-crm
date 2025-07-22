@@ -62,7 +62,7 @@ const AddSupplier = ({ supplierAddModal, width = '40%', editSupplier, setSupplie
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			type: CUSTOMER_TYPE[1] || '',
 			// type: values?.type || '',
 			category: values?.category,
@@ -90,7 +90,7 @@ const AddSupplier = ({ supplierAddModal, width = '40%', editSupplier, setSupplie
 		if (!editSupplier) {
 			dispatch(postApi(data, 'ADD_CUSTOMER'));
 		} else {
-			let url = `${SERVER_IP}customer/${editSupplier._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}customer/${editSupplier._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_CUSTOMER', url));
 		}
 	};

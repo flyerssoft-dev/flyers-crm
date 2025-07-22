@@ -24,14 +24,14 @@ const AddUnit = ({ unitAddModal, width = '40%', editUnit, setUnitAddModal, refre
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			unitName: values?.unitName,
 		};
 
 		if (!editUnit) {
 			dispatch(postApi(data, 'ADD_UNIT'));
 		} else {
-			let url = `${SERVER_IP}unit/${editUnit._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}unit/${editUnit._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_UNIT', url));
 		}
 	};

@@ -29,9 +29,9 @@ const AccountBook = React.memo(() => {
 	const [editAccountBooks, setEditAccountBooks] = useState(null);
 
 	const getAccountBooks = useCallback(() => {
-		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ACCOUNT_BOOKS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getAccountBooks();
@@ -134,7 +134,7 @@ const AccountBook = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}accbook/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}accbook/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_ACC_BOOK', url));
 								}}
 								placement="rightTop">

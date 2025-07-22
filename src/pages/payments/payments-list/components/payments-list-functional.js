@@ -32,9 +32,9 @@ const PaymentsListFunctional = React.memo(() => {
 	// const dispatch = useDispatch();
 
 	// const getPayments = useCallback(() => {
-	// 	let url = `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?._id}&customerId=${selectedCustomer}`;
+	// 	let url = `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?.id}&customerId=${selectedCustomer}`;
 	// 	dispatch(getApi('GET_PAYMENTS', url));
-	// }, [dispatch, globalRedux?.selectedOrganization?._id, selectedCustomer]);
+	// }, [dispatch, globalRedux?.selectedOrganization?.id, selectedCustomer]);
 
 	// useEffect(() => {
 	// 	getPayments();
@@ -53,7 +53,7 @@ const PaymentsListFunctional = React.memo(() => {
 						data: { data },
 					} = await sendGetRequest(
 						null,
-						`${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?._id}&customerId=${selectedCustomer}`
+						`${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?.id}&customerId=${selectedCustomer}`
 					);
 					setTableData(data);
 				} catch (err) {
@@ -63,7 +63,7 @@ const PaymentsListFunctional = React.memo(() => {
 			}
 		}
 		fetchData();
-	}, [selectedCustomer, globalRedux?.selectedOrganization?._id]);
+	}, [selectedCustomer, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {

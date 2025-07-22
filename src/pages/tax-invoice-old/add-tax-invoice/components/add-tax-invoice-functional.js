@@ -46,7 +46,7 @@ const AddTaxInvoiceFunctional = ({ state, setState, refreshList, editData }) => 
 
 	const getPurchaseDetails = async () => {
 		try {
-			const url = `${SERVER_IP}purchase/${editData?._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}purchase/${editData?._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			const response = await sendGetRequest(null, url);
 			const newData = response?.data;
 			if (newData._id) {
@@ -144,9 +144,9 @@ const AddTaxInvoiceFunctional = ({ state, setState, refreshList, editData }) => 
 	}, [dispatch, globalRedux.selectedOrganization._id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if (state?.visible) {
@@ -179,7 +179,7 @@ const AddTaxInvoiceFunctional = ({ state, setState, refreshList, editData }) => 
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			billingDetails: {
 				addressLine1: selectedCustomer?.billingDetails?.[0]?.addressLine1,
@@ -575,7 +575,7 @@ const AddTaxInvoiceFunctional = ({ state, setState, refreshList, editData }) => 
 	];
 
 	const handleRemove = async (id, record) => {
-		const res = await validateItemStock(globalRedux?.selectedOrganization?._id, editData?._id, record?.purchaseItemId);
+		const res = await validateItemStock(globalRedux?.selectedOrganization?.id, editData?._id, record?.purchaseItemId);
 		if (res?.data) {
 			const data = tableData.filter((data) => data.id !== id);
 			setTableData([...data]);

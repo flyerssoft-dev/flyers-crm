@@ -88,7 +88,7 @@ const AddLoadInFunctional = ({ state, setState, refreshList, editData }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			driverMobile: values.driverMobile.toString(),
 			loadDetails: tableData
@@ -121,7 +121,7 @@ const AddLoadInFunctional = ({ state, setState, refreshList, editData }) => {
 			});
 			const { data } = await sendGetRequest(
 				null,
-				`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?._id}&searchText=${searchString}`
+				`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?.id}&searchText=${searchString}`
 			);
 			setSearchList({
 				...searchList,

@@ -28,11 +28,11 @@ const Login = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (!!loginRedux.accessToken && loginRedux.isLogged && !globalRedux?.selectedOrganization?._id) {
+		if (!!loginRedux.accessToken && loginRedux.isLogged && !globalRedux?.selectedOrganization?.id) {
 			dispatch(getApi('PROFILE_API'));
 			navigate('/organization');
 		}
-	}, [loginRedux.token, loginRedux.isLogged, globalRedux?.selectedOrganization?._id, navigate]);
+	}, [loginRedux.token, loginRedux.isLogged, globalRedux?.selectedOrganization?.id, navigate]);
 
 	const login = (data) => {
 		dispatch(postApi(data, 'LOGIN'));

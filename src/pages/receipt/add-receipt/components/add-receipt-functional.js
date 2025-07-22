@@ -67,7 +67,7 @@ const AddReceiptFunctional = ({ state, setState, refreshList }) => {
 	const getReceiptDetails = async () => {
 		try {
 			setInvoiceLoading(true)
-			const url = `${SERVER_IP}receipt/edit/${state?.selectedRow?._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}receipt/edit/${state?.selectedRow?._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			const response = await sendGetRequest(null, url);
 			const newData = response?.data;
 
@@ -138,9 +138,9 @@ const AddReceiptFunctional = ({ state, setState, refreshList }) => {
 	}, [selectedCustomer, form]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		state?.visible && getCustomers();
@@ -174,7 +174,7 @@ const AddReceiptFunctional = ({ state, setState, refreshList }) => {
 			setInvoiceLoading(true)
 			const finalTableData = dataSource || tableData;
 			// const endpoint = typeValue === 'Retail' ? 'retail' : 'invoice';
-			const url = `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?._id}&customerId=${customerId}`;
+			const url = `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?.id}&customerId=${customerId}`;
 			const response = await sendGetRequest(null, url);
 
 			const fetchedData = response?.data?.data || [];
@@ -221,7 +221,7 @@ const AddReceiptFunctional = ({ state, setState, refreshList }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			// totalAmount: parseFloat(roundOff.value).toFixed(2),
 			invoices: tableData

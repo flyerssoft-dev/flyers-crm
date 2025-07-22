@@ -26,9 +26,9 @@ const ItemGroups = React.memo(() => {
 	const [editItemGroups, setEditItemGroups] = useState(null);
 
 	const getItemGroups = useCallback(() => {
-		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ITEM_GROUPS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getItemGroups();
@@ -104,7 +104,7 @@ const ItemGroups = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}itemgroup/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}itemgroup/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_ITEM_GROUP', url));
 								}}
 								placement="rightTop">

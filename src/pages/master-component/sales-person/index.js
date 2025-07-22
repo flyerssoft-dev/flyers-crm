@@ -28,9 +28,9 @@ const SalesPerson = React.memo(() => {
 	const [editSalesPerson, setEditSalesPersons] = useState(null);
 
 	const getSalesPersons = useCallback(() => {
-		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SALES_PERSONS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getSalesPersons();
@@ -134,7 +134,7 @@ const SalesPerson = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}salesperson/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}salesperson/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_SALES_PERSON', url));
 								}}
 								placement="rightTop">

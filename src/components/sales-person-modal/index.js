@@ -75,17 +75,17 @@ const SalesPersonModal = ({ value = null, onChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}salesperson/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}salesperson/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_SALES_PERSON', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}salesperson/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}salesperson/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_SALES_PERSON', url));
 		} else {
 			dispatch(postApi(data, 'ADD_SALES_PERSON'));
@@ -95,7 +95,7 @@ const SalesPersonModal = ({ value = null, onChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			displayName: values?.displayName || '',
 			mobile: values?.mobile || '',
 		};
@@ -103,9 +103,9 @@ const SalesPersonModal = ({ value = null, onChange }) => {
 	};
 
 	const getSalesPersons = useCallback(() => {
-		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}salesperson/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SALES_PERSONS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if ((salesPersons || [])?.length > 0) {
