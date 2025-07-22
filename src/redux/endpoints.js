@@ -65,7 +65,7 @@ const API_ENDPOINTS = {
 	ADD_BATCH: `${SERVER_IP}batch`,
 	ADD_CLASS: `${SERVER_IP}class`,
 	ADD_BATCH_BALANCE: `${SERVER_IP}batchbalance`,
-	ME_API:`${SERVER_IP}employeeDetails/me`
+	PROFILE_API:`${SERVER_IP}employeeDetails/me`
 };
 
 export default API_ENDPOINTS;

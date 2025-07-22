@@ -240,7 +240,7 @@ function* getApiDataSuccess(response, apiName, extras) {
 		case 'GET_STATES':
 			yield put(setStates(response?.data || []));
 			break;
-		case 'ME_API':
+		case 'PROFILE_API':
 			yield put(loginUserDetails(response || {}));
 			break;
 		default:
