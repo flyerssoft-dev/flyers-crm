@@ -70,7 +70,7 @@ const ReceiptListPresentational = ({
 								</div>
 							</Col>
 							<Col>
-								<div style={{ textAlign: 'right' }}>
+								<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 									<Pagination
 										pageSizeOptions={intialPageSizeOptions}
 										defaultPageSize={initialPageSize}

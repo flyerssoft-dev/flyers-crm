@@ -126,7 +126,7 @@ const TicketListPresentational = ({
 									<Row>
 										<Col span={12}>{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}</Col>
 										<Col span={12}>
-											<div style={{ textAlign: 'right' }}>
+											<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 												<Pagination pageSizeOptions={intialPageSizeOptions} defaultPageSize={initialPageSize} showSizeChanger={true} total={filteredData?.length} onChange={handleTableChange} responsive />
 											</div>
 										</Col>

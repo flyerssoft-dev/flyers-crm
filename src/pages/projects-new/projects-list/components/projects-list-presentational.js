@@ -109,7 +109,7 @@ const ProjectListPresentational = ({
 									{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}
 								</Col>
 								<Col span={12}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

@@ -194,7 +194,7 @@ const Categories = React.memo(() => {
 									<div>{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}</div>
 								</Col>
 								<Col span={16}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination pageSizeOptions={intialPageSizeOptions} defaultPageSize={initialPageSize} showSizeChanger={true} total={filteredData?.length} onChange={handleTableChange} responsive />
 									</div>
 								</Col>

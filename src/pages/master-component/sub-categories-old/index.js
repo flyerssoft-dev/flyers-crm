@@ -201,7 +201,7 @@ const SubCategories = React.memo(() => {
 									</div>
 								</Col>
 								<Col span={16}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

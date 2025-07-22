@@ -23,7 +23,8 @@ export const renderTableFooter = (
 	<Row justify="space-between" gutter={[20, 20]}>
 		<Col span={selectedData ? 24 : 12}>{!!data.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${data.length} Data`}</Col>
 		<Col span={selectedData ? 24 : 12}>
-			<div style={{ textAlign: selectedData ? 'center' : 'right' }}>
+			{/* <div style={{ textAlign: selectedData ? 'center' : 'right' }}> */}
+			<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 				<Pagination
 					pageSizeOptions={intialPageSizeOptions}
 					defaultPageSize={initialPageSize}
