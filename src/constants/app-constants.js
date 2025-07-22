@@ -181,13 +181,13 @@ const MENUS = [
     name: "Accounts",
     icon: <FI.FiUsers />,
     route: "/accounts",
-    key: "3",
+    key: "4",
   },
   {
     name: "Customers",
     icon: <FI.FiUsers />,
     route: "/customers",
-    key: "4",
+    key: "5",
   },
   // {
   // 	name: 'Sales',

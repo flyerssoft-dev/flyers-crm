@@ -73,8 +73,8 @@ const PageHeader = () => {
 
 	const organizationMenu = {
 		items: globalRedux?.organizations?.map((org, index) => ({
-			key: org?._id || `org-${index}`,
-			label: org?.orgName,
+			key: org?.id || `org-${index}`,
+			label: org?.organization_name,
 			onClick: () => {
 				selectOrganization(org);
 			},
@@ -98,7 +98,7 @@ const PageHeader = () => {
 								border: 'none',
 							}}
 							onClick={(e) => e.preventDefault()}>
-							{globalRedux?.selectedOrganization?.orgName} <DownOutlined />
+							{globalRedux?.selectedOrganization?.organization_name} <DownOutlined />
 						</button>
 					</Dropdown>,
 					<div onClick={showDrawer} key="avatar">
