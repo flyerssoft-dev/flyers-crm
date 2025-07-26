@@ -19,7 +19,7 @@ const PageLayout = () => {
 	React.useEffect(() => {
 		if (globalRedux?.selectedOrganization?.id) {
 			// dispatch(getApi('GET_VOUCHERS_HEAD', `${SERVER_IP}voucherhead/?orgId=${globalRedux.selectedOrganization._id}`));
-			dispatch(getApi('GET_TAXES', `${SERVER_IP}tax`));
+			// dispatch(getApi('GET_TAXES', `${SERVER_IP}tax`));
 		}
 	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
