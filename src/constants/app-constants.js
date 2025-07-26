@@ -44,6 +44,7 @@ import ExportInvoiceList from 'pages/export-invoice';
 import ExportGstJsonList from 'pages/export-gst-json';
 import ContactList from 'pages/contacts/contact-list';
 import AccountList from "pages/accounts/accounts-list";
+import UsersAndControlsMenu from "pages/users-controls";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -176,6 +177,12 @@ const MENUS = [
 		icon: <FI.FiUsers />,
 		route: '/contacts',
 		key: '3',
+	},
+  {
+		name: 'Users and Controls',
+		icon: <FI.FiUsers />,
+		route: '/users-controls',
+		key: '6',
 	},
   {
     name: "Accounts",
@@ -531,6 +538,10 @@ const ROUTES = [
   {
 		route: '/contacts',
 		Component: ContactList,
+	},
+  {
+		route: '/users-controls',
+		Component: UsersAndControlsMenu,
 	},
 ];
 
