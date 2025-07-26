@@ -13,6 +13,7 @@ import {
 	Space,
 	Popconfirm,
 	message,
+	Modal,
 } from "antd";
 import {
 	PlusOutlined,
@@ -136,17 +137,31 @@ const ProfilesTab = () => {
 	};
 
 	const handleDeleteBasicPermission = (perm) => {
-		setBasicPermissionsList(basicPermissionsList.filter((p) => p !== perm));
-		const updatedSelections = { ...basicPermissionsSelections };
-		delete updatedSelections[perm];
-		setBasicPermissionsSelections(updatedSelections);
+		Modal.confirm({
+			title: "Are you sure you want to delete this permission?",
+			onOk: () => {
+				setBasicPermissionsList(basicPermissionsList.filter((p) => p !== perm));
+				const updatedSelections = { ...basicPermissionsSelections };
+				delete updatedSelections[perm];
+				setBasicPermissionsSelections(updatedSelections);
+				message.success("Permission deleted");
+			},
+		});
 	};
 
 	const handleDeleteAdvancedFeature = (feature) => {
-		setAdvancedFeaturesList(advancedFeaturesList.filter((f) => f !== feature));
-		const updatedToggles = { ...advancedFeaturesToggles };
-		delete updatedToggles[feature];
-		setAdvancedFeaturesToggles(updatedToggles);
+		Modal.confirm({
+			title: "Are you sure you want to delete this feature?",
+			onOk: () => {
+				setAdvancedFeaturesList(
+					advancedFeaturesList.filter((f) => f !== feature)
+				);
+				const updatedToggles = { ...advancedFeaturesToggles };
+				delete updatedToggles[feature];
+				setAdvancedFeaturesToggles(updatedToggles);
+				message.success("Feature deleted");
+			},
+		});
 	};
 
 	return (
