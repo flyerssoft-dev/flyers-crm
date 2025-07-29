@@ -56,7 +56,7 @@ const AddAccount = ({
     if (!editAccount) {
       dispatch(postApi(payload, "ADD_ACCOUNT_BOOK"));
     } else {
-      const url = `${SERVER_IP}account`;
+      const url = `${SERVER_IP}account/${editAccount?.id}`;
       dispatch(putApi(payload, "EDIT_ACCOUNT_BOOK", url));
     }
   };

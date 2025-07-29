@@ -41,6 +41,7 @@ const TableComponent = ({
 				pagination,
 				footer,
 				onChange,
+				 scroll: { x: 'max-content' },
 				...rest,
 			}}
 		/>

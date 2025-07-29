@@ -11,7 +11,7 @@ const sendPostRequest = async (data) => {
 		const response = await axios.post(data.url || API_ENDPOINTS[data.apiName], data.body, {
 			timeout: timeoutInMs,
 			headers: {
-				Authorization: store.getState().loginRedux.accessToken,
+				Authorization: `Bearer ${store.getState().loginRedux.accessToken}`,
 			},
 		});
 		return response;
@@ -47,7 +47,7 @@ const sendDeleteRequest = async (apiName, url, body) => {
 		const response = await axios.delete(url || API_ENDPOINTS[apiName], {
 			timeout: timeoutInMs,
 			headers: {
-				Authorization: store.getState().loginRedux.accessToken,
+				Authorization: `Bearer ${store.getState().loginRedux.accessToken}`,
 			},
 			data: body,
 		});
@@ -63,10 +63,10 @@ const sendDeleteRequest = async (apiName, url, body) => {
 
 const sendPutRequest = async (data) => {
 	try {
-		const response = await axios.put(data.url || API_ENDPOINTS[data.apiName], data.body, {
+		const response = await axios.patch(data.url || API_ENDPOINTS[data.apiName], data.body, {
 			timeout: timeoutInMs,
 			headers: {
-				Authorization: store.getState().loginRedux.accessToken,
+				Authorization: `Bearer ${store.getState().loginRedux.accessToken}`,
 			},
 		});
 		return response;
