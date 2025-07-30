@@ -14,14 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { putApi } from "redux/sagas/putApiSaga";
 import {
   API_STATUS,
-  CATEGORIES,
-  CUSTOMER_TYPE,
-  GST_TREATMENT,
-  INDUSTRY,
   LEAD_SOURCE,
-  LEAD_STATUS,
-  PLACE_OF_SUPPLY,
-  RATING,
 } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
@@ -36,45 +29,14 @@ const AddContact = ({
   refreshList,
   handleClose,
 }) => {
-  const [gstTreatment, setGstTreatment] = React.useState(
-    GST_TREATMENT[0]?.value
-  );
   const [form] = Form.useForm();
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
   const { TextArea } = Input;
 
-  const isConsumer = React.useMemo(
-    () => gstTreatment === GST_TREATMENT[0]?.value,
-    [gstTreatment]
-  );
-
-  useEffect(() => {
-    if (isConsumer) {
-      form.setFieldsValue({ gstin: "" });
-    }
-  }, [gstTreatment, form, isConsumer]);
-
   useEffect(() => {
     if (editContact) {
-      form.setFieldsValue({
-        category: editContact?.category || "Individual",
-        displayName: editContact?.displayName,
-        mobile: editContact?.mobile,
-        secondaryMobile: editContact?.secondaryMobile,
-        openingBalance: editContact?.openingBalance,
-        email: editContact?.email,
-        panCard: editContact?.panCard,
-        aadharCard: editContact?.aadharCard,
-        gstTreatment: editContact?.gstTreatment || GST_TREATMENT[0]?.value,
-        gstin: editContact?.gstin,
-        placeOfSupply: editContact?.placeOfSupply || PLACE_OF_SUPPLY[0],
-        addressLine1: editContact?.billingDetails?.[0]?.addressLine1,
-        addressLine2: editContact?.billingDetails?.[0]?.addressLine2,
-        city: editContact?.billingDetails?.[0]?.city,
-        pincode: editContact?.billingDetails?.[0]?.pincode,
-      });
-      setGstTreatment(editContact?.gstTreatment);
+      form.setFieldsValue(editContact);
     } else {
       form?.resetFields();
     }
@@ -82,44 +44,24 @@ const AddContact = ({
 
   const handleSubmit = (values) => {
     let data = {
-      orgId: globalRedux?.selectedOrganization?.id,
-      type: CUSTOMER_TYPE[2] || "",
-      category: values?.category,
-      displayName: values?.displayName || "",
-      email: values?.email || "",
-      mobile: values?.mobile || "",
-      secondaryMobile: values?.secondaryMobile || "",
-      panCard: values?.panCard || "",
-      aadharCard: values?.aadharCard || "",
-      gstTreatment: values?.gstTreatment || "",
-      gstin: values?.gstin || "",
-      openingBalance: values?.openingBalance || 0,
-      billingDetails: [
-        {
-          addressLine1: values?.addressLine1 || "",
-          addressLine2: values?.addressLine2 || "",
-          city: values?.city || "",
-          pincode: values?.pincode || "",
-        },
-      ],
-      placeOfSupply: values?.placeOfSupply || "",
-      remarks: values?.remarks || "",
+      ...values,
     };
 
     if (!editContact) {
-      dispatch(postApi(data, "ADD_LEAD"));
+      let url = `${SERVER_IP}contact`;
+      dispatch(postApi(data, "ADD_CONTACT", url));
     } else {
-      let url = `${SERVER_IP}customer/${editContact._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
-      dispatch(putApi(data, "EDIT_LEAD", url));
+      let url = `${SERVER_IP}contact/${editContact.id}`;
+      dispatch(putApi(data, "EDIT_CONTACT", url));
     }
   };
 
   useEffect(() => {
     if (
-      globalRedux.apiStatus.ADD_LEAD === "SUCCESS" ||
-      globalRedux.apiStatus.EDIT_LEAD === "SUCCESS"
+      globalRedux.apiStatus.ADD_CONTACT === "SUCCESS" ||
+      globalRedux.apiStatus.EDIT_CONTACT === "SUCCESS"
     ) {
-      dispatch(resetApiStatus(editContact ? "EDIT_LEAD" : "ADD_LEAD"));
+      dispatch(resetApiStatus(editContact ? "EDIT_CONTACT" : "ADD_CONTACT"));
       refreshList?.();
       handleClose?.();
       form?.resetFields();
@@ -127,8 +69,8 @@ const AddContact = ({
   }, [globalRedux.apiStatus]);
 
   const loading =
-    globalRedux.apiStatus.ADD_LEAD === API_STATUS.PENDING ||
-    globalRedux.apiStatus.EDIT_LEAD === API_STATUS.PENDING;
+    globalRedux.apiStatus.ADD_CONTACT === API_STATUS.PENDING ||
+    globalRedux.apiStatus.EDIT_CONTACT === API_STATUS.PENDING;
 
   return (
     <Drawer
@@ -146,11 +88,6 @@ const AddContact = ({
         name="add-Contact"
         layout="vertical"
         onFinish={handleSubmit}
-        initialValues={{
-          category: "Individual",
-          gstTreatment,
-          placeOfSupply: PLACE_OF_SUPPLY[0],
-        }}
       >
         <div style={{ fontWeight: "bold", marginBottom: 16 }}>
           Contact Information
@@ -158,18 +95,12 @@ const AddContact = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Contact Owner" name="contactowner">
-              <Select placeholder="Select Contact">
-                {CATEGORIES.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
+            <Form.Item label="Contact Owner" name="contact_owner_name">
+              <Input placeholder="Enter contact owner name" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Lead Source" name="leadsource">
+            <Form.Item label="Lead Source" name="lead_source">
               <Select placeholder="Select Lead Source">
                 {LEAD_SOURCE.map((type) => (
                   <Select.Option key={type} value={type}>
@@ -180,14 +111,14 @@ const AddContact = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="First Name" name="firstname">
+            <Form.Item label="First Name" name="first_name">
               <Input placeholder="Enter first name" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               label="Last Name"
-              name="lastname"
+              name="last_name"
               rules={[{ required: true, message: "Required!" }]}
             >
               <Input placeholder="Enter last name" />
@@ -197,12 +128,12 @@ const AddContact = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Account Name" name="acountname">
+            <Form.Item label="Account Name" name="account_name">
               <Input maxLength={10} placeholder="Enter account number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Vendor Name" name="vndorname">
+            <Form.Item label="Vendor Name" name="vendor_name">
               <Input placeholder="Enter vendor name" />
             </Form.Item>
           </Col>
@@ -233,12 +164,12 @@ const AddContact = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Other Phone" name="otherphone">
+            <Form.Item label="Other Phone" name="other_phone">
               <Input placeholder="Enter Phone number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Home Phone" name="homephone">
+            <Form.Item label="Home Phone" name="home_phone">
               <Input placeholder="Enter Phone number" />
             </Form.Item>
           </Col>
@@ -253,7 +184,7 @@ const AddContact = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Assistant" name="assitant">
+            <Form.Item label="Assistant" name="assistant">
               <Input />
             </Form.Item>
           </Col>
@@ -272,7 +203,7 @@ const AddContact = ({
           </Col>
           <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Skype ID" name="skypeid">
+            <Form.Item label="Skype ID" name="skype_id">
               <Input />
             </Form.Item>
           </Col>
@@ -288,9 +219,9 @@ const AddContact = ({
               <Input />
             </Form.Item>
           </Col>
-		  <Col span={12}></Col>
+          <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Reporting To" name="reportingto">
+            <Form.Item label="Reporting To" name="reporting_to">
               <Input />
             </Form.Item>
           </Col>
@@ -303,7 +234,7 @@ const AddContact = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Mailing Street" name="mailing_street">
-              <Input/>
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -316,7 +247,7 @@ const AddContact = ({
               <Input />
             </Form.Item>
           </Col>
-		   <Col span={12}>
+          <Col span={12}>
             <Form.Item label="Other City" name="other_city">
               <Input />
             </Form.Item>
@@ -326,29 +257,29 @@ const AddContact = ({
               <Input />
             </Form.Item>
           </Col>
-		  <Col span={12}>
+          <Col span={12}>
             <Form.Item label="Other State" name="other_state">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Mailing Zip Code" name="mailing_zipcode">
-              <Input  />
+            <Form.Item label="Mailing Zip Code" name="mailing_zip_code">
+              <Input />
             </Form.Item>
           </Col>
-		  <Col span={12}>
-            <Form.Item label="Other Zip Code" name="other_zipcode">
-              <Input  />
+          <Col span={12}>
+            <Form.Item label="Other Zip Code" name="other_zip_code">
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Mailing Country" name="mailing_country">
-              <Input  />
+              <Input />
             </Form.Item>
           </Col>
-		   <Col span={12}>
+          <Col span={12}>
             <Form.Item label="Other Country" name="other_country">
-              <Input  />
+              <Input />
             </Form.Item>
           </Col>
         </Row>

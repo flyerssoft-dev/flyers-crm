@@ -19,7 +19,6 @@ const LeadsListFunctional = React.memo(() => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [leadAddModal, setLeadAddModal] = useState(false);
   const [searchKey, setSearchKey] = useState("");
-  const [tableData, setTableData] = useState(leadsRedux.leads);
   const [editLead, setEditLead] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);

@@ -34,6 +34,7 @@ import { schedulerReducer } from './schedulers/schedulerReducer';
 import { compositesReducer } from './composites/compositeReducer';
 import { EstimatesReducer } from './estimates/estimatesReducer';
 import { taxInvoicesReducer } from './tax-invoices/taxInvoicesReducer';
+import { contactReducer } from './contact/contactReducer';
 
 const persistConfig = {
 	key: 'root',
@@ -75,6 +76,7 @@ const allReducers = combineReducers({
 	dailyTransactionRedux: dailyTransactionReducer,
 	ticketRedux: ticketReducer,
 	taxInvoicesRedux: taxInvoicesReducer,
+	contactRedux: contactReducer
 });
 
 export default persistReducer(persistConfig, allReducers);

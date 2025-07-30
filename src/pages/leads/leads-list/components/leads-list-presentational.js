@@ -33,8 +33,6 @@ const LeadsListPresentational = ({
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
 
-  console.log('selectedRowKeys',selectedRowKeys)
-
   const [columns, setColumns] = useState(column);
   const [isColumnModalOpen, setIsColumnModalOpen] = useState(false);
 
