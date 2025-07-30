@@ -546,7 +546,7 @@ const ROUTES = [
     route: "/contacts",
     Component: ContactList,
   },
-    {
+  {
     route: "/deals",
     Component: DealList,
   },
@@ -840,4 +840,16 @@ export const ACCOUNT_TYPE = [
   "Reseller",
   "Supplier",
   "Vendor",
+];
+
+export const DEAL_STAGE = [
+  "Qualification",
+  "Needs Analysis",
+  "Value Proposition",
+  "Identify Decision Makers",
+  "Proposal/Price Quote",
+  "Negotiation/Review",
+  "Closed Won",
+  "Closed Lost",
+  "Closed Lost to Competition",
 ];

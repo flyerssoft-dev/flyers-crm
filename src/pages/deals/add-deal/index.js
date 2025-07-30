@@ -16,6 +16,7 @@ import {
   API_STATUS,
   CATEGORIES,
   CUSTOMER_TYPE,
+  DEAL_STAGE,
   GST_TREATMENT,
   INDUSTRY,
   LEAD_SOURCE,
@@ -154,7 +155,7 @@ const AddDeal = ({
               rules={[{ required: true, message: "Required!" }]}
             >
               <Select>
-                {LEAD_SOURCE.map((type) => (
+                {DEAL_STAGE.map((type) => (
                   <Select.Option key={type} value={type}>
                     {type}
                   </Select.Option>
