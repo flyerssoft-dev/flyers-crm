@@ -387,8 +387,6 @@ const AccountsListFunctional = React.memo(() => {
     setEditAccount(null);
   };
 
-  console.log("refreshList", globalRedux);
-
   return (
     <>
       <Row justify="space-between" style={{ marginBottom: 16 }}>
