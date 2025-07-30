@@ -12,14 +12,12 @@ import {
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { putApi } from "redux/sagas/putApiSaga";
-import {
-  API_STATUS,
-  LEAD_SOURCE,
-} from "constants/app-constants";
+import { API_STATUS, LEAD_SOURCE } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { Checkbox } from "antd";
+import dayjs from "dayjs";
 
 const AddContact = ({
   contactAddModal,
@@ -36,7 +34,14 @@ const AddContact = ({
 
   useEffect(() => {
     if (editContact) {
-      form.setFieldsValue(editContact);
+      const patchedValues = {
+        ...editContact,
+        date_of_birth: dayjs(editContact.date_of_birth).isValid()
+          ? dayjs(editContact.date_of_birth)
+          : null,
+      };
+
+      form.setFieldsValue(patchedValues);
     } else {
       form?.resetFields();
     }
