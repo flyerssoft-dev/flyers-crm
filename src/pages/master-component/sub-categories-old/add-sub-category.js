@@ -16,7 +16,7 @@ const AddSubCategory = ({ handleClose, editSubCategory, setSubCategoryAddModal, 
 	const addSubCategories = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			categoryId: selectedCategory
 		};
 		dispatch(postApi(data, 'ADD_SUB_CATEGORY'));
@@ -26,9 +26,9 @@ const AddSubCategory = ({ handleClose, editSubCategory, setSubCategoryAddModal, 
 		let data = {
 			...values,
 			categoryId: selectedCategory,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
-		let url = `${SERVER_IP}subcategory/${editSubCategory._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}subcategory/${editSubCategory._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_SUB_CATEGORY', url));
 	};
 

@@ -38,7 +38,7 @@ const AddStudentFunctional = ({ state, setState, refreshList }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			currentBatchId: globalRedux?.activeBatch,
 			students: [{ ...values }],
 		};
@@ -48,7 +48,7 @@ const AddStudentFunctional = ({ state, setState, refreshList }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			currentBatchId: globalRedux?.activeBatch,
 		};
 		let url = `${SERVER_IP}student/${state?.selectedRow?._id}`;

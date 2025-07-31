@@ -40,7 +40,7 @@ const VoucherReport = () => {
 
 	const { accountBooks = [], users = [], subCategories = [], apiStatus, selectedOrganization } = globalRedux;
 
-	const orgId = selectedOrganization?._id;
+	const orgId = selectedOrganization?.id;
 
 	const fetchData = useCallback(
 		(key, endpoint) => {

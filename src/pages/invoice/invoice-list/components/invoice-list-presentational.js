@@ -93,7 +93,7 @@ const InvoiceListPresentational = ({
 											justifyContent: 'flex-end',
 											alignItems: 'center',
 										}}>
-										<div style={{ textAlign: 'right' }}>
+										<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 											<Pagination pageSizeOptions={intialPageSizeOptions} defaultPageSize={initialPageSize} showSizeChanger={true} total={filteredData?.length} onChange={handleTableChange} responsive />
 										</div>
 									</Col>

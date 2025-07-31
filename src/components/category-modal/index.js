@@ -89,17 +89,17 @@ const CategoryModal = ({ value = null, onChange, handleCategoryChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}category/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_CATEGORY', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}category/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}category/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_CATEGORY', url));
 		} else {
 			dispatch(postApi(data, 'ADD_CATEGORY'));
@@ -109,7 +109,7 @@ const CategoryModal = ({ value = null, onChange, handleCategoryChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			categoryName: values?.categoryName || '',
 			type: values?.type || '',
 			remarks: values?.remarks || '',
@@ -118,9 +118,9 @@ const CategoryModal = ({ value = null, onChange, handleCategoryChange }) => {
 	};
 
 	const getCategories = useCallback(() => {
-		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		categoryModal && getCategories();

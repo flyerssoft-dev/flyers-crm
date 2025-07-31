@@ -17,7 +17,7 @@ const AddVendor = ({ handleClose, editVendor, setVendorAddModal }) => {
 	const addVendor = (values) => {
 		const data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		dispatch(postApi(data, 'ADD_VENDOR'));
 	};
@@ -25,9 +25,9 @@ const AddVendor = ({ handleClose, editVendor, setVendorAddModal }) => {
 	const handleEdit = (values) => {
 		const data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
-		const url = `${SERVER_IP}vendor/${editVendor._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}vendor/${editVendor._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_VENDOR', url));
 	};
 

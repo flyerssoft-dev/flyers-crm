@@ -24,14 +24,14 @@ const AddSize = ({ sizeAddModal, width = '40%', editSize, setSizeAddModal, refre
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			sizeName: values?.sizeName,
 		};
 
 		if (!editSize) {
 			dispatch(postApi(data, 'ADD_UNIT'));
 		} else {
-			let url = `${SERVER_IP}size/${editSize._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}size/${editSize._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_UNIT', url));
 		}
 	};

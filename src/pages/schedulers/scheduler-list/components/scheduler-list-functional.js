@@ -27,14 +27,14 @@ const SchedulerListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getSchedulers = useCallback(() => {
-		let url = `${SERVER_IP}scheduler?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}scheduler?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SCHEDULERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCustomers();

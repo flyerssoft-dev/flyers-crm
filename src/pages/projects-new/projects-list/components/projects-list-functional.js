@@ -42,9 +42,9 @@ const ProjectListFunctional = React.memo(() => {
 	);
 
 	const getProjects = useCallback(() => {
-		let url = `${SERVER_IP}project?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_PROJECTS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getUsers = useCallback(() => {
 		let url = `${SERVER_IP}user?orgId=${globalRedux.selectedOrganization._id}`;

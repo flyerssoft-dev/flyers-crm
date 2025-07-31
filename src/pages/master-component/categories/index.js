@@ -27,9 +27,9 @@ const Categories = React.memo(() => {
 	const [editCategories, setEditCategories] = useState(null);
 
 	const getCategories = useCallback(() => {
-		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCategories();
@@ -112,7 +112,7 @@ const Categories = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}category/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}category/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_CATEGORY', url));
 								}}
 								placement="rightTop">
@@ -194,7 +194,7 @@ const Categories = React.memo(() => {
 									<div>{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}</div>
 								</Col>
 								<Col span={16}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination pageSizeOptions={intialPageSizeOptions} defaultPageSize={initialPageSize} showSizeChanger={true} total={filteredData?.length} onChange={handleTableChange} responsive />
 									</div>
 								</Col>

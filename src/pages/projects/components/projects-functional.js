@@ -21,9 +21,9 @@ const ProjectsFunctional = () => {
 	}, [dispatch, globalRedux.selectedOrganization._id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const handleProjectChange = useCallback((value) => {
 		setSelectedProject(value);
@@ -31,9 +31,9 @@ const ProjectsFunctional = () => {
 
 	const handleAddProject = useCallback(
 		(values) => {
-			dispatch(postApi({ ...values, status: 'active', orgId: globalRedux?.selectedOrganization?._id }, 'ADD_PROJECT'));
+			dispatch(postApi({ ...values, status: 'active', orgId: globalRedux?.selectedOrganization?.id }, 'ADD_PROJECT'));
 		},
-		[dispatch, globalRedux?.selectedOrganization?._id]
+		[dispatch, globalRedux?.selectedOrganization?.id]
 	);
 
 	useEffect(() => {

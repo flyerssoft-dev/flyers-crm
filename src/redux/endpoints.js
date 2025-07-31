@@ -37,7 +37,7 @@ const API_ENDPOINTS = {
 	ADD_INVOICE: `${SERVER_IP}invoice`,
 	ADD_TICKET: `${SERVER_IP}ticket`,
 	ADD_ORGANIZATION: `${SERVER_IP}organization`,
-	ADD_ACCOUNT_BOOK: `${SERVER_IP}accbook`,
+	ADD_ACCOUNT_BOOK: `${SERVER_IP}account`,
 	ADD_SALES_PERSON: `${SERVER_IP}salesperson`,
 
 	// Item Group APIS
@@ -65,7 +65,7 @@ const API_ENDPOINTS = {
 	ADD_BATCH: `${SERVER_IP}batch`,
 	ADD_CLASS: `${SERVER_IP}class`,
 	ADD_BATCH_BALANCE: `${SERVER_IP}batchbalance`,
-	ME_API:`${SERVER_IP}employeeDetails/me`
+	PROFILE_API:`${SERVER_IP}employeeDetails/me`
 };
 
 export default API_ENDPOINTS;

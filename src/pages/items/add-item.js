@@ -19,14 +19,14 @@ const AddItem = ({ selectedItem, showAddItemModal, showEditItemModal, setShowAdd
 	const dispatch = useDispatch();
 
 	const getUnits = useCallback(() => {
-		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_UNITS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getItemGroups = useCallback(() => {
-		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ITEM_GROUPS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if(showAddItemModal) {
@@ -111,9 +111,9 @@ const AddItem = ({ selectedItem, showAddItemModal, showEditItemModal, setShowAdd
 	};
 
 	const getCategories = useCallback(() => {
-		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCategories();

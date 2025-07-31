@@ -42,7 +42,7 @@ const AddressEditModal = ({ showAddressEditModal, setShowAddressEditModal, editC
 
 	const handleSubmit = (values) => {
 		const data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			billingDetails: [
 				{
 					addressLine1: values?.addressLine1 || '',
@@ -70,7 +70,7 @@ const AddressEditModal = ({ showAddressEditModal, setShowAddressEditModal, editC
 			});
 		}
 
-		const url = `${SERVER_IP}customer/${editCustomer._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}customer/${editCustomer._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_CUSTOMER', url));
 	};
 

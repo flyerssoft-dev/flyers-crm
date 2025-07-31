@@ -69,7 +69,7 @@ const AddSerialModal = ({ visible, handleInputChange, selectedData, setSelectedD
 
 	const handleRemove = async (value) => {
 		try {
-			const res = await validateStock(globalRedux?.selectedOrganization?._id, selectedData?.itemId, value);
+			const res = await validateStock(globalRedux?.selectedOrganization?.id, selectedData?.itemId, value);
 
 			if (!res?.data?.stockExist) {
 				const filteredData = tableData?.filter((data) => data?.serial !== value);
@@ -105,7 +105,7 @@ const AddSerialModal = ({ visible, handleInputChange, selectedData, setSelectedD
 
 		try {
 			setCheckingStock(true);
-			const res = await validateStock(globalRedux?.selectedOrganization?._id, selectedData?.itemId, values?.serial);
+			const res = await validateStock(globalRedux?.selectedOrganization?.id, selectedData?.itemId, values?.serial);
 			setCheckingStock(false);
 
 			const allowAdd = serialType === SERIAL_TYPE.ADD ? !res?.data?.stockExist : res?.data?.stockExist;
@@ -131,9 +131,9 @@ const AddSerialModal = ({ visible, handleInputChange, selectedData, setSelectedD
 	// console.log('🚀 ~ file: index.js:84 ~ handleSubmit ~ tableData:', tableData);
 
 	const getUnits = useCallback(() => {
-		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_UNITS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	// const handleModifySerials = () => {
 	// const newData = tableDataProps?.map((data) => ({

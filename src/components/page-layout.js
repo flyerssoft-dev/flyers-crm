@@ -17,11 +17,11 @@ const PageLayout = () => {
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
-		if (globalRedux?.selectedOrganization?._id) {
+		if (globalRedux?.selectedOrganization?.id) {
 			// dispatch(getApi('GET_VOUCHERS_HEAD', `${SERVER_IP}voucherhead/?orgId=${globalRedux.selectedOrganization._id}`));
-			dispatch(getApi('GET_TAXES', `${SERVER_IP}tax`));
+			// dispatch(getApi('GET_TAXES', `${SERVER_IP}tax`));
 		}
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	// useEffect(() => {
 	// 	setTimeout(() => {

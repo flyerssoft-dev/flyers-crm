@@ -27,9 +27,9 @@ const SupplierListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getSuppliers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}&type=${CUSTOMER_TYPE[1]}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}&type=${CUSTOMER_TYPE[1]}`;
 		dispatch(getApi('GET_SUPPLIERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getSuppliers();

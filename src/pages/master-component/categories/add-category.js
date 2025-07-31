@@ -29,13 +29,13 @@ const AddCategory = ({ categoryAddModal, setCategoryAddModal, editCategories, ha
 	const handleSubmit = (values) => {
 		const data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		if (!editCategories) {
 			dispatch(postApi(data, 'ADD_CATEGORY'));
 		} else {
-			const url = `${SERVER_IP}category/${editCategories._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}category/${editCategories._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_CATEGORY', url));
 		}
 	};

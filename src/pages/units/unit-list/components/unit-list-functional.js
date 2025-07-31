@@ -28,9 +28,9 @@ const UnitListFunctional = React.memo(() => {
 
 	const getUnits = useCallback(() => {
 		// let url = `${SERVER_IP}unit`;
-		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_UNITS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getUnits();
@@ -125,7 +125,7 @@ const UnitListFunctional = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}unit/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}unit/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_UNIT', url));
 								}}
 								placement="rightTop">

@@ -87,9 +87,9 @@ const AddInventoryFunctional = ({ state, setState, refreshList, editData }) => {
 	}, [getItems, state?.visible]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCustomers();
@@ -121,7 +121,7 @@ const AddInventoryFunctional = ({ state, setState, refreshList, editData }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			items: tableData
 				.filter((data) => data.itemId)
@@ -149,7 +149,7 @@ const AddInventoryFunctional = ({ state, setState, refreshList, editData }) => {
 	// 		});
 	// 		const { data } = await sendGetRequest(
 	// 			null,
-	// 			`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?._id}&searchText=${searchString}`
+	// 			`${SERVER_IP}student/search?orgId=${globalRedux?.selectedOrganization?.id}&searchText=${searchString}`
 	// 		);
 	// 		setSearchList({
 	// 			...searchList,

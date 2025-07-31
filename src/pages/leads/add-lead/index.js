@@ -56,59 +56,21 @@ const AddLead = ({
 
   useEffect(() => {
     if (editLead) {
-      form.setFieldsValue({
-        category: editLead?.category || "Individual",
-        displayName: editLead?.displayName,
-        mobile: editLead?.mobile,
-        secondaryMobile: editLead?.secondaryMobile,
-        openingBalance: editLead?.openingBalance,
-        email: editLead?.email,
-        panCard: editLead?.panCard,
-        aadharCard: editLead?.aadharCard,
-        gstTreatment: editLead?.gstTreatment || GST_TREATMENT[0]?.value,
-        gstin: editLead?.gstin,
-        placeOfSupply: editLead?.placeOfSupply || PLACE_OF_SUPPLY[0],
-        addressLine1: editLead?.billingDetails?.[0]?.addressLine1,
-        addressLine2: editLead?.billingDetails?.[0]?.addressLine2,
-        city: editLead?.billingDetails?.[0]?.city,
-        pincode: editLead?.billingDetails?.[0]?.pincode,
-      });
-      setGstTreatment(editLead?.gstTreatment);
+       form.setFieldsValue(editLead);
     } else {
       form?.resetFields();
     }
   }, [editLead, form]);
 
   const handleSubmit = (values) => {
-    let data = {
-      orgId: globalRedux?.selectedOrganization?._id,
-      type: CUSTOMER_TYPE[2] || "",
-      category: values?.category,
-      displayName: values?.displayName || "",
-      email: values?.email || "",
-      mobile: values?.mobile || "",
-      secondaryMobile: values?.secondaryMobile || "",
-      panCard: values?.panCard || "",
-      aadharCard: values?.aadharCard || "",
-      gstTreatment: values?.gstTreatment || "",
-      gstin: values?.gstin || "",
-      openingBalance: values?.openingBalance || 0,
-      billingDetails: [
-        {
-          addressLine1: values?.addressLine1 || "",
-          addressLine2: values?.addressLine2 || "",
-          city: values?.city || "",
-          pincode: values?.pincode || "",
-        },
-      ],
-      placeOfSupply: values?.placeOfSupply || "",
-      remarks: values?.remarks || "",
+    const data = {
+      ...values
     };
-
     if (!editLead) {
-      dispatch(postApi(data, "ADD_LEAD"));
+      let url= `${SERVER_IP}leads`
+      dispatch(postApi(data, "ADD_LEAD",url));
     } else {
-      let url = `${SERVER_IP}customer/${editLead._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+      let url = `${SERVER_IP}leads/${editLead.id}`;
       dispatch(putApi(data, "EDIT_LEAD", url));
     }
   };
@@ -157,34 +119,28 @@ const AddLead = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Lead Owner" name="leadowner">
-              <Select placeholder="Select lead">
-                {CATEGORIES.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
+            <Form.Item label="Lead Owner" name="lead_owner_name">
+              <Input placeholder="Enter owner name" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               label="Company Name"
-              name="companyname"
+              name="company_name"
               rules={[{ required: true, message: "Required!" }]}
             >
               <Input placeholder="Enter company name" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="First Name" name="firstname">
+            <Form.Item label="First Name" name="first_name">
               <Input placeholder="Enter first name" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               label="Last Name"
-              name="lastname"
+              name="last_name"
               rules={[{ required: true, message: "Required!" }]}
             >
               <Input placeholder="Enter last name" />
@@ -230,7 +186,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Lead Source" name="leadsource">
+            <Form.Item label="Lead Source" name="lead_source">
               <Select placeholder="Select Lead Source">
                 {LEAD_SOURCE.map((type) => (
                   <Select.Option key={type} value={type}>
@@ -241,7 +197,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Lead Status" name="leadstatus">
+            <Form.Item label="Lead Status" name="lead_status">
               <Select placeholder="Select Lead Status">
                 {LEAD_STATUS.map((type) => (
                   <Select.Option key={type} value={type}>
@@ -266,12 +222,12 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="No.of Employees" name="noofemployees">
+            <Form.Item label="No.of Employees" name="no_of_employees">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Annual Revenue" name="annualrevenue">
+            <Form.Item label="Annual Revenue" name="annual_revenue">
               <Input />
             </Form.Item>
           </Col>
@@ -292,7 +248,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Skype ID" name="skypeid">
+            <Form.Item label="Skype ID" name="skype_id">
               <Input />
             </Form.Item>
           </Col>
@@ -319,12 +275,12 @@ const AddLead = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Address Line 1" name="addressLine1">
+            <Form.Item label="Address Line 1" name="address_line_one">
               <Input placeholder="Address line 1" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Address Line 2" name="addressLine2">
+            <Form.Item label="Address Line 2" name="address_line_two">
               <Input placeholder="Address line 2" />
             </Form.Item>
           </Col>
@@ -339,7 +295,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Zip Code" name="zipcode">
+            <Form.Item label="Zip Code" name="zip_code">
               <Input placeholder="Zip code" />
             </Form.Item>
           </Col>

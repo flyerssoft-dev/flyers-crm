@@ -64,7 +64,7 @@ const SupplierListPresentational = ({
 															okText="Delete"
 															cancelText="No"
 															onConfirm={() => {
-																let url = `${SERVER_IP}supplier/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?._id}`;
+																let url = `${SERVER_IP}supplier/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?.id}`;
 																dispatch(deleteApi('DELETE_CUSTOMER', url));
 															}}>
 															<div style={{ textDecoration: 'underline', color: 'red', cursor: 'pointer' }}>Delete</div>
@@ -97,7 +97,7 @@ const SupplierListPresentational = ({
 									{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}
 								</Col>
 								<Col span={12}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

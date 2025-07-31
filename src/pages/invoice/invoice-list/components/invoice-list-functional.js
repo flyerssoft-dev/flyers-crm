@@ -34,8 +34,8 @@ const InvoiceListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getInvoices = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_INVOICES, `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?._id}&invoiceType=retail_invoice`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_INVOICES, `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?.id}&invoiceType=retail_invoice`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (!searchKey) return tableData;

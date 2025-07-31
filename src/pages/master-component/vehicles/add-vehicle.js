@@ -24,14 +24,14 @@ const AddVehicle = ({ vehicleAddModal, width = '40%', editVehicle, setVehicleAdd
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			regNumber: values?.regNumber,
 		};
 
 		if (!editVehicle) {
 			dispatch(postApi(data, 'ADD_VEHICLE'));
 		} else {
-			let url = `${SERVER_IP}vehicle/${editVehicle._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}vehicle/${editVehicle._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_VEHICLE', url));
 		}
 	};

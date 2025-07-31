@@ -90,7 +90,7 @@ const UserListFunctional = React.memo(() => {
 
 	const handleModifyRole = async (rowData, value) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			userId: loginUser?.id,
 			accessLevel: value || '',
 			staffId: rowData?._id,

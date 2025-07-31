@@ -54,6 +54,8 @@ import { setEstimates } from 'redux/reducers/estimates/estimatesActions';
 import { setTaxInvoices } from 'redux/reducers/tax-invoices/taxInvoicesAction';
 import { setReceipts } from 'redux/reducers/receipts/receiptsActions';
 import { loginUserDetails } from 'redux/reducers/login/loginActions';
+import { setContact } from 'redux/reducers/contact/contactAction';
+import { setDeals } from 'redux/reducers/deals/dealAction';
 
 function getApi(apiName, url, extras) {
 	return {
@@ -131,6 +133,12 @@ function* getApiDataSuccess(response, apiName, extras) {
 			break;
 		case 'GET_LEADS':
 			yield put(setLeads(response?.data || []));
+			break;
+		case 'GET_CONTACT':
+			yield put(setContact(response?.data || []));
+			break;
+		case 'GET_DEALS':
+			yield put(setDeals(response?.data || []));
 			break;
 		case 'GET_ITEMS':
 			yield put(setItems(response?.data || []));
@@ -240,7 +248,7 @@ function* getApiDataSuccess(response, apiName, extras) {
 		case 'GET_STATES':
 			yield put(setStates(response?.data || []));
 			break;
-		case 'ME_API':
+		case 'PROFILE_API':
 			yield put(loginUserDetails(response || {}));
 			break;
 		default:

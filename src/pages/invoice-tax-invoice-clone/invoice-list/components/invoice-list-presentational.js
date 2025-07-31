@@ -52,7 +52,7 @@ const InvoiceListPresentational = ({
 												okText="Delete"
 												cancelText="No"
 												onConfirm={() => {
-													let url = `${SERVER_IP}retail/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?._id}`;
+													let url = `${SERVER_IP}retail/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?.id}`;
 													dispatch(deleteApi('DELETE_INVOICE', url));
 												}}>
 												<div style={{ textDecoration: 'underline', color: 'red', cursor: 'pointer' }}>Delete</div>
@@ -150,7 +150,7 @@ const InvoiceListPresentational = ({
 									// 					`Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}
 									// 			</Col>
 									// 			<Col md={8}>
-									// 				<div style={{ textAlign: 'right' }}>
+									// 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 									// 					<Pagination
 									// 						pageSizeOptions={intialPageSizeOptions}
 									// 						defaultPageSize={initialPageSize}

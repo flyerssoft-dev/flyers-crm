@@ -28,9 +28,9 @@ const Voucher = React.memo((props) => {
 	const [editVoucher, setEditVoucher] = useState(null);
 
 	const getVouchers = useCallback(() => {
-		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_VOUCHERS_HEAD', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	// const handleDrawer = (rowData) => {
 	// 	setEditVoucher(rowData);
@@ -156,7 +156,7 @@ const Voucher = React.memo((props) => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}voucherhead/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}voucherhead/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_VOUCHER', url));
 								}}
 								placement="rightTop">
@@ -236,7 +236,7 @@ const Voucher = React.memo((props) => {
 								</Col>
 
 								<Col md={8}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

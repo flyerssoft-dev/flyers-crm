@@ -33,14 +33,14 @@ const AddScheduler = ({ schedulerAddModal, width = '40%', editScheduler, setSche
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 		};
 
 		if (!editScheduler) {
 			dispatch(postApi(data, 'ADD_SCHEDULER'));
 		} else {
-			let url = `${SERVER_IP}scheduler/${editScheduler._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}scheduler/${editScheduler._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_SCHEDULER', url));
 		}
 	};

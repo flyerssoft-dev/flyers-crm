@@ -38,8 +38,8 @@ const TasksListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getTasks = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_TASKS, `${SERVER_IP}task?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_TASKS, `${SERVER_IP}task?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {
@@ -164,7 +164,7 @@ const TasksListFunctional = React.memo(() => {
 							cancelText="No"
 							placement="rightTop"
 							onConfirm={() => {
-								let url = `${SERVER_IP}task/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+								let url = `${SERVER_IP}task/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 								dispatch(deleteApi('DELETE_ORDER', url));
 							}}>
 							<Col className="delete_icon">

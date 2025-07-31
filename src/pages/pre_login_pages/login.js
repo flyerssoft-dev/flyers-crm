@@ -27,23 +27,28 @@ const Login = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-
 	useEffect(() => {
-		if (!!loginRedux.accessToken && loginRedux.isLogged && !globalRedux?.selectedOrganization?._id) {
-			dispatch(getApi('ME_API'))
+		if (!!loginRedux.accessToken && loginRedux.isLogged && !globalRedux?.selectedOrganization?.id) {
+			dispatch(getApi('PROFILE_API'));
 			navigate('/organization');
 		}
-	}, [loginRedux.token, loginRedux.isLogged, globalRedux?.selectedOrganization?._id, navigate]);
+	}, [loginRedux.token, loginRedux.isLogged, globalRedux?.selectedOrganization?.id, navigate]);
 
-	const login = (data) =>{ 
-		dispatch(postApi(data, 'LOGIN'))
+	const login = (data) => {
+		dispatch(postApi(data, 'LOGIN'));
 	};
 
 	return (
 		<motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="login-container">
 			<Row style={{ height: '100vh', width: '100%' }}>
 				<Col xl={14} md={12} sm={0} xs={0} className="login-slider">
-					<Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 2500 }} loop className="login-swiper" pagination={{ enabled: false }}>
+					<Swiper
+						modules={[Autoplay, Pagination]}
+						autoplay={{ delay: 2500 }}
+						loop
+						className="login-swiper"
+						pagination={{ clickable: true }}
+					>
 						<SwiperSlide>
 							<div className="slider-content">
 								<img src="https://accounts.zoho.com/v2/components/images/passwordless_illustration2x.png" alt="Slide 1" />
@@ -65,25 +70,27 @@ const Login = () => {
 					<Row justify="center" align="middle" style={{ height: '100%', width: '80%' }}>
 						<Col span={24}>
 							<LogoComponent style={{ fontSize: 30 }} />
-							<Title level={2} style={{ marginTop: 20 }}>
+							<Title level={2} style={{ marginTop: 20, fontWeight: 700, fontSize: '28px' }}>
 								Welcome <span style={{ color: '#006fd9' }}>back!</span>
 							</Title>
 							<Text type="secondary">Enter your details to continue.</Text>
 
-							<Tabs defaultActiveKey="LOGIN_WITH_PASSWORD" style={{ marginTop: 30 }}>
-								{/* <TabPane tab="Login with OTP" key="LOGIN_WITH_OTP">
-									<LoginWithOTP />
-								</TabPane> */}
+							<Tabs defaultActiveKey="LOGIN_WITH_PASSWORD" centered style={{ marginTop: 30 }}>
 								<TabPane tab="Login with Password" key="LOGIN_WITH_PASSWORD">
 									<Form form={form} layout="vertical" onFinish={login} {...FormProps}>
 										<Form.Item label="Email or Employee ID" name="username" rules={[{ required: true, message: 'Please enter your Mobile' }]}>
-											<Input placeholder="Email Office or Personal Email/Employee ID"/>
+											<Input placeholder="Email Office or Personal Email/Employee ID" />
 										</Form.Item>
 										<Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your Password' }]}>
 											<Input.Password placeholder="Password" visibilityToggle />
 										</Form.Item>
 										<Form.Item>
-											<Button type="primary" htmlType="submit" loading={globalRedux.apiStatus.LOGIN === 'PENDING'} style={{ width: '100%', fontWeight: 'bold' }}>
+											<Button
+												type="primary"
+												htmlType="submit"
+												loading={globalRedux.apiStatus.LOGIN === 'PENDING'}
+												style={{ width: '100%', fontWeight: 'bold' }}
+											>
 												LOGIN
 											</Button>
 										</Form.Item>

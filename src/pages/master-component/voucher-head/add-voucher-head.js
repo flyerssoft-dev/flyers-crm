@@ -33,13 +33,13 @@ const AddVoucherHead = ({ voucherHeadModal, setVoucherHeadModal, editVoucherHead
 		const payload = {
 			...values,
 			openingDate: values?.openingDate?.format('YYYY-MM-DD'),
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		if (!editVoucherHead) {
 			dispatch(postApi(payload, 'ADD_VOUCHER_HEAD'));
 		} else {
-			const url = `${SERVER_IP}voucherhead/${editVoucherHead._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}voucherhead/${editVoucherHead._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(payload, 'EDIT_VOUCHER_HEAD', url));
 		}
 	};

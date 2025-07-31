@@ -143,7 +143,7 @@ const AddUser = ({ userAddModal, width = '40%', editUser, setUserAddModal, refre
 
 	const handleSubmit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			userId: loginUser?.id,
 			accessLevel: values?.accessLevel || USER_TYPE[1],
 			staffId: userDetailsFromAPI?._id || values?.registeredUserId,
@@ -152,7 +152,7 @@ const AddUser = ({ userAddModal, width = '40%', editUser, setUserAddModal, refre
 		if (!editUser) {
 			dispatch(postApi(data, 'ADD_USER'));
 		} else {
-			let url = `${SERVER_IP}user/${editUser._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}user/${editUser._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_CUSTOMER', url));
 		}
 	};

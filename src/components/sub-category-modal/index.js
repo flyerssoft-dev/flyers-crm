@@ -93,17 +93,17 @@ const SubCategoryModal = ({ value = null, onChange, categoryIdValue }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}subcategory/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}subcategory/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_CATEGORY', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}subcategory/${editData?._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}subcategory/${editData?._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_SUB_CATEGORY', url));
 		} else {
 			dispatch(postApi(data, 'ADD_SUB_CATEGORY'));
@@ -113,7 +113,7 @@ const SubCategoryModal = ({ value = null, onChange, categoryIdValue }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			subcategoryName: values?.subcategoryName || '',
 			remarks: values?.remarks || '',
 		};
@@ -121,14 +121,14 @@ const SubCategoryModal = ({ value = null, onChange, categoryIdValue }) => {
 	};
 
 	const getSubCategories = useCallback(() => {
-		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?._id}&categoryId=${categoryIdValue}`;
+		let url = `${SERVER_IP}subcategory/?orgId=${globalRedux?.selectedOrganization?.id}&categoryId=${categoryIdValue}`;
 		dispatch(getApi('GET_SUB_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id, categoryIdValue]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, categoryIdValue]);
 
 	const getCategories = useCallback(() => {
-		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}category/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CATEGORIES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		categoryIdValue && subCategoryModal && getSubCategories();

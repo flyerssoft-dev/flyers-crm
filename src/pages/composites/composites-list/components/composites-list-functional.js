@@ -36,8 +36,8 @@ const CompositeListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getComposites = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_COMPOSITES, `${SERVER_IP}composite?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_COMPOSITES, `${SERVER_IP}composite?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {
@@ -141,7 +141,7 @@ const CompositeListFunctional = React.memo(() => {
 							cancelText="No"
 							placement="rightTop"
 							onConfirm={() => {
-								let url = `${SERVER_IP}composite/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+								let url = `${SERVER_IP}composite/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 								dispatch(deleteApi('DELETE_COMPOSITE', url));
 							}}>
 							<Col className="delete_icon">

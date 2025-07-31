@@ -14,36 +14,38 @@ import LoadIn from "pages/load-in/load-in-list";
 import VoucherList from "pages/voucher/voucher-list";
 import TicketList from "pages/tickets/ticket-list";
 // import Projects from 'pages/projects';
-import CustomerList from 'pages/customers/customer-list';
-import UserList from 'pages/users/user-list';
-import SuppliersList from 'pages/suppliers/suppliers-list';
-import InvoiceList from 'pages/invoice/invoice-list';
-import AddInvoice from 'pages/invoice/add-invoice';
-import ServiceTripList from 'pages/service-trips/service-trip-list';
-import OrdersList from 'pages/orders/orders-list';
-import PaymentsList from 'pages/payments/payments-list';
-import TasksList from 'pages/tasks/tasks-list';
-import InventoryList from 'pages/inventory/inventory-list';
-import LeadsList from 'pages/leads/leads-list';
-import Settings from 'pages/settings';
-import ProfilePage from 'pages/profile/profile-page';
-import PurchasesList from 'pages/purchases/purchases-list';
-import Preferences from 'pages/preferences';
-import StocksList from 'pages/stocks/stocks-list';
-import SchedulerList from 'pages/schedulers/scheduler-list';
-import CompositeList from 'pages/composites/composites-list';
-import ProjectsList from 'pages/projects-new/projects-list';
-import ProjectDetail from 'pages/projects-new/project-details';
-import EstimatesList from 'pages/estimates/estimates-list';
-import TaxInvoiceList from 'pages/tax-invoice/tax-invoice-list';
-import ReceiptList from 'pages/receipt/receipt-list';
-import AddTaxInvoice from 'pages/tax-invoice/add-tax-invoice';
-import CustomerStatementList from 'pages/customer-statement';
-import FaqExtractor from 'pages/FaqExtractor';
-import ExportInvoiceList from 'pages/export-invoice';
-import ExportGstJsonList from 'pages/export-gst-json';
-import ContactList from 'pages/contacts/contact-list';
+import CustomerList from "pages/customers/customer-list";
+import UserList from "pages/users/user-list";
+import SuppliersList from "pages/suppliers/suppliers-list";
+import InvoiceList from "pages/invoice/invoice-list";
+import AddInvoice from "pages/invoice/add-invoice";
+import ServiceTripList from "pages/service-trips/service-trip-list";
+import OrdersList from "pages/orders/orders-list";
+import PaymentsList from "pages/payments/payments-list";
+import TasksList from "pages/tasks/tasks-list";
+import InventoryList from "pages/inventory/inventory-list";
+import LeadsList from "pages/leads/leads-list";
+import Settings from "pages/settings";
+import ProfilePage from "pages/profile/profile-page";
+import PurchasesList from "pages/purchases/purchases-list";
+import Preferences from "pages/preferences";
+import StocksList from "pages/stocks/stocks-list";
+import SchedulerList from "pages/schedulers/scheduler-list";
+import CompositeList from "pages/composites/composites-list";
+import ProjectsList from "pages/projects-new/projects-list";
+import ProjectDetail from "pages/projects-new/project-details";
+import EstimatesList from "pages/estimates/estimates-list";
+import TaxInvoiceList from "pages/tax-invoice/tax-invoice-list";
+import ReceiptList from "pages/receipt/receipt-list";
+import AddTaxInvoice from "pages/tax-invoice/add-tax-invoice";
+import CustomerStatementList from "pages/customer-statement";
+import FaqExtractor from "pages/FaqExtractor";
+import ExportInvoiceList from "pages/export-invoice";
+import ExportGstJsonList from "pages/export-gst-json";
+import ContactList from "pages/contacts/contact-list";
 import AccountList from "pages/accounts/accounts-list";
+import UsersAndControlsMenu from "pages/users-controls";
+import DealList from "pages/deals/deals-list";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -172,23 +174,35 @@ const MENUS = [
     key: "2",
   },
   {
-		name: 'Contacts',
-		icon: <FI.FiUsers />,
-		route: '/contacts',
-		key: '3',
-	},
+    name: "Contacts",
+    icon: <FI.FiUsers />,
+    route: "/contacts",
+    key: "3",
+  },
   {
     name: "Accounts",
     icon: <FI.FiUsers />,
     route: "/accounts",
-    key: "3",
-  },
-  {
-    name: "Customers",
-    icon: <FI.FiUsers />,
-    route: "/customers",
     key: "4",
   },
+  {
+    name: "Deals",
+    icon: <FI.FiUsers />,
+    route: "/deals",
+    key: "5",
+  },
+  // {
+  //   name: "Customers",
+  //   icon: <FI.FiUsers />,
+  //   route: "/customers",
+  //   key: "5",
+  // },
+  //  {
+  // 	name: 'Users and Controls',
+  // 	icon: <FI.FiUsers />,
+  // 	route: '/users-controls',
+  // 	key: '6',
+  // },
   // {
   // 	name: 'Sales',
   // 	icon: <FI.FiUsers />,
@@ -529,9 +543,17 @@ const ROUTES = [
     Component: AccountList,
   },
   {
-		route: '/contacts',
-		Component: ContactList,
-	},
+    route: "/contacts",
+    Component: ContactList,
+  },
+  {
+    route: "/deals",
+    Component: DealList,
+  },
+  {
+    route: "/users-controls",
+    Component: UsersAndControlsMenu,
+  },
 ];
 
 export { ACTIONS, MENUS, ROUTES, API_STATUS, SIDE_MENUS };
@@ -818,4 +840,16 @@ export const ACCOUNT_TYPE = [
   "Reseller",
   "Supplier",
   "Vendor",
+];
+
+export const DEAL_STAGE = [
+  "Qualification",
+  "Needs Analysis",
+  "Value Proposition",
+  "Identify Decision Makers",
+  "Proposal/Price Quote",
+  "Negotiation/Review",
+  "Closed Won",
+  "Closed Lost",
+  "Closed Lost to Competition",
 ];

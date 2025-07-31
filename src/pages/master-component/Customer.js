@@ -32,9 +32,9 @@ const Customer = React.memo((props) => {
 	const [pageSize, setPageSize] = useState(initialPageSize);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCustomers();
@@ -243,7 +243,7 @@ const Customer = React.memo((props) => {
 															okText="Delete"
 															cancelText="No"
 															onConfirm={() => {
-																let url = `${SERVER_IP}customer/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?._id}`;
+																let url = `${SERVER_IP}customer/${selectedRowKeys?.[0]}?orgId=${globalRedux?.selectedOrganization?.id}`;
 																dispatch(deleteApi('DELETE_CUSTOMER', url));
 															}}>
 															<div style={{ textDecoration: 'underline', color: 'red', cursor: 'pointer' }}>Delete</div>
@@ -276,7 +276,7 @@ const Customer = React.memo((props) => {
 									{!!filteredData?.length && `Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}
 								</Col>
 								<Col span={12}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

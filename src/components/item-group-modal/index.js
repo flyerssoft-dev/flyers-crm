@@ -75,17 +75,17 @@ const ItemGroupModal = ({ value = null, onChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}itemgroup/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}itemgroup/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_ITEM_GROUP', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}itemgroup/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}itemgroup/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_ITEM_GROUP', url));
 		} else {
 			dispatch(postApi(data, 'ADD_ITEM_GROUP'));
@@ -95,7 +95,7 @@ const ItemGroupModal = ({ value = null, onChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			itemGroupName: values?.itemGroupName || '',
 			remarks: values?.remarks || ''
 		};
@@ -103,9 +103,9 @@ const ItemGroupModal = ({ value = null, onChange }) => {
 	};
 
 	const getItemGroups = useCallback(() => {
-		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}itemgroup/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ITEM_GROUPS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getItemGroups();
