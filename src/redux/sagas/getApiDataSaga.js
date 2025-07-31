@@ -54,7 +54,7 @@ import { setEstimates } from 'redux/reducers/estimates/estimatesActions';
 import { setTaxInvoices } from 'redux/reducers/tax-invoices/taxInvoicesAction';
 import { setReceipts } from 'redux/reducers/receipts/receiptsActions';
 import { loginUserDetails } from 'redux/reducers/login/loginActions';
-import { setContact } from 'redux/reducers/contact/contactAction';
+import { setContact, setContactById } from 'redux/reducers/contact/contactAction';
 import { setDeals } from 'redux/reducers/deals/dealAction';
 
 function getApi(apiName, url, extras) {
@@ -139,6 +139,9 @@ function* getApiDataSuccess(response, apiName, extras) {
 			break;
 		case 'GET_CONTACT':
 			yield put(setContact(response?.data || []));
+			break;
+		case 'GET_CONTACT_BY_ID':
+			yield put(setContactById(response?.data || []));
 			break;
 		case 'GET_DEALS':
 			yield put(setDeals(response?.data || []));

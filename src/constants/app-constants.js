@@ -47,6 +47,7 @@ import AccountList from "pages/accounts/accounts-list";
 import UsersAndControlsMenu from "pages/users-controls";
 import DealList from "pages/deals/deals-list";
 import LeadDetails from "pages/leads/lead-details";
+import ContactDetails from "pages/contacts/contact-details";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -558,7 +559,10 @@ const ROUTES = [
   {
     route: "leads/:leadsId",
     Component: LeadDetails,
-  },
+  },{
+    route: "contact/:contactId",
+    Component:ContactDetails
+  }
 ];
 
 export { ACTIONS, MENUS, ROUTES, API_STATUS, SIDE_MENUS };

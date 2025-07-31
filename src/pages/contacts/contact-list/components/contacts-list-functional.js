@@ -9,6 +9,7 @@ import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { generatePagination } from "helpers";
 import { API_STATUS, CUSTOMER_TYPE } from "constants/app-constants";
 import ContactsListPresentational from "./contacts-list-presentational";
+import { useNavigate } from "react-router-dom";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -24,6 +25,8 @@ const ContactListFunctional = React.memo(() => {
   const [pageSize, setPageSize] = useState(initialPageSize);
 
   const dispatch = useDispatch();
+
+  const navigate= useNavigate()
 
   const getContacts = useCallback(() => {
     let url = `${SERVER_IP}contact?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
@@ -375,6 +378,7 @@ const ContactListFunctional = React.memo(() => {
         refreshList: getContacts,
         editContact,
         handleClose,
+        navigate
       }}
     />
   );

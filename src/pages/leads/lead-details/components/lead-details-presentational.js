@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Row, Col, Tour, Tooltip, Checkbox } from "antd";
 import "../styles.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SERVER_IP } from "assets/Config";
 import { getApi } from "redux/sagas/getApiDataSaga";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ const LeadPresentational = () => {
   const leadsRedux = useSelector((state) => state.leadsRedux);
 
   const dispatch = useDispatch();
+  const navigate= useNavigate()
 
   useEffect(() => {
     if (leadsId) {
@@ -62,7 +63,13 @@ const LeadPresentational = () => {
     <>
       <Col className="lead_container">
         <div className="lead-details">
-          <div className="lead-details__header">Lead Details</div>
+       <div
+            className="lead-details__header"
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <div onClick={() => navigate(-1)} style={{ cursor:'pointer'}}>←</div>
+            <div>Lead Details</div>
+          </div>
 
           <div className="lead-details__content">
             {/* Lead Information Section */}
