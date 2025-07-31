@@ -29,7 +29,8 @@ import {
 	setTaxes,
 	setSizes,
 	setSubCategories,
-	setItemGroups
+	setItemGroups,
+	setAccountBooksById
 } from '../reducers/globals/globalActions';
 import { setItems } from '../reducers/items/action';
 import { setProjectDetails, setProjects, setSelectedProject } from '../reducers/projects/action';
@@ -175,6 +176,9 @@ function* getApiDataSuccess(response, apiName, extras) {
 			break;
 		case ACTIONS.GET_ACCOUNT_BOOKS:
 			yield put(setAccountBooks(response?.data || []));
+			break;
+		case 'GET_ACCOUNT_BOOKS_BY_ID':
+			yield put(setAccountBooksById(response?.data || []));
 			break;
 		case ACTIONS.GET_SALES_PERSONS:
 			yield put(setSalesPerson(response?.data || []));

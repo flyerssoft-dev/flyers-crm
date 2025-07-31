@@ -148,7 +148,7 @@ $twitter-color: #1da1f2;
         &__value {
             font-size: 14px;
             color: $text-primary;
-            @include flex-center;
+            // @include flex-center;
             justify-content: flex-start;
             gap: 8px;
 

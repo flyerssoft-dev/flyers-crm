@@ -73,7 +73,9 @@ const ContactDetailsPresentational = () => {
             className="contact-details__header"
             style={{ display: "flex", alignItems: "center", gap: "10px" }}
           >
-            <div onClick={() => navigate(-1)} style={{ cursor:'pointer'}}>←</div>
+            <div onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
+              ←
+            </div>
             <div>Contact Details</div>
           </div>
 
@@ -134,9 +136,9 @@ const ContactDetailsPresentational = () => {
                     <div className="contact-field__value">
                       <div>{contactData.createdBy}</div>
                       <div className="contact-field__date">
-                        {`( ${dayjs(contactData.createdDate).format(
+                        {dayjs(contactData.createdDate).format(
                           "DD-MM-YYYY HH:mm"
-                        )} )`}
+                        )}
                       </div>
                     </div>
                   </div>
@@ -146,9 +148,9 @@ const ContactDetailsPresentational = () => {
                     <div className="contact-field__value">
                       <div>{contactData.modifiedBy}</div>
                       <div className="contact-field__date">
-                        {`( ${dayjs(contactData.modifiedDate).format(
+                        {dayjs(contactData.modifiedDate).format(
                           "DD-MM-YYYY HH:mm"
-                        )} )`}
+                        )}
                       </div>
                     </div>
                   </div>

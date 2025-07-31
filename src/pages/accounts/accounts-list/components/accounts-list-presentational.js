@@ -29,6 +29,7 @@ const AccountsListPresentational = ({
   refreshList,
   editAccount,
   handleClose,
+  navigate
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -61,6 +62,13 @@ const AccountsListPresentational = ({
             rowKey={(record) => record.id}
             dataSource={filteredData}
             rowSelection={rowSelection}
+            onRow={(record, rowIndex) => {
+							return {
+								onClick: (event) => {
+									navigate(`/account/${record.id}`);
+								}, 
+							};
+						}}
             title={() => (
               <Row style={{ justifyContent: "space-between" }}>
                 <Col span={8}>

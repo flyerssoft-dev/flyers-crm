@@ -14,6 +14,7 @@ import AccountsListPresentational from "./accounts-list-presentational";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { useNavigate } from "react-router-dom";
 
 // ✅ Attach autoTable manually
 // jsPDF.API.autoTable = autoTable;
@@ -31,6 +32,7 @@ const AccountsListFunctional = React.memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const dispatch = useDispatch();
+  const navigate  = useNavigate()
 
   const renderFilterDropdown = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
@@ -328,9 +330,9 @@ const AccountsListFunctional = React.memo(() => {
   ];
 
   const getAccounts = useCallback(() => {
-    const url = `${SERVER_IP}account?page=${currentPage}&limit=${pageSize}&sort=asc`;
+    const url = `${SERVER_IP}account?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
     dispatch(getApi("GET_ACCOUNT_BOOKS", url));
-  }, [dispatch, pageSize, currentPage]);
+  }, [dispatch, pageSize, currentPage,searchKey]);
 
   useEffect(() => {
     getAccounts();
@@ -429,6 +431,7 @@ const AccountsListFunctional = React.memo(() => {
           refreshList: getAccounts,
           editAccount,
           handleClose,
+          navigate
         }}
       />
     </>

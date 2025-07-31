@@ -29,7 +29,7 @@ $twitter-color: #1da1f2;
     outline: none;
 }
 
-.contact_container {
+.account_container {
     padding: 24px;
     background-color: #f0f2f5;
     height: calc(100vh - 65px);
@@ -37,7 +37,7 @@ $twitter-color: #1da1f2;
 
 
 
-    .contact-overview {
+    .account-overview {
         background: $background-white;
         border: 1px solid $border-color;
         border-radius: 8px;
@@ -125,8 +125,8 @@ $twitter-color: #1da1f2;
         font-weight: 400;
     }
 
-    // contact fields
-    .contact-field {
+    // account fields
+    .account-field {
         display: grid;
         grid-template-columns: 140px 1fr;
         gap: 16px;
@@ -183,7 +183,7 @@ $twitter-color: #1da1f2;
 
     // Responsive design
     @media (max-width: 768px) {
-        .contact-overview {
+        .account-overview {
             margin: 16px;
 
             &__header {
@@ -202,7 +202,7 @@ $twitter-color: #1da1f2;
             }
         }
 
-        .contact-field {
+        .account-field {
             grid-template-columns: 1fr;
             gap: 8px;
 
@@ -219,7 +219,7 @@ $twitter-color: #1da1f2;
     }
 
     // Hover effects and micro-interactions
-    .contact-overview {
+    .account-overview {
         @include transition-smooth;
 
         &:hover {
@@ -262,9 +262,9 @@ $twitter-color: #1da1f2;
 
 
 
-    // contact details
+    // account details
     // Main component
-    .contact-details {
+    .account-details {
         background: $background-white;
         border: 1px solid $border-color;
         border-radius: 8px;
@@ -332,8 +332,8 @@ $twitter-color: #1da1f2;
         }
     }
 
-    // contact fields
-    .contact-field {
+    // account fields
+    .account-field {
         display: grid;
         grid-template-columns: 140px 1fr;
         gap: 30px;
@@ -475,7 +475,7 @@ $twitter-color: #1da1f2;
 
     // Responsive design
     @media (max-width: 1024px) {
-        .contact-details {
+        .account-details {
             &__grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -484,7 +484,7 @@ $twitter-color: #1da1f2;
     }
 
     @media (max-width: 768px) {
-        .contact-details {
+        .account-details {
             margin: 16px;
 
             &__content {
@@ -500,7 +500,7 @@ $twitter-color: #1da1f2;
             }
         }
 
-        .contact-field {
+        .account-field {
             grid-template-columns: 1fr;
             gap: 8px;
 
@@ -521,14 +521,14 @@ $twitter-color: #1da1f2;
     }
 
     // Focus states for accessibility
-    .contact-details__toggle:focus,
+    .account-details__toggle:focus,
     .locate-map-btn:focus {
         outline: 2px solid $primary-color;
         outline-offset: 2px;
     }
 
     // Hover effects
-    .contact-details {
+    .account-details {
         @include transition-smooth;
 
         &:hover {

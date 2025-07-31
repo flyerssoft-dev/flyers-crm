@@ -48,6 +48,7 @@ import UsersAndControlsMenu from "pages/users-controls";
 import DealList from "pages/deals/deals-list";
 import LeadDetails from "pages/leads/lead-details";
 import ContactDetails from "pages/contacts/contact-details";
+import AccountDetails from "pages/accounts/account-details";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -121,6 +122,7 @@ const ACTIONS = {
   GET_ACCOUNT_BOOKS: "GET_ACCOUNT_BOOKS",
   GET_SALES_PERSONS: "GET_SALES_PERSONS",
   SET_ACCOUNT_BOOKS: "SET_ACCOUNT_BOOKS",
+  SET_ACCOUNT_BOOKS_BY_ID: "SET_ACCOUNT_BOOKS_BY_ID",
   SET_SALES_PERSONS: "SET_SALES_PERSONS",
   GET_TICKETS: "GET_TICKETS",
   GET_SERVICE_TRIPS: "GET_SERVICE_TRIPS",
@@ -559,10 +561,15 @@ const ROUTES = [
   {
     route: "leads/:leadsId",
     Component: LeadDetails,
-  },{
+  },
+  {
     route: "contact/:contactId",
-    Component:ContactDetails
-  }
+    Component: ContactDetails,
+  },
+  {
+    route: "account/:accountId",
+    Component: AccountDetails,
+  },
 ];
 
 export { ACTIONS, MENUS, ROUTES, API_STATUS, SIDE_MENUS };
