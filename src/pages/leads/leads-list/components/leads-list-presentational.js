@@ -29,6 +29,7 @@ const LeadsListPresentational = ({
   refreshList,
   editLead,
   handleClose,
+  navigate
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -119,6 +120,13 @@ const LeadsListPresentational = ({
               pageSize: pageSize,
               position: ["none", "none"],
             }}
+            onRow={(record, rowIndex) => {
+							return {
+								onClick: (event) => {
+									navigate(`/leads/${record.id}`);
+								}, 
+							};
+						}}
             footer={() => (
               <Row justify="space-between">
                 <Col span={12}>

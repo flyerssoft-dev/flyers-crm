@@ -1,5 +1,6 @@
 let initialState = {
 	leads: [],
+	leadData: {}
 };
 
 const leadsReducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const leadsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				leads: action.payload,
+			};
+		case 'GET_LEADS_BY_ID':
+			return {
+				...state,
+				leadData: action.payload,
 			};
 		default:
 			return state;

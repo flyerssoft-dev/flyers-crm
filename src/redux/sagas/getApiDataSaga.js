@@ -44,7 +44,7 @@ import { setTicketDetails, setTickets } from 'redux/reducers/tickets/ticketActio
 import { setOrders } from 'redux/reducers/orders/ordersActions';
 import { setTasks } from 'redux/reducers/tasks/tasksActions';
 import { setPayments } from 'redux/reducers/payments/paymentAction';
-import { setLeads } from 'redux/reducers/leads/leadAction';
+import { setIndividulLeads, setLeads } from 'redux/reducers/leads/leadAction';
 import { setPurchases } from 'redux/reducers/purchases/purchaseAction';
 import { setStocks } from 'redux/reducers/stocks/stocksActions';
 import { setInventories } from 'redux/reducers/inventory/inventoryAction';
@@ -133,6 +133,9 @@ function* getApiDataSuccess(response, apiName, extras) {
 			break;
 		case 'GET_LEADS':
 			yield put(setLeads(response?.data || []));
+			break;
+		case 'GET_LEADS_BY_ID':
+			yield put(setIndividulLeads(response?.data || []));
 			break;
 		case 'GET_CONTACT':
 			yield put(setContact(response?.data || []));
