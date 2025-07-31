@@ -30,6 +30,7 @@ const DealListPresentational = ({
   refreshList,
   editDeal,
   handleClose,
+  navigate,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -62,6 +63,13 @@ const DealListPresentational = ({
             rowKey={(record) => record.id}
             dataSource={filteredData}
             rowSelection={rowSelection}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  navigate(`/deals/${record.id}`);
+                },
+              };
+            }}
             title={() => (
               <Row style={{ justifyContent: "space-between" }}>
                 <Col span={8}>

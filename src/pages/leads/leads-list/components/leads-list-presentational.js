@@ -6,7 +6,7 @@ import { SERVER_IP } from "assets/Config";
 import TableComponent from "components/table-component";
 import { deleteApi } from "redux/sagas/deleteApiSaga";
 import AddLead from "pages/leads/add-lead";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, UpCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 
 const LeadsListPresentational = ({
@@ -111,6 +111,9 @@ const LeadsListPresentational = ({
                   </Button>
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
+                  </Col>
+                   <Col onClick={() => setIsColumnModalOpen(true)}>
+                    <Button type="primary" icon={<UploadOutlined />} />
                   </Col>
                 </Col>
               </Row>

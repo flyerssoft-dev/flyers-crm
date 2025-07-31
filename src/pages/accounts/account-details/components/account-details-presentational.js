@@ -24,8 +24,6 @@ const AccountPresentational = () => {
     }
   }, [accountId]);
 
-  console.log("globalRedux?.accountBooksData", globalRedux?.accountBooksData);
-
   const accountData = {
     accountOwner: globalRedux?.accountBooksData?.account_owner_name,
     account_name: globalRedux?.accountBooksData?.account_name,

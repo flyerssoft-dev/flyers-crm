@@ -49,6 +49,7 @@ import DealList from "pages/deals/deals-list";
 import LeadDetails from "pages/leads/lead-details";
 import ContactDetails from "pages/contacts/contact-details";
 import AccountDetails from "pages/accounts/account-details";
+import DealDetails from "pages/deals/deals-details";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -569,6 +570,10 @@ const ROUTES = [
   {
     route: "account/:accountId",
     Component: AccountDetails,
+  },
+   {
+    route: "deals/:dealId",
+    Component: DealDetails,
   },
 ];
 
