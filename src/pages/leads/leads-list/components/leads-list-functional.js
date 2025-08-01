@@ -23,6 +23,7 @@ const LeadsListFunctional = React.memo(() => {
   const [editLead, setEditLead] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -343,7 +344,9 @@ const LeadsListFunctional = React.memo(() => {
         refreshList: getLeads,
         editLead,
         handleClose,
-        navigate
+        navigate,
+        drawerOpen,
+        setDrawerOpen,
       }}
     />
   );

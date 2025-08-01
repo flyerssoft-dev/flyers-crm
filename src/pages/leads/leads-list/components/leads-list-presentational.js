@@ -6,8 +6,13 @@ import { SERVER_IP } from "assets/Config";
 import TableComponent from "components/table-component";
 import { deleteApi } from "redux/sagas/deleteApiSaga";
 import AddLead from "pages/leads/add-lead";
-import { PlusCircleOutlined, UpCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  PlusCircleOutlined,
+  UpCircleOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
+import ExcelUploader from "components/bulk-upload-modal";
 
 const LeadsListPresentational = ({
   filteredData,
@@ -29,7 +34,9 @@ const LeadsListPresentational = ({
   refreshList,
   editLead,
   handleClose,
-  navigate
+  navigate,
+  drawerOpen,
+  setDrawerOpen,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -112,7 +119,7 @@ const LeadsListPresentational = ({
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
                   </Col>
-                   <Col onClick={() => setIsColumnModalOpen(true)}>
+                  <Col onClick={() => setDrawerOpen(true)}>
                     <Button type="primary" icon={<UploadOutlined />} />
                   </Col>
                 </Col>
@@ -124,12 +131,12 @@ const LeadsListPresentational = ({
               position: ["none", "none"],
             }}
             onRow={(record, rowIndex) => {
-							return {
-								onClick: (event) => {
-									navigate(`/leads/${record.id}`);
-								}, 
-							};
-						}}
+              return {
+                onClick: (event) => {
+                  navigate(`/leads/${record.id}`);
+                },
+              };
+            }}
             footer={() => (
               <Row justify="space-between">
                 <Col span={12}>
@@ -169,6 +176,40 @@ const LeadsListPresentational = ({
         onSave={handleSaveColumns}
         onCancel={handleCancelColumns}
         isOpen={isColumnModalOpen}
+      />
+      <ExcelUploader
+        requiredFields={["Company Name", "Last Name"]}
+        formFields={[
+          "Lead Owner",
+          "Company Name",
+          "First Name",
+          "Last Name",
+          "Email",
+          "Phone",
+          "Fax",
+          "Mobile",
+          "Website",
+          "Lead Source",
+          "Lead Status",
+          "Industry",
+          "No.of Employees",
+          "Annual Revenue",
+          "Rating",
+          "Email Opt Out",
+          "Skype ID",
+          "Secondary Email",
+          "Twitter",
+          "Address Line 1",
+          "Address Line 2",
+          "City",
+          "State",
+          "Zip Code",
+          "Country",
+          "Description",
+        ]}
+        onDataSubmit={(data) => console.log("Imported:", data)}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
       />
     </>
   );
