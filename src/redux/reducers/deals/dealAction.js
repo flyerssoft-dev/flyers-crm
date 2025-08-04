@@ -1,11 +1,15 @@
-
-function setDeals(data){
-    return{
-        type : "GET_DEALS",
-        payload : data
-    }
+function setDeals(data) {
+  return {
+    type: "GET_DEALS",
+    payload: data,
+  };
 }
 
-export {  
-    setDeals,
+function setIndividulDeal(data) {
+  return {
+    type: "GET_DEAL_BY_ID",
+    payload: data,
+  };
 }
+
+export { setDeals, setIndividulDeal };

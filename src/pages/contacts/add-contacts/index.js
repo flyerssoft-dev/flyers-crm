@@ -144,7 +144,7 @@ const AddContact = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Email" name="email">
-              <Input maxLength={10} placeholder="Enter email" />
+              <Input placeholder="Enter email" />
             </Form.Item>
           </Col>
           <Col span={12}>

@@ -7,6 +7,7 @@ import { SERVER_IP } from "assets/Config";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { API_STATUS } from "constants/app-constants";
 import DealListPresentational from "./deals-list-presentational";
+import { useNavigate } from "react-router-dom";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -22,6 +23,8 @@ const DealListFunctional = React.memo(() => {
   const [pageSize, setPageSize] = useState(initialPageSize);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const getDeals = useCallback(() => {
     let url = `${SERVER_IP}deals?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
@@ -249,6 +252,7 @@ const DealListFunctional = React.memo(() => {
         refreshList: getDeals,
         editDeal,
         handleClose,
+        navigate
       }}
     />
   );

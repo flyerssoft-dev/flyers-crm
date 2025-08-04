@@ -46,6 +46,10 @@ import ContactList from "pages/contacts/contact-list";
 import AccountList from "pages/accounts/accounts-list";
 import UsersAndControlsMenu from "pages/users-controls";
 import DealList from "pages/deals/deals-list";
+import LeadDetails from "pages/leads/lead-details";
+import ContactDetails from "pages/contacts/contact-details";
+import AccountDetails from "pages/accounts/account-details";
+import DealDetails from "pages/deals/deals-details";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -119,6 +123,7 @@ const ACTIONS = {
   GET_ACCOUNT_BOOKS: "GET_ACCOUNT_BOOKS",
   GET_SALES_PERSONS: "GET_SALES_PERSONS",
   SET_ACCOUNT_BOOKS: "SET_ACCOUNT_BOOKS",
+  SET_ACCOUNT_BOOKS_BY_ID: "SET_ACCOUNT_BOOKS_BY_ID",
   SET_SALES_PERSONS: "SET_SALES_PERSONS",
   GET_TICKETS: "GET_TICKETS",
   GET_SERVICE_TRIPS: "GET_SERVICE_TRIPS",
@@ -553,6 +558,22 @@ const ROUTES = [
   {
     route: "/users-controls",
     Component: UsersAndControlsMenu,
+  },
+  {
+    route: "leads/:leadsId",
+    Component: LeadDetails,
+  },
+  {
+    route: "contact/:contactId",
+    Component: ContactDetails,
+  },
+  {
+    route: "account/:accountId",
+    Component: AccountDetails,
+  },
+   {
+    route: "deals/:dealId",
+    Component: DealDetails,
   },
 ];
 

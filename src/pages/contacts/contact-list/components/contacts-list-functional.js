@@ -9,6 +9,8 @@ import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { generatePagination } from "helpers";
 import { API_STATUS, CUSTOMER_TYPE } from "constants/app-constants";
 import ContactsListPresentational from "./contacts-list-presentational";
+import { useNavigate } from "react-router-dom";
+import { postApi } from "redux/sagas/postApiDataSaga";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -22,8 +24,11 @@ const ContactListFunctional = React.memo(() => {
   const [editContact, setEditContact] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const getContacts = useCallback(() => {
     let url = `${SERVER_IP}contact?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
@@ -45,6 +50,13 @@ const ContactListFunctional = React.memo(() => {
       getContacts();
     }
   }, [globalRedux.apiStatus, dispatch, getContacts]);
+
+  useEffect(() => {
+    if (globalRedux.apiStatus.ADD_BULK_CONTACT_DATA === "SUCCESS") {
+      dispatch(resetApiStatus("ADD_BULK_CONTACT_DATA"));
+      getContacts?.();
+    }
+  }, [globalRedux.apiStatus]);
 
   const handleDrawer = (rowData) => {
     setEditContact(rowData);
@@ -353,6 +365,56 @@ const ContactListFunctional = React.memo(() => {
     setEditContact(null);
   }, [setContactAddModal, setEditContact]);
 
+
+   const onUploadData = (data) => {
+    const value = data.map((item) => ({
+      contact_owner_name: item?.["Contact Owner"],
+      lead_source: item?.["Lead Source"],
+      first_name:item?.["First Name"],
+      last_name:item?.["Last Name"],
+      account_name:item?.["Account Name"],
+      vendor_name: item?.["Vendor Name"],
+      email: item?.Email,
+      title: item?.Title,
+      phone: item?.Phone,
+      department: item?.["Department"],
+      other_phone: item?.['Other Phone'],
+      home_phone: item?.["Home Phone"],
+      mobile: item?.mobile,
+      fax: item?.Fax,
+      assistant: item?.Assistant,
+      date_of_birth:item?.["Date of Birth"],
+      // email_opt_out: item?.['Email Opt Out'],
+      skype_id: item?.["Skype ID"],
+      secondary_email: item?.["Secondary Email"],
+      twitter:item?.["Twitter"],
+      reporting_to:item?.["Reporting To"],
+      mailing_street: item?.["Mailing Street"],
+      other_street:item?.["Other Street"],
+      mailing_city: item?.["Mailing City"],
+      other_city: item?.["Other City"],
+      mailing_state:item?.["Mailing State"],
+      mailing_state: item?.["Other State"],
+      mailing_zip_code: item?.["Mailing Zip Code"],
+      other_zip_code:item?.["Other Zip Code"],
+      mailing_country: item?.["Mailing Country"],
+      other_country:  item?.["Other Country"],
+      description: item?.Description
+    }));
+    let url = `${SERVER_IP}contact/multiple-records`;
+    dispatch(postApi(value, "ADD_BULK_CONTACT_DATA", url));
+
+
+    const AccountValue = data.map((item) => ({
+      account_owner_name: item?.["Contact Owner"],
+      rating: '-None-',
+      account_name:item?.["Account Name"],
+      phone: item?.Phone,
+    }));
+    let account_url = `${SERVER_IP}account/multiple-accounts`;
+    dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
+  };
+
   return (
     <ContactsListPresentational
       {...{
@@ -375,6 +437,10 @@ const ContactListFunctional = React.memo(() => {
         refreshList: getContacts,
         editContact,
         handleClose,
+        navigate,
+        drawerOpen,
+        setDrawerOpen,
+        onUploadData,
       }}
     />
   );

@@ -7,7 +7,8 @@ import TableComponent from "components/table-component";
 import { deleteApi } from "redux/sagas/deleteApiSaga";
 import AddAccount from "pages/accounts/add-account";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import ExcelUploader from "components/bulk-upload-modal";
 
 const AccountsListPresentational = ({
   filteredData,
@@ -29,6 +30,10 @@ const AccountsListPresentational = ({
   refreshList,
   editAccount,
   handleClose,
+  navigate,
+  drawerOpen,
+  setDrawerOpen,
+  onUploadData,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -61,6 +66,13 @@ const AccountsListPresentational = ({
             rowKey={(record) => record.id}
             dataSource={filteredData}
             rowSelection={rowSelection}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  navigate(`/account/${record.id}`);
+                },
+              };
+            }}
             title={() => (
               <Row style={{ justifyContent: "space-between" }}>
                 <Col span={8}>
@@ -86,7 +98,7 @@ const AccountsListPresentational = ({
                               onConfirm={() => {
                                 let url = `${SERVER_IP}account/${selectedRowKeys?.[0]}`;
                                 dispatch(deleteApi("DELETE_CUSTOMER", url));
-                                refreshList()
+                                refreshList();
                               }}
                             >
                               <div
@@ -111,6 +123,9 @@ const AccountsListPresentational = ({
                   </Button>
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
+                  </Col>
+                  <Col onClick={() => setDrawerOpen(true)}>
+                    <Button type="primary" icon={<UploadOutlined />} />
                   </Col>
                 </Col>
               </Row>
@@ -159,6 +174,42 @@ const AccountsListPresentational = ({
         onSave={handleSaveColumns}
         onCancel={handleCancelColumns}
         isOpen={isColumnModalOpen}
+      />
+
+      <ExcelUploader
+        requiredFields={["Account Owner", "Rating", "Account Name", "Phone"]}
+        formFields={[
+          "Account Owner",
+          "Rating",
+          "Account Name",
+          "Phone",
+          "Account Site",
+          "Fax",
+          "Parent Account",
+          "Website",
+          "Account Number",
+          "Ticker Symbol",
+          "Account Type",
+          "Ownership",
+          "Industry",
+          "Employees",
+          "Annual Revenue",
+          "SIC Code",
+          "Billing Street",
+          "Shipping Street",
+          "Billing City",
+          "Shipping City",
+          "Billing State",
+          "Shipping State",
+          "Billing Zip Code",
+          "Shipping Zip Code",
+          "Billing Country",
+          "Shipping Country",
+          "Description",
+        ]}
+        onDataSubmit={(data) => onUploadData(data)}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
       />
     </>
   );

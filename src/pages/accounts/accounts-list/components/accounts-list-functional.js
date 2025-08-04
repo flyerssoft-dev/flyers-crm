@@ -14,6 +14,9 @@ import AccountsListPresentational from "./accounts-list-presentational";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { useNavigate } from "react-router-dom";
+import { resetApiStatus } from "redux/reducers/globals/globalActions";
+import { postApi } from "redux/sagas/postApiDataSaga";
 
 // ✅ Attach autoTable manually
 // jsPDF.API.autoTable = autoTable;
@@ -30,7 +33,9 @@ const AccountsListFunctional = React.memo(() => {
   const [editAccount, setEditAccount] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const renderFilterDropdown = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
@@ -328,9 +333,9 @@ const AccountsListFunctional = React.memo(() => {
   ];
 
   const getAccounts = useCallback(() => {
-    const url = `${SERVER_IP}account?page=${currentPage}&limit=${pageSize}&sort=asc`;
+    const url = `${SERVER_IP}account?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
     dispatch(getApi("GET_ACCOUNT_BOOKS", url));
-  }, [dispatch, pageSize, currentPage]);
+  }, [dispatch, pageSize, currentPage, searchKey]);
 
   useEffect(() => {
     getAccounts();
@@ -387,6 +392,50 @@ const AccountsListFunctional = React.memo(() => {
     setEditAccount(null);
   };
 
+  useEffect(() => {
+    if (globalRedux.apiStatus.ADD_BULK_ACCOUNT_DATA === "SUCCESS") {
+      dispatch(resetApiStatus("ADD_BULK_ACCOUNT_DATA"));
+      getAccounts?.();
+    }
+  }, [globalRedux.apiStatus]);
+
+  const onUploadData = (data) => {
+
+    const AccountValue = data.map((item) => ({
+      account_owner_name: item?.["Account Owner"],
+      rating: item?.Rating,
+      account_name: item?.["Account Name"],
+      phone: item?.Phone,
+      account_site: item?.["Account Site"],
+      fax: item?.Fax,
+      parent_account: item?.["Parent Account"],
+      website: item?.Website,
+      account_number: item?.["Account Number"],
+      ticker_symbol: item?.["Ticker Symbol"],
+      account_type: item?.["Account Type"],
+      ownership: item?.Ownership,
+      industry: item?.Industry,
+      employees: `${item?.Employees}`,
+      annual_revenue: `${item?.["Annual Revenue"]}`,
+      sic_code: item?.["SIC Code"],
+      billing_street: item?.["Billing Street"],
+      shipping_street: item?.["Shipping Street"],
+      billing_city: item?.["Billing City"],
+      shipping_city: item?.["Shipping City"],
+      billing_state: item?.["Billing State"],
+      shipping_state: item?.["Shipping State"],
+      billing_zip_code: item?.["Billing Zip Code"],
+      shipping_zip_code: item?.["Shipping Zip Code"],
+      billing_country: item?.["Billing Country"],
+      shipping_country: item?.["Shipping Country"],
+      description: item?.["Description"],
+    }));
+
+    console.log('AccountValue',AccountValue)
+    let account_url = `${SERVER_IP}account/multiple-accounts`;
+    dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
+  };
+
   return (
     <>
       <Row justify="space-between" style={{ marginBottom: 16 }}>
@@ -429,6 +478,10 @@ const AccountsListFunctional = React.memo(() => {
           refreshList: getAccounts,
           editAccount,
           handleClose,
+          navigate,
+          drawerOpen,
+          setDrawerOpen,
+          onUploadData,
         }}
       />
     </>

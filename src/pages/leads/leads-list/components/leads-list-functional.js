@@ -9,6 +9,8 @@ import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { generatePagination } from "helpers";
 import { API_STATUS, CUSTOMER_TYPE } from "constants/app-constants";
 import LeadsListPresentational from "./leads-list-presentational";
+import { useNavigate } from "react-router-dom";
+import { postApi } from "redux/sagas/postApiDataSaga";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -22,8 +24,10 @@ const LeadsListFunctional = React.memo(() => {
   const [editLead, setEditLead] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getLeads = useCallback(() => {
     let url = `${SERVER_IP}leads?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;
@@ -33,7 +37,6 @@ const LeadsListFunctional = React.memo(() => {
   useEffect(() => {
     getLeads();
   }, [getLeads]);
-
 
   useEffect(() => {
     let doIt = false;
@@ -48,8 +51,13 @@ const LeadsListFunctional = React.memo(() => {
   }, [globalRedux.apiStatus, dispatch, getLeads]);
 
 
-
-
+  useEffect(() => {
+      if (
+        globalRedux.apiStatus.ADD_BULK_DATA === "SUCCESS") {
+        dispatch(resetApiStatus("ADD_BULK_DATA"));
+        getLeads?.();
+      }
+    }, [globalRedux.apiStatus]);
 
   const handleDrawer = (rowData) => {
     setEditLead(rowData);
@@ -292,7 +300,9 @@ const LeadsListFunctional = React.memo(() => {
 
   const getEndingValue = () => {
     if (currentPage === 1)
-      return leadsRedux.leads.length < pageSize ? leadsRedux.leads.length : pageSize;
+      return leadsRedux.leads.length < pageSize
+        ? leadsRedux.leads.length
+        : pageSize;
     else {
       let end = currentPage * pageSize;
       return end > leadsRedux.leads.length ? leadsRedux.leads.length : end;
@@ -319,10 +329,44 @@ const LeadsListFunctional = React.memo(() => {
     setEditLead(null);
   }, [setLeadAddModal, setEditLead]);
 
+  const onUploadData = (data) => {
+    const value = data.map((item) => ({
+      lead_owner_name: item?.["Lead Owner"],
+      company_name: item?.["Company Name"],
+      first_name:item?.["First Name"],
+      last_name:item?.["Last Name"],
+      title:item?.["Title"],
+      email: item?.Email,
+      phone: item?.Phone,
+      fax: item?.Fax,
+      mobile: item?.Mobile,
+      website: item?.Website,
+      lead_source: item?.['Lead Source'],
+      lead_status: item?.["Lead Status"],
+      industry: item?.Industry,
+      no_of_employees: item?.["No.of Employees"],
+      annual_revenue: item?.["Annual Revenue"],
+      rating:item?.Rating,
+      // email_opt_out: item?.['Email Opt Out'],
+      skype_id: item?.["Skype ID"],
+      secondary_email: item?.["Secondary Email"],
+      twitter:item?.["Twitter"],
+      address_line_one: item?.["Address Line 1"],
+      address_line_two: item?.["Address Line 2"],
+      city: item?.City,
+      state: item?.State,
+      zip_code: item?.["Zip Code"],
+      country: item?.Country,
+      description: item?.Description
+    }));
+    let url = `${SERVER_IP}leads/multiple-leads`;
+    dispatch(postApi(value, "ADD_BULK_DATA", url));
+  };
+
   return (
     <LeadsListPresentational
       {...{
-        filteredData : leadsRedux?.leads,
+        filteredData: leadsRedux?.leads,
         column: leadColumns,
         tableLoading,
         rowSelection,
@@ -341,6 +385,10 @@ const LeadsListFunctional = React.memo(() => {
         refreshList: getLeads,
         editLead,
         handleClose,
+        navigate,
+        drawerOpen,
+        setDrawerOpen,
+        onUploadData,
       }}
     />
   );
