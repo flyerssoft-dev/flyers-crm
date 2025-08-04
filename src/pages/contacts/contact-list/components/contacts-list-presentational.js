@@ -7,7 +7,8 @@ import TableComponent from "components/table-component";
 import { deleteApi } from "redux/sagas/deleteApiSaga";
 import AddContact from "pages/contacts/add-contacts";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import ExcelUploader from "components/bulk-upload-modal";
 
 const ContactsListPresentational = ({
   filteredData,
@@ -29,7 +30,10 @@ const ContactsListPresentational = ({
   refreshList,
   editContact,
   handleClose,
-  navigate
+  navigate,
+  drawerOpen,
+  setDrawerOpen,
+  onUploadData,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -63,12 +67,12 @@ const ContactsListPresentational = ({
             dataSource={filteredData}
             rowSelection={rowSelection}
             onRow={(record, rowIndex) => {
-							return {
-								onClick: (event) => {
-									navigate(`/contact/${record.id}`);
-								}, 
-							};
-						}}
+              return {
+                onClick: (event) => {
+                  navigate(`/contact/${record.id}`);
+                },
+              };
+            }}
             title={() => (
               <Row style={{ justifyContent: "space-between" }}>
                 <Col span={8}>
@@ -94,7 +98,7 @@ const ContactsListPresentational = ({
                               onConfirm={() => {
                                 let url = `${SERVER_IP}contact/${selectedRowKeys?.[0]}`;
                                 dispatch(deleteApi("DELETE_CONTACT", url));
-								refreshList()
+                                refreshList();
                               }}
                             >
                               <div
@@ -119,6 +123,9 @@ const ContactsListPresentational = ({
                   </Button>
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
+                  </Col>
+                  <Col onClick={() => setDrawerOpen(true)}>
+                    <Button type="primary" icon={<UploadOutlined />} />
                   </Col>
                 </Col>
               </Row>
@@ -167,6 +174,46 @@ const ContactsListPresentational = ({
         onSave={handleSaveColumns}
         onCancel={handleCancelColumns}
         isOpen={isColumnModalOpen}
+      />
+      <ExcelUploader
+        requiredFields={["Last Name"]}
+        formFields={[
+          "Contact Owner",
+          "Lead Source",
+          "First Name",
+          "Last Name",
+          "Account Name",
+          "Vendor Name",
+          "Email",
+          "Title",
+          "Phone",
+          "Department",
+          "Other Phone",
+          "Home Phone",
+          "Mobile",
+          "Fax",
+          "Assistant",
+          "Date of Birth",
+          "Email Opt Out",
+          "Skype ID",
+          "Secondary Email",
+          "Twitter",
+          "Reporting To",
+          "Mailing Street",
+          "Other Street",
+          "Mailing City",
+          "Other City",
+          "Mailing State",
+          "Other State",
+          "Mailing Zip Code",
+          "Other Zip Code",
+          "Mailing Country",
+          "Other Country",
+          "Description",
+        ]}
+        onDataSubmit={(data) => onUploadData(data)}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
       />
     </>
   );

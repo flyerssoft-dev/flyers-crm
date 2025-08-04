@@ -37,6 +37,7 @@ const LeadsListPresentational = ({
   navigate,
   drawerOpen,
   setDrawerOpen,
+  onUploadData,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -207,7 +208,7 @@ const LeadsListPresentational = ({
           "Country",
           "Description",
         ]}
-        onDataSubmit={(data) => console.log("Imported:", data)}
+        onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
       />
