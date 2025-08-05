@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Row,
   Col,
@@ -9,26 +9,23 @@ import {
   InputNumber,
   Drawer,
   DatePicker,
+  Tooltip,
+  Modal,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { putApi } from "redux/sagas/putApiSaga";
 import {
   API_STATUS,
-  CATEGORIES,
-  CUSTOMER_TYPE,
   DEAL_STAGE,
-  GST_TREATMENT,
-  INDUSTRY,
   LEAD_SOURCE,
-  LEAD_STATUS,
-  PLACE_OF_SUPPLY,
   RATING,
 } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
-import { Checkbox } from "antd";
 import dayjs from "dayjs";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import { getApi } from "redux/sagas/getApiDataSaga";
 
 const AddDeal = ({
   dealAddModal,
@@ -42,6 +39,28 @@ const AddDeal = ({
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
   const { TextArea } = Input;
+
+  const [form1] = Form.useForm();
+  const [accountDropdownValue, setAccountDropDownValue] = useState([]);
+  const [accountSearchvalue, setAccountSearchValue] = useState();
+  const [addNewButtonVisible, setAddNewButtonVisible] = useState(false);
+  const [addNewModalVisible, setAddnewModalVisible] = useState(false);
+
+  const originalAccountList = useRef([]);
+
+  const renderLabelWithTooltip = (label, tooltip) => (
+    <span>
+      {label}{" "}
+      <Tooltip title={tooltip}>
+        <InfoCircleOutlined />
+      </Tooltip>
+    </span>
+  );
+
+  const getAccounts = useCallback(() => {
+    const url = `${SERVER_IP}account`;
+    dispatch(getApi("GET_ACCOUNT_BOOKS", url));
+  }, [dispatch]);
 
   useEffect(() => {
     if (editDeal) {
@@ -58,15 +77,11 @@ const AddDeal = ({
   }, [editDeal, form]);
 
   const handleSubmit = (values) => {
-    const data = {
-      ...values,
-    };
+    const data = { ...values };
     if (!editDeal) {
-      let url = `${SERVER_IP}deals`;
-      dispatch(postApi(data, "ADD_DEAL", url));
+      dispatch(postApi(data, "ADD_DEAL", `${SERVER_IP}deals`));
     } else {
-      let url = `${SERVER_IP}deals/${editDeal.id}`;
-      dispatch(putApi(data, "EDIT_DEAL", url));
+      dispatch(putApi(data, "EDIT_DEAL", `${SERVER_IP}deals/${editDeal.id}`));
     }
   };
 
@@ -86,6 +101,75 @@ const AddDeal = ({
     globalRedux.apiStatus.ADD_DEAL === API_STATUS.PENDING ||
     globalRedux.apiStatus.EDIT_DEAL === API_STATUS.PENDING;
 
+  useEffect(() => {
+    if (globalRedux?.accountBooks) {
+      const value = globalRedux.accountBooks.map((item) => ({
+        label: item?.account_name,
+        value: item?.id,
+      }));
+      originalAccountList.current = value;
+      setAccountDropDownValue(value);
+    }
+  }, [globalRedux?.accountBooks]);
+
+  useEffect(() => {
+    if (globalRedux.apiStatus.ADD_ACCOUNT_BOOK === "SUCCESS") {
+      dispatch(resetApiStatus("ADD_ACCOUNT_BOOK"));
+      getAccounts?.();
+      setAddnewModalVisible(false);
+      form1?.resetFields();
+      if (accountSearchvalue) {
+        const newlyAdded = globalRedux?.accountBooks?.find(
+          (a) =>
+            a.account_name?.toLowerCase() === accountSearchvalue?.toLowerCase()
+        );
+        if (newlyAdded) {
+          form.setFieldsValue({ account_name: newlyAdded.id });
+        }
+      }
+    }
+  }, [globalRedux.apiStatus]);
+
+  const handleTypeSearch = (value) => {
+    setAccountSearchValue(value);
+    const filtered = originalAccountList.current.filter((type) =>
+      type.label.toLowerCase().includes(value.toLowerCase())
+    );
+    setAccountDropDownValue(filtered);
+
+    const exactMatch = filtered.some(
+      (type) => type.label.toLowerCase() === value.toLowerCase()
+    );
+    setAddNewButtonVisible(!exactMatch && value.trim() !== "");
+  };
+
+  // Debounce function
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  const debouncedSearch = useCallback(debounce(handleTypeSearch, 300), []);
+
+  const handleNewAcountName = () => {
+    setAddnewModalVisible(true);
+  };
+
+  const handleSubmitAccount = () => {
+    const value = form1.getFieldsValue();
+    dispatch(postApi(value, "ADD_ACCOUNT_BOOK"));
+  };
+
+  const handleDrawerClose = () => {
+    setAccountDropDownValue(originalAccountList.current);
+    setAccountSearchValue("");
+    setAddNewButtonVisible(false);
+    setDealAddModal(false);
+  };
+
   return (
     <Drawer
       placement="right"
@@ -93,7 +177,7 @@ const AddDeal = ({
       width={width}
       open={dealAddModal}
       closable
-      onClose={() => setDealAddModal(false)}
+      onClose={handleDrawerClose}
       destroyOnClose
       size="large"
     >
@@ -115,7 +199,7 @@ const AddDeal = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Amount" name="amount">
-              <Input />
+              <InputNumber style={{ width: "100%" }} min={0} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -140,12 +224,48 @@ const AddDeal = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              label="Account Name"
-              name="account_name"
-              rules={[{ required: true, message: "Required!" }]}
-            >
-              <Input />
+            <Form.Item label="Account Name" name="account_name">
+              <Select
+                showSearch
+                placeholder="Select Account"
+                onSearch={debouncedSearch}
+                filterOption={false}
+                onChange={(value) =>
+                  form.setFieldsValue({ account_name: value })
+                }
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    {addNewButtonVisible && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "10px 16px",
+                          backgroundColor: "#f6f8fa",
+                          borderTop: "1px solid #e8e8e8",
+                          cursor: "pointer",
+                          color: "#1890ff",
+                          fontWeight: "500",
+                        }}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                          if (accountSearchvalue) handleNewAcountName();
+                        }}
+                      >
+                        <span>Add New Account Name</span>
+                      </div>
+                    )}
+                  </>
+                )}
+              >
+                {accountDropdownValue.map((type) => (
+                  <Select.Option key={type?.value} value={type?.value}>
+                    {type?.label}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -170,7 +290,7 @@ const AddDeal = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Probability (%)" name="probability">
-              <Input />
+              <InputNumber min={0} max={100} style={{ width: "100%" }} />
             </Form.Item>
           </Col>
         </Row>
@@ -183,7 +303,7 @@ const AddDeal = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Expected Revenue" name="expected_revenue">
-              <Input />
+              <InputNumber style={{ width: "100%" }} min={0} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -217,13 +337,9 @@ const AddDeal = ({
         </Form.Item>
 
         <Form.Item>
-          <Row
-            gutter={16}
-            justify="space-between"
-            style={{ marginTop: 16, marginBottom: 16 }}
-          >
+          <Row gutter={16} justify="space-between" style={{ margin: "16px 0" }}>
             <Col span={12}>
-              <Button danger block onClick={() => setDealAddModal(false)}>
+              <Button danger block onClick={handleDrawerClose}>
                 Cancel
               </Button>
             </Col>
@@ -235,6 +351,70 @@ const AddDeal = ({
           </Row>
         </Form.Item>
       </Form>
+
+      <Modal
+        open={addNewModalVisible}
+        title="Quick Create: Account"
+        okText="Save"
+        onCancel={() => setAddnewModalVisible(false)}
+        onOk={() => form1.submit()}
+      >
+        <Form form={form1} layout="vertical" onFinish={handleSubmitAccount}>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label={renderLabelWithTooltip(
+                  "Account Owner",
+                  "Person responsible for this account"
+                )}
+                name="account_owner_name"
+                rules={[{ required: true, message: "Please enter account owner name" }]}
+              >
+                <Input placeholder="Account Owner Name" autoFocus />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label={renderLabelWithTooltip("Rating", "Internal engagement score")}
+                name="rating"
+                rules={[{ required: true, message: "Please select a rating" }]}
+              >
+                <Select placeholder="Select Rating">
+                  {RATING.map((r) => (
+                    <Select.Option key={r} value={r}>
+                      {r}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label={renderLabelWithTooltip("Account Name", "Registered name of the account")}
+                name="account_name"
+                rules={[{ required: true, message: "Please enter account name" }]}
+              >
+                <Input placeholder="Enter the Account Name" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label={renderLabelWithTooltip("Phone", "Primary contact number")}
+                name="phone"
+                rules={[
+                  { required: true, message: "Please enter phone number" },
+                  {
+                    pattern: /^\d{10}$/,
+                    message: "Phone number must be 10 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter the Phone Number" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
     </Drawer>
   );
 };
