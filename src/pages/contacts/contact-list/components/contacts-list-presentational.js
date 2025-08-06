@@ -203,6 +203,14 @@ const ContactsListPresentational = ({
           "Other Country",
           "Description",
         ]}
+        validationRules={{
+          Email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+          "Secondary Email": (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Mobile: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          "Mailing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+          "Other Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+        }}
         onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}

@@ -40,7 +40,7 @@ $transition: all 0.2s ease-in-out;
   cursor: pointer;
   border: none;
   text-decoration: none;
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
@@ -67,14 +67,14 @@ $transition: all 0.2s ease-in-out;
 // Header section
 .header {
   margin-bottom: 2rem;
-  
+
   h2 {
     font-size: 1.5rem;
     font-weight: 700;
     color: $gray-900;
     margin-bottom: 0.5rem;
   }
-  
+
   p {
     color: $gray-600;
     margin: 0;
@@ -90,16 +90,16 @@ $transition: all 0.2s ease-in-out;
   text-align: center;
   transition: $transition;
   cursor: pointer;
-  
+
   &:hover {
     border-color: $gray-400;
   }
-  
+
   &.dragActive {
     border-color: $primary-color;
     background-color: rgba($primary-color, 0.05);
   }
-  
+
   .fileInput {
     position: absolute;
     inset: 0;
@@ -108,25 +108,25 @@ $transition: all 0.2s ease-in-out;
     opacity: 0;
     cursor: pointer;
   }
-  
+
   .uploadContent {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    
+
     .iconWrapper {
       padding: 1rem;
       background-color: rgba($primary-color, 0.1);
       border-radius: 50%;
-      
+
       svg {
         width: 2rem;
         height: 2rem;
         color: $primary-color;
       }
     }
-    
+
     .uploadText {
       h3 {
         font-size: 1.125rem;
@@ -134,13 +134,13 @@ $transition: all 0.2s ease-in-out;
         color: $gray-900;
         margin-bottom: 0.25rem;
       }
-      
+
       p {
         color: $gray-500;
         margin: 0;
       }
     }
-    
+
     .supportText {
       font-size: 0.875rem;
       color: $gray-400;
@@ -157,47 +157,58 @@ $transition: all 0.2s ease-in-out;
   padding: 1rem;
   background-color: $gray-50;
   border-radius: $border-radius-lg;
-  
+
   .fileDetails {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    
+
     svg {
       width: 2rem;
       height: 2rem;
       color: $success-color;
     }
-    
+
     .fileName {
       font-weight: 500;
       color: $gray-900;
       margin-bottom: 0.25rem;
     }
-    
+
     .fileSize {
       font-size: 0.875rem;
       color: $gray-500;
       margin: 0;
     }
   }
-  
+
   .removeButton {
     color: $error-color;
     transition: $transition;
     cursor: pointer;
     padding: 0.25rem;
     border-radius: $border-radius;
-    
+
     &:hover {
       color: darken($error-color, 10%);
       background-color: rgba($error-color, 0.1);
     }
-    
+
     svg {
       width: 1.25rem;
       height: 1.25rem;
     }
+  }
+
+  .selectError {
+    border: 1px solid #d93025 !important;
+    background-color: #fff3f3 !important;
+  }
+
+  .errorCell {
+    background-color: #fff3f3 !important;
+    color: #d93025 !important;
+    font-weight: 500 !important;
   }
 }
 
@@ -206,7 +217,7 @@ $transition: all 0.2s ease-in-out;
   @include flex-center;
   padding: 3rem 0;
   gap: 0.75rem;
-  
+
   .spinner {
     width: 2rem;
     height: 2rem;
@@ -215,33 +226,38 @@ $transition: all 0.2s ease-in-out;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
-  
+
   span {
     color: $gray-700;
   }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 // Column mapping section
 .mappingSection {
   margin-top: 1.5rem;
-  
+
   .sectionHeader {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    
+
     svg {
       width: 1.25rem;
       height: 1.25rem;
       color: $primary-color;
     }
-    
+
     h3 {
       font-size: 1.125rem;
       font-weight: 600;
@@ -249,34 +265,34 @@ $transition: all 0.2s ease-in-out;
       margin: 0;
     }
   }
-  
+
   .mappingGrid {
     display: grid;
     gap: 1rem;
-    
+
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
+
   .fieldGroup {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    
+
     label {
       display: block;
       font-size: 0.875rem;
       font-weight: 500;
       color: $gray-700;
       text-transform: capitalize;
-      
+
       .required {
         color: $error-color;
         margin-left: 0.25rem;
       }
     }
-    
+
     select {
       width: 100%;
       padding: 0.75rem;
@@ -285,17 +301,28 @@ $transition: all 0.2s ease-in-out;
       background: white;
       color: $gray-900;
       transition: $transition;
-      
+
       &:focus {
         outline: none;
         border-color: $primary-color;
         box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
       }
-      
+
       &:hover {
         border-color: $gray-400;
       }
     }
+  }
+
+  .selectError {
+    border: 1px solid #d93025 !important;
+    background-color: #fff3f3 !important;
+  }
+
+  .errorCell {
+    background-color: #fff3f3 !important;
+    color: #d93025 !important;
+    font-weight: 500 !important;
   }
 }
 
@@ -306,37 +333,37 @@ $transition: all 0.2s ease-in-out;
   gap: 1rem;
   margin-top: 1rem;
   font-size: 0.875rem;
-  
+
   .statusIndicator {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    
+
     .statusDot {
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      
+
       &.partial {
         background-color: $warning-color;
       }
-      
+
       &.complete {
         background-color: $success-color;
       }
     }
-    
+
     span {
       color: $gray-700;
     }
   }
-  
+
   .readyIndicator {
     display: flex;
     align-items: center;
     gap: 0.25rem;
     color: $success-color;
-    
+
     svg {
       width: 1rem;
       height: 1rem;
@@ -347,20 +374,20 @@ $transition: all 0.2s ease-in-out;
 // Preview section
 .previewSection {
   margin-top: 1.5rem;
-  
+
   .previewHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
-    
+
     h3 {
       font-size: 1.125rem;
       font-weight: 600;
       color: $gray-900;
       margin: 0;
     }
-    
+
     .toggleButton {
       display: flex;
       align-items: center;
@@ -373,12 +400,12 @@ $transition: all 0.2s ease-in-out;
       cursor: pointer;
       transition: $transition;
       border-radius: $border-radius;
-      
+
       &:hover {
         color: $primary-hover;
         background-color: rgba($primary-color, 0.05);
       }
-      
+
       svg {
         width: 1rem;
         height: 1rem;
@@ -392,18 +419,18 @@ $transition: all 0.2s ease-in-out;
   border: 1px solid $gray-200;
   border-radius: $border-radius-lg;
   overflow: hidden;
-  
+
   .tableWrapper {
     overflow-x: auto;
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
-    
+
     thead {
       background-color: $gray-50;
-      
+
       th {
         padding: 0.75rem 1.5rem;
         text-align: left;
@@ -415,23 +442,23 @@ $transition: all 0.2s ease-in-out;
         border-bottom: 1px solid $gray-200;
       }
     }
-    
+
     tbody {
       background: white;
-      
+
       tr {
         border-bottom: 1px solid $gray-200;
         transition: $transition;
-        
+
         &:hover {
           background-color: $gray-50;
         }
-        
+
         &:last-child {
           border-bottom: none;
         }
       }
-      
+
       td {
         padding: 1rem 1.5rem;
         white-space: nowrap;
@@ -440,13 +467,19 @@ $transition: all 0.2s ease-in-out;
       }
     }
   }
-  
+
   .tableFooter {
     padding: 0.75rem 1.5rem;
     background-color: $gray-50;
     border-top: 1px solid $gray-200;
     font-size: 0.875rem;
     color: $gray-500;
+  }
+
+  .errorCell {
+    background-color: #fff3f3 !important;
+    color: #d93025 !important;
+    font-weight: 500 !important;
   }
 }
 
@@ -455,34 +488,34 @@ $transition: all 0.2s ease-in-out;
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
-  
+
   .submitButton {
     @include button-base;
     gap: 0.5rem;
     box-shadow: $shadow-lg;
-    
+
     &.enabled {
       background-color: $primary-color;
       color: white;
-      
+
       &:hover {
         background-color: $primary-hover;
         box-shadow: $shadow-xl;
         transform: translateY(-1px);
       }
     }
-    
+
     &.disabled {
       background-color: $gray-300;
       color: $gray-500;
       cursor: not-allowed;
-      
+
       &:hover {
         transform: none;
         box-shadow: $shadow-lg;
       }
     }
-    
+
     svg {
       width: 1.25rem;
       height: 1.25rem;
@@ -495,37 +528,38 @@ $transition: all 0.2s ease-in-out;
   .container {
     padding: 1rem;
   }
-  
+
   .uploadArea {
     padding: 1.5rem;
   }
-  
+
   .fileInfo {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .mappingGrid {
     grid-template-columns: 1fr !important;
   }
-  
+
   .mappingStatus {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .previewHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .tableContainer {
     font-size: 0.75rem;
-    
-    th, td {
+
+    th,
+    td {
       padding: 0.5rem 0.75rem;
     }
   }

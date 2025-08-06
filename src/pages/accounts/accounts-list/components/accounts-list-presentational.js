@@ -182,11 +182,8 @@ const AccountsListPresentational = ({
           "Account Owner",
           "Account Name",
           "Phone",
-
           "Website",
-
           "Employees",
-
           "Billing Street",
           "Shipping Street",
           "Billing City",
@@ -199,6 +196,15 @@ const AccountsListPresentational = ({
           "Shipping Country",
           "Description",
         ]}
+         validationRules={{
+          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Website: (v) =>
+            /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
+              v
+            ),
+          "Billing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+          "Billing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+        }}
         onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
