@@ -14,7 +14,7 @@ import {
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { putApi } from "redux/sagas/putApiSaga";
-import { API_STATUS, LEAD_SOURCE, RATING } from "constants/app-constants";
+import { API_STATUS, LEAD_SOURCE, RATING, STATUS_VALUE } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
@@ -192,17 +192,6 @@ const AddContact = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Lead Source" name="lead_source">
-              <Select placeholder="Select Lead Source">
-                {LEAD_SOURCE.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
             <Form.Item label="First Name" name="first_name">
               <Input placeholder="Enter first name" />
             </Form.Item>
@@ -216,9 +205,6 @@ const AddContact = ({
               <Input placeholder="Enter last name" />
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Account Name" name="account_name">
               <Select
@@ -264,11 +250,9 @@ const AddContact = ({
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Vendor Name" name="vendor_name">
-              <Input placeholder="Enter vendor name" />
-            </Form.Item>
-          </Col>
+        </Row>
+
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Email" name="email">
               <Input placeholder="Enter email" />
@@ -284,9 +268,10 @@ const AddContact = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Phone" name="phone">
-              <InputNumber
+              <Input
                 style={{ width: "100%" }}
                 placeholder="Enter phone number"
+                maxLength={10}
               />
             </Form.Item>
           </Col>
@@ -295,50 +280,19 @@ const AddContact = ({
               <Input placeholder="Enter Department" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Other Phone" name="other_phone">
-              <Input placeholder="Enter Phone number" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Home Phone" name="home_phone">
-              <Input placeholder="Enter Phone number" />
-            </Form.Item>
-          </Col>
+
           <Col span={12}>
             <Form.Item label="Mobile" name="mobile">
-              <Input placeholder="Enter mobile number" />
+              <Input maxLength={10} placeholder="Enter mobile number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Fax" name="fax">
+            <Form.Item label="LinkedIn Profile" name="linkedin_profile">
               <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Assistant" name="assistant">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Date of Birth" name="date_of_birth">
-              <DatePicker style={{ width: "100%" }} />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}></Col>
-          <Col span={12}>
-            <Form.Item name="email_opt_out" valuePropName="checked">
-              <Checkbox>Email Opt Out</Checkbox>
-            </Form.Item>
-          </Col>
-          <Col span={12}></Col>
-          <Col span={12}>
-            <Form.Item label="Skype ID" name="skype_id">
-              <Input />
-            </Form.Item>
-          </Col>
           <Col span={12}></Col>
           <Col span={12}>
             <Form.Item label="Secondary Email" name="secondary_email">
@@ -347,14 +301,20 @@ const AddContact = ({
           </Col>
           <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Twitter" name="twitter">
+            <Form.Item label="Time Zone" name="time_zone">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Reporting To" name="reporting_to">
-              <Input />
+            <Form.Item label="Status" name="Status">
+              <Select>
+                {STATUS_VALUE.map((type) => (
+                  <Select.Option key={type} value={type}>
+                    {type}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>

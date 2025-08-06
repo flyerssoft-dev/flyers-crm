@@ -72,103 +72,63 @@ const DealListFunctional = React.memo(() => {
       key: "amount",
       visible: true,
       default: true,
-      order: 3,
+      order: 2,
     },
     {
       title: "Deal Name",
       dataIndex: "deal_name",
       key: "deal_name",
       visible: true,
-
-      order: 4,
+      order: 3,
     },
     {
       title: "Closing Date",
       dataIndex: "closing_date",
       key: "closing_date",
-
       visible: true,
-      order: 5,
+      order: 4,
     },
     {
       title: "Account Name",
       dataIndex: "account_name",
       key: "account_name",
-
       visible: true,
-      order: 6,
+      order: 5,
     },
     {
       title: "Stage",
       dataIndex: "stage",
       key: "stage",
-
       visible: true,
-      order: 7,
-    },
-    { title: "Type", dataIndex: "type", key: "type", visible: false, order: 8 },
-    {
-      title: "Probability",
-      dataIndex: "probability",
-      key: "probability",
-      visible: false,
-      order: 9,
-    },
-    {
-      title: "Next Step",
-      dataIndex: "next_step",
-      key: "next_step",
-      visible: false,
-      order: 10,
-    },
-    {
-      title: "Expected Revenue",
-      dataIndex: "expected_revenue",
-      key: "expected_revenue",
-      visible: false,
-      order: 11,
-    },
-    {
-      title: "Lead Resource",
-      dataIndex: "lead_resource",
-      key: "lead_resource",
-      visible: false,
-      order: 12,
-    },
-    {
-      title: "Campaign Source",
-      dataIndex: "campaign_source",
-      key: "campaign_source",
-      visible: false,
-      order: 13,
+      order: 6,
     },
     {
       title: "Contact Name",
       dataIndex: "contact_name",
       key: "contact_name",
       visible: false,
-      order: 14,
+      order: 7,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       visible: false,
-      order: 15,
+      order: 8,
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
       visible: false,
-      order: 16,
+      order: 9,
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
       visible: false,
-      order: 17,
+      order: 10,
     },
     {
       title: "Action",
@@ -176,14 +136,20 @@ const DealListFunctional = React.memo(() => {
       align: "center",
       render: (_, row) => (
         <Row justify="center">
-          <Col className="edit_icon" onClick={() => handleDrawer(row)}>
+          <Col
+            className="edit_icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDrawer(row);
+            }}
+          >
             <EditOutlined />
           </Col>
         </Row>
       ),
       visible: true,
       default: true,
-      order: 35,
+      order: 11,
     },
   ];
 
@@ -252,7 +218,7 @@ const DealListFunctional = React.memo(() => {
         refreshList: getDeals,
         editDeal,
         handleClose,
-        navigate
+        navigate,
       }}
     />
   );

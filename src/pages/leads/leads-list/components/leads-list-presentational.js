@@ -187,19 +187,16 @@ const LeadsListPresentational = ({
           "Last Name",
           "Email",
           "Phone",
-          "Fax",
+        
           "Mobile",
           "Website",
-          "Lead Source",
-          "Lead Status",
+         
           "Industry",
           "No.of Employees",
-          "Annual Revenue",
-          "Rating",
-          "Email Opt Out",
-          "Skype ID",
+         
+         
           "Secondary Email",
-          "Twitter",
+         
           "Address Line 1",
           "Address Line 2",
           "City",

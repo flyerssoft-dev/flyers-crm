@@ -66,7 +66,9 @@ const AddAccount = ({
       globalRedux.apiStatus.ADD_ACCOUNT_BOOK === "SUCCESS" ||
       globalRedux.apiStatus.EDIT_ACCOUNT_BOOK === "SUCCESS"
     ) {
-      dispatch(resetApiStatus(editAccount ? "EDIT_ACCOUNT_BOOK" : "ADD_ACCOUNT_BOOK"));
+      dispatch(
+        resetApiStatus(editAccount ? "EDIT_ACCOUNT_BOOK" : "ADD_ACCOUNT_BOOK")
+      );
       refreshList?.();
       handleClose?.();
       form?.resetFields();
@@ -80,7 +82,10 @@ const AddAccount = ({
 
   const renderLabelWithTooltip = (label, tooltip) => (
     <span>
-      {label} <Tooltip title={tooltip}><InfoCircleOutlined /></Tooltip>
+      {label}{" "}
+      <Tooltip title={tooltip}>
+        <InfoCircleOutlined />
+      </Tooltip>
     </span>
   );
 
@@ -121,7 +126,7 @@ const AddAccount = ({
       shipping_country: "",
     });
     setSameAsBilling(false);
-  }
+  };
 
   return (
     <Drawer
@@ -145,37 +150,34 @@ const AddAccount = ({
           inline: "center",
         }}
       >
-        <div style={{ fontWeight: "bold", marginBottom: 16 }}>Account Information</div>
+        <div style={{ fontWeight: "bold", marginBottom: 16 }}>
+          Account Information
+        </div>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label={renderLabelWithTooltip("Account Owner", "Person responsible for this account")}
+              label={renderLabelWithTooltip(
+                "Account Owner",
+                "Person responsible for this account"
+              )}
               name="account_owner_name"
-              rules={[{ required: true, message: "Please enter account owner name" }]}
+              rules={[
+                { required: true, message: "Please enter account owner name" },
+              ]}
             >
-              <Input placeholder="e.g., Roshan" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              label={renderLabelWithTooltip("Rating", "Internal engagement score")}
-              name="rating"
-              rules={[{ required: true, message: "Please select a rating" }]}
-            >
-              <Select placeholder="Select rating">
-                {RATING.map((r) => (
-                  <Select.Option key={r} value={r}>{r}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label={renderLabelWithTooltip("Account Name", "Registered name of the account")}
+              label={renderLabelWithTooltip(
+                "Account Name",
+                "Registered name of the account"
+              )}
               name="account_name"
               rules={[{ required: true, message: "Please enter account name" }]}
             >
-              <Input placeholder="e.g., Roshan Enterprises" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -184,87 +186,36 @@ const AddAccount = ({
               name="phone"
               rules={[
                 { required: true, message: "Please enter phone number" },
-                { pattern: /^\d{10}$/, message: "Phone number must be 10 digits" }
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number must be 10 digits",
+                },
               ]}
             >
-              <Input placeholder="e.g., 9876543210" />
+              <Input />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          {/* <Col span={12}>
             <Form.Item label="Account Site" name="account_site">
               <Input placeholder="e.g., Head Office - Chennai" />
             </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Fax" name="fax">
-              <Input placeholder="e.g., 044-12345678" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Parent Account" name="parent_account">
-              <Input placeholder="e.g., Acme Corp" />
-            </Form.Item>
-          </Col>
+          </Col> */}
+
           <Col span={12}>
             <Form.Item label="Website" name="website">
-              <Input placeholder="e.g., www.company.com" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Account Number" name="account_number">
-              <Input placeholder="e.g., ACC-1001" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Ticker Symbol" name="ticker_symbol">
-              <Input placeholder="e.g., ROSH" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Account Type" name="account_type">
-              <Select placeholder="Select account type">
-                {ACCOUNT_TYPE.map((type) => (
-                  <Select.Option key={type} value={type}>{type}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Ownership" name="ownership">
-              <Select placeholder="Select ownership type">
-                {OWNERSHIP.map((type) => (
-                  <Select.Option key={type} value={type}>{type}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Industry" name="industry">
-              <Select placeholder="Select industry">
-                {ACCOUNT_INDUSTRY.map((industry) => (
-                  <Select.Option key={industry} value={industry}>{industry}</Select.Option>
-                ))}
-              </Select>
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Employees" name="employees">
-              <Input placeholder="e.g., 150" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Annual Revenue" name="annual_revenue">
-              <Input placeholder="e.g., 1000000" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="SIC Code" name="sic_code">
-              <Input placeholder="e.g., 3711" />
+              <Input />
             </Form.Item>
           </Col>
         </Row>
 
-        <div style={{ fontWeight: "bold", margin: "24px 0 8px" }}>Address Information</div>
+        <div style={{ fontWeight: "bold", margin: "24px 0 8px" }}>
+          Address Information
+        </div>
 
         <Form.Item>
           <Checkbox
@@ -288,59 +239,62 @@ const AddAccount = ({
         <Row gutter={16} style={{ marginTop: 12 }}>
           <Col span={12}>
             <Form.Item label="Billing Street" name="billing_street">
-              <Input placeholder="e.g., 123 MG Road" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Shipping Street" name="shipping_street">
-              <Input placeholder="e.g., 456 Anna Nagar" onChange={handleShippingChange} />
+              <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Billing City" name="billing_city">
-              <Input placeholder="e.g., Chennai" />
+              <Input  />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Shipping City" name="shipping_city">
-              <Input placeholder="e.g., Coimbatore" onChange={handleShippingChange} />
+              <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Billing State" name="billing_state">
-              <Input placeholder="e.g., Tamil Nadu" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Shipping State" name="shipping_state">
-              <Input placeholder="e.g., Kerala" onChange={handleShippingChange} />
+              <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Billing Zip Code" name="billing_zip_code">
-              <Input placeholder="e.g., 600097" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Shipping Zip Code" name="shipping_zip_code">
-              <Input placeholder="e.g., 641001" onChange={handleShippingChange} />
+              <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Billing Country" name="billing_country">
-              <Input placeholder="e.g., India" />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Shipping Country" name="shipping_country">
-              <Input placeholder="e.g., India" onChange={handleShippingChange} />
+              <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>
         </Row>
 
         <div style={{ fontWeight: "bold", marginTop: 24 }}>Description</div>
         <Form.Item name="description">
-          <TextArea rows={4} placeholder="Add description or notes for follow-up" />
+          <TextArea
+            rows={4}
+            placeholder="Add description or notes for follow-up"
+          />
         </Form.Item>
 
         <Row gutter={16} style={{ marginTop: 24 }}>

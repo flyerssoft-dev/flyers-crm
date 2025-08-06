@@ -50,14 +50,12 @@ const LeadsListFunctional = React.memo(() => {
     }
   }, [globalRedux.apiStatus, dispatch, getLeads]);
 
-
   useEffect(() => {
-      if (
-        globalRedux.apiStatus.ADD_BULK_DATA === "SUCCESS") {
-        dispatch(resetApiStatus("ADD_BULK_DATA"));
-        getLeads?.();
-      }
-    }, [globalRedux.apiStatus]);
+    if (globalRedux.apiStatus.ADD_BULK_DATA === "SUCCESS") {
+      dispatch(resetApiStatus("ADD_BULK_DATA"));
+      getLeads?.();
+    }
+  }, [globalRedux.apiStatus]);
 
   const handleDrawer = (rowData) => {
     setEditLead(rowData);
@@ -121,153 +119,124 @@ const LeadsListFunctional = React.memo(() => {
       visible: true,
       order: 8,
     },
-    { title: "Fax", dataIndex: "fax", key: "fax", visible: false, order: 9 },
     {
       title: "Mobile",
       dataIndex: "mobile",
       key: "mobile",
       visible: false,
-      order: 10,
+      order: 9,
     },
     {
       title: "Website",
       dataIndex: "website",
       key: "website",
       visible: false,
-      order: 11,
-    },
-    {
-      title: "Lead Source",
-      dataIndex: "lead_source",
-      key: "lead_source",
-      visible: false,
-      order: 12,
-    },
-    {
-      title: "Lead Status",
-      dataIndex: "lead_status",
-      key: "lead_status",
-      visible: false,
-      order: 13,
+      order: 10,
     },
     {
       title: "Industry",
       dataIndex: "industry",
       key: "industry",
       visible: false,
-      order: 14,
+      order: 11,
     },
     {
       title: "No Of Employees",
       dataIndex: "no_of_employees",
       key: "no_of_employees",
       visible: false,
-      order: 15,
+      order: 12,
     },
     {
-      title: "Annual Revenue",
-      dataIndex: "annual_revenue",
-      key: "annual_revenue",
+      title: "LinkedIn Profile",
+      dataIndex: "linkedin_profile",
+      key: "linkedin_profile",
       visible: false,
-      order: 16,
-    },
-    {
-      title: "Rating",
-      dataIndex: "rating",
-      key: "rating",
-      visible: false,
-      order: 17,
-    },
-    {
-      title: "Email Opt Out",
-      dataIndex: "email_opt_out",
-      key: "email_opt_out",
-      visible: false,
-      order: 18,
-    },
-    {
-      title: "Skype Id",
-      dataIndex: "skype_id",
-      key: "skype_id",
-      visible: false,
-      order: 19,
+      order: 13,
     },
     {
       title: "Secondary Email",
       dataIndex: "secondary_email",
       key: "secondary_email",
       visible: false,
-      order: 20,
+      order: 14,
     },
     {
-      title: "Twitter",
-      dataIndex: "twitter",
-      key: "twitter",
+      title: "Time Zone",
+      dataIndex: "time_zone",
+      key: "time_zone",
       visible: false,
-      order: 21,
+      order: 15,
+    },
+    {
+      title: "Status",
+      dataIndex: "Status",
+      key: "Status",
+      visible: false,
+      order: 15,
     },
     {
       title: "Address Line One",
       dataIndex: "address_line_one",
       key: "address_line_one",
       visible: false,
-      order: 22,
+      order: 16,
     },
     {
       title: "Address Line Two",
       dataIndex: "address_line_two",
       key: "address_line_two",
       visible: false,
-      order: 23,
+      order: 17,
     },
     {
       title: "City",
       dataIndex: "city",
       key: "city",
       visible: false,
-      order: 24,
+      order: 18,
     },
     {
       title: "State",
       dataIndex: "state",
       key: "state",
       visible: false,
-      order: 25,
+      order: 19,
     },
     {
       title: "Zip Code",
       dataIndex: "zip_code",
       key: "zip_code",
       visible: false,
-      order: 26,
+      order: 20,
     },
     {
       title: "Country",
       dataIndex: "country",
       key: "country",
       visible: false,
-      order: 27,
+      order: 21,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       visible: false,
-      order: 28,
+      order: 22,
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
       visible: false,
-      order: 29,
+      order: 23,
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
       visible: false,
-      order: 30,
+      order: 24,
     },
     {
       title: "Action",
@@ -275,14 +244,20 @@ const LeadsListFunctional = React.memo(() => {
       align: "center",
       render: (_, row) => (
         <Row justify="center">
-          <Col className="edit_icon" onClick={() => handleDrawer(row)}>
+          <Col
+            className="edit_icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDrawer(row);
+            }}
+          >
             <EditOutlined />
           </Col>
         </Row>
       ),
       visible: true,
       default: true,
-      order: 31,
+      order: 25,
     },
   ];
 
@@ -333,31 +308,26 @@ const LeadsListFunctional = React.memo(() => {
     const value = data.map((item) => ({
       lead_owner_name: item?.["Lead Owner"],
       company_name: item?.["Company Name"],
-      first_name:item?.["First Name"],
-      last_name:item?.["Last Name"],
-      title:item?.["Title"],
+      first_name: item?.["First Name"],
+      last_name: item?.["Last Name"],
+      title: item?.["Title"],
       email: item?.Email,
       phone: item?.Phone,
-      fax: item?.Fax,
       mobile: item?.Mobile,
       website: item?.Website,
-      lead_source: item?.['Lead Source'],
-      lead_status: item?.["Lead Status"],
       industry: item?.Industry,
       no_of_employees: item?.["No.of Employees"],
-      annual_revenue: item?.["Annual Revenue"],
-      rating:item?.Rating,
-      // email_opt_out: item?.['Email Opt Out'],
-      skype_id: item?.["Skype ID"],
       secondary_email: item?.["Secondary Email"],
-      twitter:item?.["Twitter"],
+      linkedin_profile: item?.["LinkedIn Profile"],
+      time_zone: item?.["Time Zone"],
+      Status: item?.["Status"],
       address_line_one: item?.["Address Line 1"],
       address_line_two: item?.["Address Line 2"],
       city: item?.City,
       state: item?.State,
       zip_code: item?.["Zip Code"],
       country: item?.Country,
-      description: item?.Description
+      description: item?.Description,
     }));
     let url = `${SERVER_IP}leads/multiple-leads`;
     dispatch(postApi(value, "ADD_BULK_DATA", url));

@@ -21,6 +21,7 @@ import {
   LEAD_STATUS,
   PLACE_OF_SUPPLY,
   RATING,
+  STATUS_VALUE,
 } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
@@ -56,7 +57,7 @@ const AddLead = ({
 
   useEffect(() => {
     if (editLead) {
-       form.setFieldsValue(editLead);
+      form.setFieldsValue(editLead);
     } else {
       form?.resetFields();
     }
@@ -64,11 +65,11 @@ const AddLead = ({
 
   const handleSubmit = (values) => {
     const data = {
-      ...values
+      ...values,
     };
     if (!editLead) {
-      let url= `${SERVER_IP}leads`
-      dispatch(postApi(data, "ADD_LEAD",url));
+      let url = `${SERVER_IP}leads`;
+      dispatch(postApi(data, "ADD_LEAD", url));
     } else {
       let url = `${SERVER_IP}leads/${editLead.id}`;
       dispatch(putApi(data, "EDIT_LEAD", url));
@@ -156,7 +157,7 @@ const AddLead = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Email" name="email">
-              <Input/>
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -165,18 +166,11 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Fax" name="fax">
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
             <Form.Item label="Mobile" name="mobile">
               <Input
                 style={{ width: "100%" }}
                 placeholder="Enter mobile number"
+                maxLength={10}
               />
             </Form.Item>
           </Col>
@@ -185,31 +179,6 @@ const AddLead = ({
               <Input />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Lead Source" name="lead_source">
-              <Select placeholder="Select Lead Source">
-                {LEAD_SOURCE.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Lead Status" name="lead_status">
-              <Select placeholder="Select Lead Status">
-                {LEAD_STATUS.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Industry" name="industry">
               <Select placeholder="Select industry">
@@ -221,34 +190,15 @@ const AddLead = ({
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="No.of Employees" name="no_of_employees">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Annual Revenue" name="annual_revenue">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Rating" name="rating">
-              <Select>
-                {RATING.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="email_opt_out" valuePropName="checked">
-              <Checkbox>Email Opt Out</Checkbox>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Skype ID" name="skype_id">
+            <Form.Item label="LinkedIn Profile" name="linkedin_profile">
               <Input />
             </Form.Item>
           </Col>
@@ -263,8 +213,20 @@ const AddLead = ({
           </Col>
           <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Twitter" name="twitter">
+            <Form.Item label="Time Zone" name="time_zone">
               <Input />
+            </Form.Item>
+          </Col>
+          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item label="Status" name="Status">
+              <Select>
+                {STATUS_VALUE.map((type) => (
+                  <Select.Option key={type} value={type}>
+                    {type}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>

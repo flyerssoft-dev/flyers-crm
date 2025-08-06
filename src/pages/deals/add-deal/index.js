@@ -77,7 +77,7 @@ const AddDeal = ({
   }, [editDeal, form]);
 
   const handleSubmit = (values) => {
-    const data = { ...values };
+    const data = { ...values, amount: `${values?.amount}` };
     if (!editDeal) {
       dispatch(postApi(data, "ADD_DEAL", `${SERVER_IP}deals`));
     } else {
@@ -283,45 +283,9 @@ const AddDeal = ({
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Type" name="type">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Probability (%)" name="probability">
-              <InputNumber min={0} max={100} style={{ width: "100%" }} />
-            </Form.Item>
-          </Col>
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Next Step" name="next_step">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Expected Revenue" name="expected_revenue">
-              <InputNumber style={{ width: "100%" }} min={0} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Lead Source" name="lead_resource">
-              <Select placeholder="Select Lead Source">
-                {LEAD_SOURCE.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Campaign Source" name="campaign_source">
-              <Input />
-            </Form.Item>
-          </Col>
           <Col span={12}>
             <Form.Item label="Contact Name" name="contact_name">
               <Input />
@@ -368,14 +332,22 @@ const AddDeal = ({
                   "Person responsible for this account"
                 )}
                 name="account_owner_name"
-                rules={[{ required: true, message: "Please enter account owner name" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter account owner name",
+                  },
+                ]}
               >
                 <Input placeholder="Account Owner Name" autoFocus />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                label={renderLabelWithTooltip("Rating", "Internal engagement score")}
+                label={renderLabelWithTooltip(
+                  "Rating",
+                  "Internal engagement score"
+                )}
                 name="rating"
                 rules={[{ required: true, message: "Please select a rating" }]}
               >
@@ -390,16 +362,24 @@ const AddDeal = ({
             </Col>
             <Col span={12}>
               <Form.Item
-                label={renderLabelWithTooltip("Account Name", "Registered name of the account")}
+                label={renderLabelWithTooltip(
+                  "Account Name",
+                  "Registered name of the account"
+                )}
                 name="account_name"
-                rules={[{ required: true, message: "Please enter account name" }]}
+                rules={[
+                  { required: true, message: "Please enter account name" },
+                ]}
               >
                 <Input placeholder="Enter the Account Name" />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                label={renderLabelWithTooltip("Phone", "Primary contact number")}
+                label={renderLabelWithTooltip(
+                  "Phone",
+                  "Primary contact number"
+                )}
                 name="phone"
                 rules={[
                   { required: true, message: "Please enter phone number" },
