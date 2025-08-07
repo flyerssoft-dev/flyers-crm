@@ -284,38 +284,38 @@ const MENUS = [
   // 		},
   // 	],
   // },
-  {
-  	name: 'Inventory',
-  	icon: <BsBoxSeam />,
-  	route: '/inventory',
-  	key: '13',
-  	submenus: [
-  		{
-  			name: 'Items',
-  			icon: <BsBoxSeam />,
-  			route: '/items',
-  			key: '14',
-  		},
-  		{
-  			name: 'Stocks',
-  			icon: <BsBoxSeam />,
-  			route: '/stocks',
-  			key: '15',
-  		},
-  		// {
-  		// 	name: 'Stock Adjustment',
-  		// 	icon: <BsBoxSeam />,
-  		// 	route: '/stock-adjustment',
-  		// 	key: '24',
-  		// },
-  		// {
-  		// 	name: 'Production Entry',
-  		// 	icon: <BsBoxSeam />,
-  		// 	route: '/production-entry',
-  		// 	key: '16',
-  		// },
-  	],
-  },
+  // {
+  // 	name: 'Inventory',
+  // 	icon: <BsBoxSeam />,
+  // 	route: '/inventory',
+  // 	key: '13',
+  // 	submenus: [
+  // 		{
+  // 			name: 'Items',
+  // 			icon: <BsBoxSeam />,
+  // 			route: '/items',
+  // 			key: '14',
+  // 		},
+  // 		{
+  // 			name: 'Stocks',
+  // 			icon: <BsBoxSeam />,
+  // 			route: '/stocks',
+  // 			key: '15',
+  // 		},
+  // 		{
+  // 			name: 'Stock Adjustment',
+  // 			icon: <BsBoxSeam />,
+  // 			route: '/stock-adjustment',
+  // 			key: '24',
+  // 		},
+  // 		{
+  // 			name: 'Production Entry',
+  // 			icon: <BsBoxSeam />,
+  // 			route: '/production-entry',
+  // 			key: '16',
+  // 		},
+  // 	],
+  // },
   // {
   // 	name: 'Schedulers',
   // 	icon: <FI.FiUsers />,
