@@ -156,26 +156,59 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Email" name="email">
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  type: "email",
+                  message: "Please enter a valid email address",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Phone" name="phone">
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number must be exactly 10 digits",
+                },
+              ]}
+            >
               <Input maxLength={10} placeholder="Enter phone number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Mobile" name="mobile">
-              <Input
-                style={{ width: "100%" }}
-                placeholder="Enter mobile number"
-                maxLength={10}
-              />
+            <Form.Item
+              label="Mobile"
+              name="mobile"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Mobile number must be exactly 10 digits",
+                },
+              ]}
+            >
+              <Input maxLength={10} placeholder="Enter mobile number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Website" name="website">
+            <Form.Item
+              label="Website"
+              name="website"
+              rules={[
+                {
+                  pattern:
+                    /^(https?:\/\/)?([\w\d-]+\.){1,}[\w]{2,}(\/[\w\d#?&%=.-]*)*\/?$/,
+                  message: "Please enter a valid website URL",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
@@ -191,6 +224,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
         </Row>
+
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="No.of Employees" name="no_of_employees">
@@ -257,7 +291,16 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Zip Code" name="zip_code">
+            <Form.Item
+              label="Zip Code"
+              name="zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input placeholder="Zip code" />
             </Form.Item>
           </Col>
@@ -267,6 +310,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
         </Row>
+
         <div style={{ fontWeight: "bold", marginBottom: 16, marginTop: 16 }}>
           Description Information
         </div>

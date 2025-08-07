@@ -195,15 +195,19 @@ const AddAccount = ({
               <Input />
             </Form.Item>
           </Col>
-          {/* <Col span={12}>
-            <Form.Item label="Account Site" name="account_site">
-              <Input placeholder="e.g., Head Office - Chennai" />
-            </Form.Item>
-          </Col> */}
-
           <Col span={12}>
-            <Form.Item label="Website" name="website">
-              <Input />
+            <Form.Item
+              label="Website"
+              name="website"
+              rules={[
+                {
+                  pattern:
+                    /^(https?:\/\/)?([\w\d-]+\.){1,}[\w]{2,}(\/[\w\d#?&%=.-]*)*\/?$/,
+                  message: "Please enter a valid website URL",
+                },
+              ]}
+            >
+              <Input placeholder="e.g., https://example.com" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -249,7 +253,7 @@ const AddAccount = ({
           </Col>
           <Col span={12}>
             <Form.Item label="Billing City" name="billing_city">
-              <Input  />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -268,12 +272,30 @@ const AddAccount = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Billing Zip Code" name="billing_zip_code">
+            <Form.Item
+              label="Billing Zip Code"
+              name="billing_zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Shipping Zip Code" name="shipping_zip_code">
+            <Form.Item
+              label="Shipping Zip Code"
+              name="shipping_zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input onChange={handleShippingChange} />
             </Form.Item>
           </Col>

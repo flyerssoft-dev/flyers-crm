@@ -14,7 +14,12 @@ import {
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { putApi } from "redux/sagas/putApiSaga";
-import { API_STATUS, LEAD_SOURCE, RATING, STATUS_VALUE } from "constants/app-constants";
+import {
+  API_STATUS,
+  LEAD_SOURCE,
+  RATING,
+  STATUS_VALUE,
+} from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
@@ -254,7 +259,16 @@ const AddContact = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Email" name="email">
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  type: "email",
+                  message: "Please enter a valid email address",
+                },
+              ]}
+            >
               <Input placeholder="Enter email" />
             </Form.Item>
           </Col>
@@ -267,7 +281,16 @@ const AddContact = ({
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Phone" name="phone">
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number must be exactly 10 digits",
+                },
+              ]}
+            >
               <Input
                 style={{ width: "100%" }}
                 placeholder="Enter phone number"
@@ -282,7 +305,16 @@ const AddContact = ({
           </Col>
 
           <Col span={12}>
-            <Form.Item label="Mobile" name="mobile">
+            <Form.Item
+              label="Mobile"
+              name="mobile"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Mobile number must be exactly 10 digits",
+                },
+              ]}
+            >
               <Input maxLength={10} placeholder="Enter mobile number" />
             </Form.Item>
           </Col>
@@ -355,12 +387,30 @@ const AddContact = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Mailing Zip Code" name="mailing_zip_code">
+            <Form.Item
+              label="Mailing Zip Code"
+              name="mailing_zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Other Zip Code" name="other_zip_code">
+            <Form.Item
+              label="Other Zip Code"
+              name="other_zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>

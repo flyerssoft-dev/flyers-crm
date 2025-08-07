@@ -203,7 +203,7 @@ const AccountsListPresentational = ({
               v
             ),
           "Billing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
-          "Billing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+          "Shipping Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
         }}
         onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
