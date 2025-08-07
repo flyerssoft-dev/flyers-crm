@@ -117,29 +117,18 @@ const AccountsListFunctional = React.memo(() => {
       ),
       order: 2,
     },
-    {
-      title: "Account Site",
-      dataIndex: "account_site",
-      key: "account_site",
-      visible: true,
-      ...renderFilterDropdown("account_site"),
-      render: (value) => (
-        <HighlightComponent textToHighlight={value} searchWords={[searchKey]} />
-      ),
-      order: 3,
-    },
+    // {
+    //   title: "Account Site",
+    //   dataIndex: "account_site",
+    //   key: "account_site",
+    //   visible: true,
+    //   ...renderFilterDropdown("account_site"),
+    //   render: (value) => (
+    //     <HighlightComponent textToHighlight={value} searchWords={[searchKey]} />
+    //   ),
+    //   order: 3,
+    // },
 
-    {
-      title: "Parent Account",
-      dataIndex: "parent_account",
-      key: "parent_account",
-      visible: true,
-      ...renderFilterDropdown("parent_account"),
-      render: (value) => (
-        <HighlightComponent textToHighlight={value} searchWords={[searchKey]} />
-      ),
-      order: 4,
-    },
     {
       title: "Website",
       dataIndex: "website",
@@ -154,166 +143,105 @@ const AccountsListFunctional = React.memo(() => {
         ) : (
           "-"
         ),
-      order: 5,
-    },
-    {
-      title: "Account Number",
-      dataIndex: "account_number",
-      key: "account_number",
-      visible: true,
-      ...renderFilterDropdown("account_number"),
-      render: (value) => (
-        <HighlightComponent textToHighlight={value} searchWords={[searchKey]} />
-      ),
-      order: 6,
-    },
-    {
-      title: "Rating",
-      dataIndex: "rating",
-      key: "rating",
-      visible: false,
-      order: 7,
-    },
-    { title: "Fax", dataIndex: "fax", key: "fax", visible: false, order: 8 },
-    {
-      title: "Ticker Symbol",
-      dataIndex: "ticker_symbol",
-      key: "ticker_symbol",
-      visible: false,
-      order: 9,
-    },
-    {
-      title: "Account Type",
-      dataIndex: "account_type",
-      key: "account_type",
-      visible: false,
-      order: 10,
-    },
-    {
-      title: "Ownership",
-      dataIndex: "ownership",
-      key: "ownership",
-      visible: false,
-      order: 11,
-    },
-    {
-      title: "Industry",
-      dataIndex: "industry",
-      key: "industry",
-      visible: false,
-      order: 12,
+      order: 3,
     },
     {
       title: "Employees",
       dataIndex: "employees",
       key: "employees",
       visible: false,
-      order: 13,
-    },
-    {
-      title: "Annual Revenue",
-      dataIndex: "annual_revenue",
-      key: "annual_revenue",
-      visible: false,
-      order: 14,
-    },
-    {
-      title: "SIC Code",
-      dataIndex: "sic_code",
-      key: "sic_code",
-      visible: false,
-      order: 15,
+      order: 4,
     },
     {
       title: "Billing Street",
       dataIndex: "billing_street",
       key: "billing_street",
       visible: false,
-      order: 16,
+      order: 5,
     },
     {
       title: "Shipping Street",
       dataIndex: "shipping_street",
       key: "shipping_street",
       visible: false,
-      order: 17,
+      order: 6,
     },
     {
       title: "Billing City",
       dataIndex: "billing_city",
       key: "billing_city",
       visible: false,
-      order: 18,
+      order: 7,
     },
     {
       title: "Shipping City",
       dataIndex: "shipping_city",
       key: "shipping_city",
       visible: false,
-      order: 19,
+      order: 8,
     },
     {
       title: "Billing State",
       dataIndex: "billing_state",
       key: "billing_state",
       visible: false,
-      order: 20,
+      order: 9,
     },
     {
       title: "Shipping State",
       dataIndex: "shipping_state",
       key: "shipping_state",
       visible: false,
-      order: 21,
+      order: 10,
     },
     {
       title: "Billing Zip Code",
       dataIndex: "billing_zip_code",
       key: "billing_zip_code",
       visible: false,
-      order: 22,
+      order: 11,
     },
     {
       title: "Shipping Zip Code",
       dataIndex: "shipping_zip_code",
       key: "shipping_zip_code",
       visible: false,
-      order: 23,
+      order: 12,
     },
     {
       title: "Billing Country",
       dataIndex: "billing_country",
       key: "billing_country",
       visible: false,
-      order: 24,
+      order: 13,
     },
     {
       title: "Shipping Country",
       dataIndex: "shipping_country",
       key: "shipping_country",
       visible: false,
-      order: 25,
+      order: 14,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       visible: false,
-      order: 26,
+      order: 15,
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
       visible: false,
-      order: 27,
+      order: 16,
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
       visible: false,
-      order: 28,
+      order: 17,
     },
     {
       title: "Action",
@@ -321,14 +249,20 @@ const AccountsListFunctional = React.memo(() => {
       align: "center",
       render: (_, row) => (
         <Row justify="center">
-          <Col className="edit_icon" onClick={() => handleDrawer(row)}>
+          <Col
+            className="edit_icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDrawer(row);
+            }}
+          >
             <EditOutlined />
           </Col>
         </Row>
       ),
       visible: true,
       default: true,
-      order: 29,
+      order: 18,
     },
   ];
 
@@ -400,24 +334,16 @@ const AccountsListFunctional = React.memo(() => {
   }, [globalRedux.apiStatus]);
 
   const onUploadData = (data) => {
-
     const AccountValue = data.map((item) => ({
       account_owner_name: item?.["Account Owner"],
-      rating: item?.Rating,
+
       account_name: item?.["Account Name"],
       phone: item?.Phone,
-      account_site: item?.["Account Site"],
-      fax: item?.Fax,
-      parent_account: item?.["Parent Account"],
+
       website: item?.Website,
-      account_number: item?.["Account Number"],
-      ticker_symbol: item?.["Ticker Symbol"],
-      account_type: item?.["Account Type"],
-      ownership: item?.Ownership,
-      industry: item?.Industry,
+
       employees: `${item?.Employees}`,
-      annual_revenue: `${item?.["Annual Revenue"]}`,
-      sic_code: item?.["SIC Code"],
+
       billing_street: item?.["Billing Street"],
       shipping_street: item?.["Shipping Street"],
       billing_city: item?.["Billing City"],
@@ -431,7 +357,7 @@ const AccountsListFunctional = React.memo(() => {
       description: item?.["Description"],
     }));
 
-    console.log('AccountValue',AccountValue)
+    console.log("AccountValue", AccountValue);
     let account_url = `${SERVER_IP}account/multiple-accounts`;
     dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
   };

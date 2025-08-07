@@ -284,38 +284,38 @@ const MENUS = [
   // 		},
   // 	],
   // },
-  // {
-  // 	name: 'Inventory',
-  // 	icon: <BsBoxSeam />,
-  // 	route: '/inventory',
-  // 	key: '13',
-  // 	submenus: [
-  // 		{
-  // 			name: 'Items',
-  // 			icon: <BsBoxSeam />,
-  // 			route: '/items',
-  // 			key: '14',
-  // 		},
-  // 		{
-  // 			name: 'Stocks',
-  // 			icon: <BsBoxSeam />,
-  // 			route: '/stocks',
-  // 			key: '15',
-  // 		},
-  // 		// {
-  // 		// 	name: 'Stock Adjustment',
-  // 		// 	icon: <BsBoxSeam />,
-  // 		// 	route: '/stock-adjustment',
-  // 		// 	key: '24',
-  // 		// },
-  // 		{
-  // 			name: 'Production Entry',
-  // 			icon: <BsBoxSeam />,
-  // 			route: '/production-entry',
-  // 			key: '16',
-  // 		},
-  // 	],
-  // },
+  {
+  	name: 'Inventory',
+  	icon: <BsBoxSeam />,
+  	route: '/inventory',
+  	key: '13',
+  	submenus: [
+  		{
+  			name: 'Items',
+  			icon: <BsBoxSeam />,
+  			route: '/items',
+  			key: '14',
+  		},
+  		{
+  			name: 'Stocks',
+  			icon: <BsBoxSeam />,
+  			route: '/stocks',
+  			key: '15',
+  		},
+  		// {
+  		// 	name: 'Stock Adjustment',
+  		// 	icon: <BsBoxSeam />,
+  		// 	route: '/stock-adjustment',
+  		// 	key: '24',
+  		// },
+  		// {
+  		// 	name: 'Production Entry',
+  		// 	icon: <BsBoxSeam />,
+  		// 	route: '/production-entry',
+  		// 	key: '16',
+  		// },
+  	],
+  },
   // {
   // 	name: 'Schedulers',
   // 	icon: <FI.FiUsers />,
@@ -571,7 +571,7 @@ const ROUTES = [
     route: "account/:accountId",
     Component: AccountDetails,
   },
-   {
+  {
     route: "deals/:dealId",
     Component: DealDetails,
   },
@@ -873,4 +873,23 @@ export const DEAL_STAGE = [
   "Closed Won",
   "Closed Lost",
   "Closed Lost to Competition",
+];
+
+export const STATUS_VALUE = [
+  "-None-",
+  "Untouched",
+  "Voice Mail",
+  "No Answer",
+  "Call Back Later",
+  "Not Interested",
+  "Warm Lead",
+  "Hot Lead",
+  "Call Not Connecting",
+  "Send Email",
+  "Have In House Team",
+  "Meeting Scheduled",
+  "Meeting Completed",
+  "DNC",
+  "No Show",
+  "Convert to lead",
 ];

@@ -177,24 +177,13 @@ const AccountsListPresentational = ({
       />
 
       <ExcelUploader
-        requiredFields={["Account Owner", "Rating", "Account Name", "Phone"]}
+        requiredFields={["Account Owner", "Account Name", "Phone"]}
         formFields={[
           "Account Owner",
-          "Rating",
           "Account Name",
           "Phone",
-          "Account Site",
-          "Fax",
-          "Parent Account",
           "Website",
-          "Account Number",
-          "Ticker Symbol",
-          "Account Type",
-          "Ownership",
-          "Industry",
           "Employees",
-          "Annual Revenue",
-          "SIC Code",
           "Billing Street",
           "Shipping Street",
           "Billing City",
@@ -207,6 +196,15 @@ const AccountsListPresentational = ({
           "Shipping Country",
           "Description",
         ]}
+         validationRules={{
+          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Website: (v) =>
+            /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
+              v
+            ),
+          "Billing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+          "Shipping Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+        }}
         onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}

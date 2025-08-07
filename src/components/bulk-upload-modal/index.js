@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
-import { Drawer, Button } from "antd";
+import { Drawer, Button, Tooltip } from "antd"; // Tooltip imported here
 import styles from "./ExcelUploader.module.scss";
 import { UploadOutlined } from "@ant-design/icons";
 import { BsFileSpreadsheet } from "react-icons/bs";
@@ -11,13 +11,16 @@ const ExcelUploader = ({
   onDataSubmit,
   open,
   onClose,
+  validationRules = {},
 }) => {
-  const [file, setFile] = useState(null);
+const [file, setFile] = useState(null);
   const [excelData, setExcelData] = useState(null);
   const [columnMapping, setColumnMapping] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [mappedData, setMappedData] = useState([]);
   const fileInputRef = useRef(null);
 
   const handleDrag = (e) => {
@@ -73,6 +76,10 @@ const ExcelUploader = ({
           if (match) autoMapping[field] = match;
         });
         setColumnMapping(autoMapping);
+
+        const { mappedRows, errors } = generateMappedDataWithMapping(autoMapping);
+        setMappedData(mappedRows);
+        setValidationErrors(errors);
       }
     } catch (error) {
       console.error("Error reading Excel file:", error);
@@ -83,31 +90,69 @@ const ExcelUploader = ({
   };
 
   const handleMappingChange = (field, selectedHeader) => {
-    setColumnMapping((prev) => ({
-      ...prev,
+    const updatedMapping = {
+      ...columnMapping,
       [field]: selectedHeader,
-    }));
+    };
+    setColumnMapping(updatedMapping);
+
+    const { mappedRows, errors } = generateMappedDataWithMapping(updatedMapping);
+    setMappedData(mappedRows);
+    setValidationErrors(errors);
   };
 
-  const getMappedData = () => {
-    if (!excelData) return [];
-    return excelData.rows.map((row) => {
+  const generateMappedDataWithMapping = (mapping) => {
+    if (!excelData) return { mappedRows: [], errors: [] };
+
+    const errors = [];
+
+    const mappedRows = excelData.rows.map((row, rowIndex) => {
       const mappedRow = {};
-      Object.entries(columnMapping).forEach(([field, selectedHeader]) => {
+      Object.entries(mapping).forEach(([field, selectedHeader]) => {
         const headerIndex = excelData.headers.indexOf(selectedHeader);
         if (headerIndex !== -1) {
-          mappedRow[field] = row[headerIndex];
+          const value = row[headerIndex];
+          mappedRow[field] = value;
+
+          if (value && validationRules[field] && !validationRules[field](value)) {
+            errors.push({ row: rowIndex, field, value });
+          }
         }
       });
       return mappedRow;
     });
+
+    return { mappedRows, errors };
   };
 
   const handleSubmit = () => {
-    const mappedData = getMappedData();
-    onDataSubmit(mappedData);
+    const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
+
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      alert(
+        `Validation failed:\n${errors
+          .map(
+            (err) =>
+              `Row ${err.row + 1}: Invalid ${err.field} (${err.value || "empty"})`
+          )
+          .join("\n")}`
+      );
+      return;
+    }
+
+    setValidationErrors([]);
+    setMappedData(mappedRows);
+    onDataSubmit(mappedRows);
     onClose?.();
     resetUpload();
+  };
+
+  const togglePreview = () => {
+    const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
+    setMappedData(mappedRows);
+    setValidationErrors(errors);
+    setShowPreview((prev) => !prev);
   };
 
   const isAllFieldsMapped = () =>
@@ -117,10 +162,25 @@ const ExcelUploader = ({
     setFile(null);
     setExcelData(null);
     setColumnMapping({});
+    setMappedData([]);
+    setValidationErrors([]);
     setShowPreview(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  const getErrorMap = () => {
+    const map = {};
+    validationErrors.forEach((err) => {
+      map[`${err.row}-${err.field}`] = true;
+    });
+    return map;
+  };
+
+  const hasFieldError = (field) => {
+    return validationErrors.some((err) => err.field === field);
+  };
+
+  const errorMap = getErrorMap();
   return (
     <Drawer
       title="Excel Data Importer"
@@ -201,48 +261,59 @@ const ExcelUploader = ({
                             <span className={styles.required}>*</span>
                           )}
                         </label>
-                        <select
-                          value={columnMapping[field] || ""}
-                          onChange={(e) =>
-                            handleMappingChange(field, e.target.value)
+                        <Tooltip
+                          title={
+                            hasFieldError(field)
+                              ? `Some data in the ${field} column is invalid`
+                              : ""
                           }
                         >
-                          <option value="">Select column...</option>
-                          {excelData.headers.map((header) => (
-                            <option key={header} value={header}>
-                              {header}
-                            </option>
-                          ))}
-                        </select>
+                          <select
+                            value={columnMapping[field] || ""}
+                            onChange={(e) =>
+                              handleMappingChange(field, e.target.value)
+                            }
+                            className={
+                              hasFieldError(field) ? styles.selectError : ""
+                            }
+                          >
+                            <option value="">Select column...</option>
+                            {excelData.headers.map((header) => (
+                              <option key={header} value={header}>
+                                {header}
+                              </option>
+                            ))}
+                          </select>
+                        </Tooltip>
                       </div>
                     ))}
                   </div>
+                </div>
 
-                  <div className={styles.mappingStatus}>
-                    <div className={styles.statusIndicator}>
-                      <div
-                        className={`${styles.statusDot} ${
-                          isAllFieldsMapped() ? styles.complete : styles.partial
-                        }`}
-                      />
-                      <span>
-                        {Object.keys(columnMapping).length} of{" "}
-                        {formFields.length} fields mapped
-                      </span>
-                    </div>
-                    {isAllFieldsMapped() && (
-                      <div className={styles.readyIndicator}>
-                        <span>Ready to import</span>
-                      </div>
-                    )}
+                <div className={styles.mappingStatus}>
+                  <div className={styles.statusIndicator}>
+                    <div
+                      className={`${styles.statusDot} ${
+                        isAllFieldsMapped() ? styles.complete : styles.partial
+                      }`}
+                    />
+                    <span>
+                      {Object.keys(columnMapping).length} of {formFields.length}{" "}
+                      fields mapped
+                    </span>
                   </div>
+                  {isAllFieldsMapped() && (
+                    <div className={styles.readyIndicator}>
+                      <span>Ready to import</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.previewSection}>
                   <div className={styles.previewHeader}>
                     <h3>Data Preview</h3>
                     <button
-                      onClick={() => setShowPreview(!showPreview)}
+                      onClick={togglePreview}
                       className={styles.toggleButton}
                     >
                       <span>{showPreview ? "Hide" : "Show"} Preview</span>
@@ -261,15 +332,22 @@ const ExcelUploader = ({
                             </tr>
                           </thead>
                           <tbody>
-                            {getMappedData()
-                              .slice(0, 5)
-                              .map((row, index) => (
-                                <tr key={index}>
-                                  {formFields.map((field) => (
-                                    <td key={field}>{row[field] || "-"}</td>
-                                  ))}
-                                </tr>
-                              ))}
+                            {mappedData.map((row, index) => (
+                              <tr key={index}>
+                                {formFields.map((field) => (
+                                  <td
+                                    key={field}
+                                    className={
+                                      errorMap[`${index}-${field}`]
+                                        ? styles.errorCell
+                                        : ""
+                                    }
+                                  >
+                                    {row[field] || "-"}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                       </div>
@@ -282,6 +360,20 @@ const ExcelUploader = ({
                     </div>
                   )}
                 </div>
+
+                {validationErrors.length > 0 && (
+                  <div className={styles.validationErrors}>
+                    <h4>Validation Errors</h4>
+                    <ul>
+                      {validationErrors.map((err, idx) => (
+                        <li key={idx}>
+                          Row {err.row + 1}: Invalid{" "}
+                          <strong>{err.field}</strong> – <em>{err.value}</em>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <div className={styles.submitSection}>
                   <Button

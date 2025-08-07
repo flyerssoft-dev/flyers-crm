@@ -21,6 +21,7 @@ import {
   LEAD_STATUS,
   PLACE_OF_SUPPLY,
   RATING,
+  STATUS_VALUE,
 } from "constants/app-constants";
 import { SERVER_IP } from "assets/Config";
 import { postApi } from "redux/sagas/postApiDataSaga";
@@ -56,7 +57,7 @@ const AddLead = ({
 
   useEffect(() => {
     if (editLead) {
-       form.setFieldsValue(editLead);
+      form.setFieldsValue(editLead);
     } else {
       form?.resetFields();
     }
@@ -64,11 +65,11 @@ const AddLead = ({
 
   const handleSubmit = (values) => {
     const data = {
-      ...values
+      ...values,
     };
     if (!editLead) {
-      let url= `${SERVER_IP}leads`
-      dispatch(postApi(data, "ADD_LEAD",url));
+      let url = `${SERVER_IP}leads`;
+      dispatch(postApi(data, "ADD_LEAD", url));
     } else {
       let url = `${SERVER_IP}leads/${editLead.id}`;
       dispatch(putApi(data, "EDIT_LEAD", url));
@@ -155,61 +156,62 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Email" name="email">
-              <Input/>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  type: "email",
+                  message: "Please enter a valid email address",
+                },
+              ]}
+            >
+              <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Phone" name="phone">
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number must be exactly 10 digits",
+                },
+              ]}
+            >
               <Input maxLength={10} placeholder="Enter phone number" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Fax" name="fax">
+            <Form.Item
+              label="Mobile"
+              name="mobile"
+              rules={[
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Mobile number must be exactly 10 digits",
+                },
+              ]}
+            >
+              <Input maxLength={10} placeholder="Enter mobile number" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Website"
+              name="website"
+              rules={[
+                {
+                  pattern:
+                    /^(https?:\/\/)?([\w\d-]+\.){1,}[\w]{2,}(\/[\w\d#?&%=.-]*)*\/?$/,
+                  message: "Please enter a valid website URL",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Mobile" name="mobile">
-              <Input
-                style={{ width: "100%" }}
-                placeholder="Enter mobile number"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Website" name="website">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Lead Source" name="lead_source">
-              <Select placeholder="Select Lead Source">
-                {LEAD_SOURCE.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Lead Status" name="lead_status">
-              <Select placeholder="Select Lead Status">
-                {LEAD_STATUS.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Industry" name="industry">
               <Select placeholder="Select industry">
@@ -221,34 +223,16 @@ const AddLead = ({
               </Select>
             </Form.Item>
           </Col>
+        </Row>
+
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="No.of Employees" name="no_of_employees">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Annual Revenue" name="annual_revenue">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Rating" name="rating">
-              <Select>
-                {RATING.map((type) => (
-                  <Select.Option key={type} value={type}>
-                    {type}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="email_opt_out" valuePropName="checked">
-              <Checkbox>Email Opt Out</Checkbox>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Skype ID" name="skype_id">
+            <Form.Item label="LinkedIn Profile" name="linkedin_profile">
               <Input />
             </Form.Item>
           </Col>
@@ -263,8 +247,20 @@ const AddLead = ({
           </Col>
           <Col span={12}></Col>
           <Col span={12}>
-            <Form.Item label="Twitter" name="twitter">
+            <Form.Item label="Time Zone" name="time_zone">
               <Input />
+            </Form.Item>
+          </Col>
+          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item label="Status" name="Status">
+              <Select>
+                {STATUS_VALUE.map((type) => (
+                  <Select.Option key={type} value={type}>
+                    {type}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
@@ -295,7 +291,16 @@ const AddLead = ({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Zip Code" name="zip_code">
+            <Form.Item
+              label="Zip Code"
+              name="zip_code"
+              rules={[
+                {
+                  pattern: /^\d{5,6}$/,
+                  message: "Zip Code must be 5 or 6 digits",
+                },
+              ]}
+            >
               <Input placeholder="Zip code" />
             </Form.Item>
           </Col>
@@ -305,6 +310,7 @@ const AddLead = ({
             </Form.Item>
           </Col>
         </Row>
+
         <div style={{ fontWeight: "bold", marginBottom: 16, marginTop: 16 }}>
           Description Information
         </div>

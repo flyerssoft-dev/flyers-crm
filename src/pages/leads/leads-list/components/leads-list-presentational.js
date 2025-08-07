@@ -187,19 +187,11 @@ const LeadsListPresentational = ({
           "Last Name",
           "Email",
           "Phone",
-          "Fax",
           "Mobile",
           "Website",
-          "Lead Source",
-          "Lead Status",
           "Industry",
           "No.of Employees",
-          "Annual Revenue",
-          "Rating",
-          "Email Opt Out",
-          "Skype ID",
           "Secondary Email",
-          "Twitter",
           "Address Line 1",
           "Address Line 2",
           "City",
@@ -208,6 +200,16 @@ const LeadsListPresentational = ({
           "Country",
           "Description",
         ]}
+        validationRules={{
+          Email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Mobile: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Website: (v) =>
+            /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
+              v
+            ),
+          "Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
+        }}
         onDataSubmit={(data) => onUploadData(data)}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
