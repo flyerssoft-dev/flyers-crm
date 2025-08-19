@@ -196,18 +196,24 @@ const MENUS = [
     route: "/deals",
     key: "5",
   },
+   {
+    name: "Calls",
+    icon: <FI.FiUsers />,
+    route: "/calls",
+    key: "6",
+  },
   // {
   //   name: "Customers",
   //   icon: <FI.FiUsers />,
   //   route: "/customers",
   //   key: "5",
   // },
-  //  {
-  // 	name: 'Users and Controls',
-  // 	icon: <FI.FiUsers />,
-  // 	route: '/users-controls',
-  // 	key: '6',
-  // },
+   {
+  	name: 'Users and Controls',
+  	icon: <FI.FiUsers />,
+  	route: '/users-controls',
+  	key: '7',
+  },
   // {
   // 	name: 'Sales',
   // 	icon: <FI.FiUsers />,

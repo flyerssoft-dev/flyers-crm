@@ -25,6 +25,7 @@ const ContactListFunctional = React.memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [accountDropdownValue, setAccountDropDownValue] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -35,9 +36,25 @@ const ContactListFunctional = React.memo(() => {
     dispatch(getApi("GET_CONTACT", url));
   }, [dispatch, searchKey, currentPage, pageSize]);
 
+  const getuserDetails = useCallback(() => {
+    const page = 1;
+    const limit = 50;
+    let user_details_url = `${SERVER_IP}employeeDetails/getAllEmployeeDetails?page=${page}&limit=${limit}&sort=asc`;
+    dispatch(getApi("GET_USER_DETAILS", user_details_url));
+  }, [dispatch]);
+
   useEffect(() => {
     getContacts();
+    getuserDetails();
   }, [getContacts]);
+
+  useEffect(() => {
+    const value = globalRedux.accountBooks.map((item) => ({
+      label: item?.account_name,
+      value: item?.id,
+    }));
+    setAccountDropDownValue(value);
+  }, [globalRedux?.accountBooks]);
 
   useEffect(() => {
     let doIt = false;
@@ -97,7 +114,15 @@ const ContactListFunctional = React.memo(() => {
       key: "account_name",
       visible: true,
       order: 4,
+      render: (name) => {
+        const account = globalRedux.accountBooks?.find(
+          (item) => item?.id === name
+        );
+        console.log("account", account, accountDropdownValue);
+        return <span>{account?.account_name || name || "-"}</span>;
+      },
     },
+
     {
       title: "Title",
       dataIndex: "title",
@@ -321,10 +346,24 @@ const ContactListFunctional = React.memo(() => {
   }, [setContactAddModal, setEditContact]);
 
   const onUploadData = (data) => {
+    // const AccountValue = data.map((item) => ({
+    //   account_owner_name: item?.["Contact Owner"],
+    //   account_name: item?.["Account Name"],
+    //   phone: item?.Phone,
+    // }));
+    // let account_url = `${SERVER_IP}account/multiple-accounts`;
+    // dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
+
+    const accountMap = {};
+    globalRedux.accountBooks?.forEach((acc) => {
+      accountMap[acc.account_name] = acc.id;
+    });
+
     const value = data.map((item) => ({
       contact_owner_name: item?.["Contact Owner"],
       first_name: item?.["First Name"],
       last_name: item?.["Last Name"],
+      account_id: accountMap[item?.["Account Name"]],
       account_name: item?.["Account Name"],
       email: item?.Email,
       title: item?.Title,
@@ -349,15 +388,6 @@ const ContactListFunctional = React.memo(() => {
     }));
     let url = `${SERVER_IP}contact/multiple-records`;
     dispatch(postApi(value, "ADD_BULK_CONTACT_DATA", url));
-
-    const AccountValue = data.map((item) => ({
-      account_owner_name: item?.["Contact Owner"],
-      rating: "-None-",
-      account_name: item?.["Account Name"],
-      phone: item?.Phone,
-    }));
-    let account_url = `${SERVER_IP}account/multiple-accounts`;
-    dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
   };
 
   return (
@@ -386,6 +416,7 @@ const ContactListFunctional = React.memo(() => {
         drawerOpen,
         setDrawerOpen,
         onUploadData,
+        setSelectedRowKeys,
       }}
     />
   );

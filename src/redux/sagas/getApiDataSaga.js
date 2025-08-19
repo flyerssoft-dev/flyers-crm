@@ -67,6 +67,7 @@ import {
   setContactById,
 } from "redux/reducers/contact/contactAction";
 import { setDeals, setIndividulDeal } from "redux/reducers/deals/dealAction";
+import { userDetails } from "redux/reducers/users/action";
 
 function getApi(apiName, url, extras) {
   return {
@@ -273,6 +274,9 @@ function* getApiDataSuccess(response, apiName, extras) {
       break;
     case "PROFILE_API":
       yield put(loginUserDetails(response || {}));
+      break;
+    case "GET_USER_DETAILS":
+      yield put(userDetails(response|| []));
       break;
     default:
       break;
