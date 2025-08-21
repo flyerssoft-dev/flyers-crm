@@ -6,7 +6,12 @@ import { SERVER_IP } from "assets/Config";
 import { getApi } from "redux/sagas/getApiDataSaga";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { PhoneOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  EditOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 import {
   Clock,
   Mic,
@@ -19,6 +24,9 @@ import {
 } from "lucide-react";
 import { useTwilioVoice } from "hooks/useTwilioVoice";
 import { postApi } from "redux/sagas/postApiDataSaga";
+import History from "components/history-timeline";
+import { STATUS_VALUE } from "constants/app-constants";
+import { putApi } from "redux/sagas/putApiSaga";
 
 const displayValue = (value) =>
   value && String(value).trim() !== "" ? value : "-";
@@ -29,6 +37,7 @@ const ContactDetailsPresentational = () => {
   const { contactId } = useParams();
   const contactRedux = useSelector((state) => state.contactRedux);
   const userRedux = useSelector((state) => state.userRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isRegistered, setIsRegistered] = useState(false);
@@ -36,6 +45,12 @@ const ContactDetailsPresentational = () => {
   const [assignDropdownValue, setAssignDropdownValue] = useState([]);
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [statusValue, setStatusValue] = useState(
+    contactRedux?.contactData?.Status || ""
+  );
+
+  const [activeTab, setActiveTab] = useState("contactDetails");
 
   const {
     device,
@@ -67,10 +82,9 @@ const ContactDetailsPresentational = () => {
     }
   }, [userRedux?.userDetails]);
 
-  console.log(
-    "userRedux?.userDetails?.message",
-    userRedux?.userDetails?.message
-  );
+  useEffect(() => {
+    setStatusValue(contactRedux?.contactData?.Status || "");
+  }, [contactRedux?.contactData?.Status]);
 
   const formatDuration = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -90,7 +104,7 @@ const ContactDetailsPresentational = () => {
     }
   }, [device]);
 
-  const handleCall = async (number) => {
+  const handleCall = async (number, data) => {
     if (!number) return;
     if (!isRegistered) {
       console.error("Device not registered yet");
@@ -98,6 +112,18 @@ const ContactDetailsPresentational = () => {
     }
 
     await makeCall(`${number}`);
+    const payload = {
+      contact_id: data?.id,
+      type: "Outbound",
+      caller_id: loginRedux?.id,
+      caller_name: loginRedux?.display_name,
+      status: data?.Status || "",
+      description: `Outgoing call to ${
+        contactRedux?.contactData?.first_name || ""
+      } ${contactRedux?.contactData?.last_name || ""}`,
+    };
+    const url = `${SERVER_IP}call-history`;
+    dispatch(postApi(payload, "ADD_CONTACT_HISTORY", url));
   };
 
   const handleEndCall = async () => {
@@ -110,7 +136,15 @@ const ContactDetailsPresentational = () => {
     }
   }, [contactId]);
 
+  useEffect(() => {
+    if (contactId) {
+      const url = `${SERVER_IP}call-history?contact_id=${contactId}`;
+      dispatch(getApi("GET_CONTACT_HISTORY", url));
+    }
+  }, [contactId]);
+
   const contactData = {
+    id: contactRedux?.contactData?.id,
     contactOwner: contactRedux?.contactData?.contact_owner_name,
     account_name: contactRedux?.contactData?.account_name,
     phone: contactRedux?.contactData?.phone,
@@ -170,6 +204,36 @@ const ContactDetailsPresentational = () => {
     setAssignModalOpen(false);
   };
 
+  const handleStatusUpdate = (data) => {
+    if (!contactData.id) return;
+
+    const payload = {
+      Status: statusValue,
+    };
+
+    const url = `${SERVER_IP}contact/${contactData.id}`;
+    dispatch(putApi(payload, "UPDATE_CONTACT_STATUS", url));
+
+    setIsEditingStatus(false);
+
+    const payloadHistory = {
+      contact_id: data?.id,
+      type: "update",
+      caller_id: loginRedux?.id,
+      caller_name: loginRedux?.display_name,
+      status: statusValue,
+      description: `${contactRedux?.contactData?.Status} to ${statusValue}`,
+    };
+    const urlHistory = `${SERVER_IP}call-history`;
+    dispatch(postApi(payloadHistory, "ADD_CONTACT_HISTORY", urlHistory));
+
+    const urlContact = `${SERVER_IP}contact/${contactId}`;
+    dispatch(getApi("GET_CONTACT_BY_ID", urlContact));
+
+    const urlgetHistory = `${SERVER_IP}call-history?contact_id=${contactId}`;
+    dispatch(getApi("GET_CONTACT_HISTORY", urlgetHistory));
+  };
+
   return (
     <Col className="contact_container">
       <div className="contact-details">
@@ -186,221 +250,300 @@ const ContactDetailsPresentational = () => {
             <div onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
               ←
             </div>
-            <div>Contact Details</div>
+            <div
+              onClick={() => setActiveTab("contactDetails")}
+              className={`custom-tab ${
+                activeTab === "contactDetails" ? "active" : ""
+              }`}
+            >
+              Contact Details
+            </div>
+            <div
+              onClick={() => setActiveTab("timeline")}
+              className={`custom-tab ${
+                activeTab === "timeline" ? "active" : ""
+              }`}
+            >
+              Timeline
+            </div>
           </div>
           <Button type="primary" onClick={() => setAssignModalOpen(true)}>
             Assign Contact
           </Button>
         </div>
 
-        <div className="contact-details__content">
-          {/* Contact Information Section */}
-          <div className="contact-details__section">
-            <h3 className="contact-details__section-title">
-              Contact Information
-            </h3>
-            <div className="contact-details__grid">
-              <div className="contact-details__column">
-                <div className="contact-field">
-                  <label className="contact-field__label">Contact Owner</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.contactOwner)}
+        {activeTab === "contactDetails" && (
+          <div className="contact-details__content">
+            {/* Contact Information Section */}
+            <div className="contact-details__section">
+              <h3 className="contact-details__section-title">
+                Contact Information
+              </h3>
+              <div className="contact-details__grid">
+                <div className="contact-details__column">
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Contact Owner
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.contactOwner)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Account Name</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.account_name)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Email</label>
+                    <div className="contact-field__value contact-field__value--phone">
+                      {displayValue(contactData.email)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Phone</label>
+                    <div className="contact-field__value contact-field__value--phone">
+                      {displayValue(contactData.phone)}
+                      <Phone
+                        style={{
+                          width: "20px",
+                          marginLeft: 8,
+                          fontSize: 16,
+                          color: "#1890ff",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          handleCall(contactData.phone, contactData)
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="contact-field">
+                    <label className="contact-field__label">Mobile</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mobile)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Created By</label>
+                    <div className="contact-field__value">
+                      <div>{displayValue(contactData.createdBy)}</div>
+                      <div className="contact-field__date">
+                        {formatDate(contactData.createdDate)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Modified By</label>
+                    <div className="contact-field__value">
+                      <div>{displayValue(contactData.modifiedBy)}</div>
+                      <div className="contact-field__date">
+                        {formatDate(contactData.modifiedDate)}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Account Name</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.account_name)}
+
+                <div className="contact-details__column">
+                  <div className="contact-field">
+                    <label className="contact-field__label">Contact Name</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.contactName)}
+                    </div>
                   </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Email</label>
-                  <div className="contact-field__value contact-field__value--phone">
-                    {displayValue(contactData.email)}
+                  <div className="contact-field">
+                    <label className="contact-field__label">Title</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.title)}
+                    </div>
                   </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Phone</label>
-                  <div className="contact-field__value contact-field__value--phone">
-                    {displayValue(contactData.phone)}
-                    <Phone
+                  <div className="contact-field">
+                    <label className="contact-field__label">Department</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.department)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      LinkedIn Profile
+                    </label>
+                    <div className="contact-field__value contact-field__value--skype">
+                      {displayValue(contactData.linkedIn_profile)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Secondary Email
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.secondaryEmail)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Time Zone</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.time_zone)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Status</label>
+                    <div
+                      className="contact-field__value"
                       style={{
-                        width: "20px",
-                        marginLeft: 8,
-                        fontSize: 16,
-                        color: "#1890ff",
-                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
                       }}
-                      onClick={() => handleCall(contactData.phone)}
-                    />
-                  </div>
-                </div>
-
-                <div className="contact-field">
-                  <label className="contact-field__label">Mobile</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mobile)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Created By</label>
-                  <div className="contact-field__value">
-                    <div>{displayValue(contactData.createdBy)}</div>
-                    <div className="contact-field__date">
-                      {formatDate(contactData.createdDate)}
+                      onMouseEnter={() =>
+                        !isEditingStatus && setIsEditingStatus("hover")
+                      }
+                      onMouseLeave={() =>
+                        isEditingStatus === "hover" && setIsEditingStatus(false)
+                      }
+                    >
+                      {isEditingStatus === true ? (
+                        <>
+                          <Select
+                            value={statusValue}
+                            onChange={(val) => setStatusValue(val)}
+                            style={{ width: '100%' }}
+                          >
+                            {STATUS_VALUE.map((type) => (
+                              <Select.Option key={type} value={type}>
+                                {type}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                          <Button
+                            // type="link"
+                            icon={<CheckOutlined />}
+                            onClick={() => handleStatusUpdate(contactData)}
+                          />
+                          <Button
+                            // type="link"
+                            icon={<CloseOutlined />}
+                            onClick={() => setIsEditingStatus(false)}
+                          />
+                        </>
+                      ) : (
+                        <div style={{width: '100%', gap: '20px'}}>
+                          <span>{displayValue(contactData.Status)}</span>
+                          {isEditingStatus === "hover" && (
+                            <EditOutlined
+                              style={{cursor: "pointer" }}
+                              onClick={() => setIsEditingStatus(true)}
+                            />
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Modified By</label>
-                  <div className="contact-field__value">
-                    <div>{displayValue(contactData.modifiedBy)}</div>
-                    <div className="contact-field__date">
-                      {formatDate(contactData.modifiedDate)}
+              </div>
+            </div>
+
+            {/* Address Information Section */}
+            <div className="contact-details__section">
+              <h3 className="contact-details__section-title">
+                Address Information
+              </h3>
+              <div className="contact-details__grid">
+                <div className="contact-details__column">
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Mailing Street
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mailing_street)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Mailing City</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mailing_city)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Mailing State
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mailing_state)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Mailing Zip</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mailing_zip_code)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Mailing Country
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.mailing_country)}
+                    </div>
+                  </div>
+                </div>
+                <div className="contact-details__column">
+                  <div className="contact-field">
+                    <label className="contact-field__label">Other Street</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.other_street)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Other City</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.other_city)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Other State</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.other_state)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">Other Zip</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.other_zip_code)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Other Country
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.other_country)}
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="contact-details__column">
-                <div className="contact-field">
-                  <label className="contact-field__label">Contact Name</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.contactName)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Title</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.title)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Department</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.department)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">
-                    LinkedIn Profile
-                  </label>
-                  <div className="contact-field__value contact-field__value--skype">
-                    {displayValue(contactData.linkedIn_profile)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">
-                    Secondary Email
-                  </label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.secondaryEmail)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Time Zone</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.time_zone)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Status</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.Status)}
-                  </div>
+            {/* Description Information Section */}
+            <div className="contact-details__section">
+              <h3 className="contact-details__section-title">
+                Description Information
+              </h3>
+              <div className="contact-field">
+                <label className="contact-field__label">Description</label>
+                <div className="contact-field__value">
+                  {displayValue(contactData.description)}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Address Information Section */}
-          <div className="contact-details__section">
-            <h3 className="contact-details__section-title">
-              Address Information
-            </h3>
-            <div className="contact-details__grid">
-              <div className="contact-details__column">
-                <div className="contact-field">
-                  <label className="contact-field__label">Mailing Street</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mailing_street)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Mailing City</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mailing_city)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Mailing State</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mailing_state)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Mailing Zip</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mailing_zip_code)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">
-                    Mailing Country
-                  </label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.mailing_country)}
-                  </div>
-                </div>
-              </div>
-              <div className="contact-details__column">
-                <div className="contact-field">
-                  <label className="contact-field__label">Other Street</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.other_street)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Other City</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.other_city)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Other State</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.other_state)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Other Zip</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.other_zip_code)}
-                  </div>
-                </div>
-                <div className="contact-field">
-                  <label className="contact-field__label">Other Country</label>
-                  <div className="contact-field__value">
-                    {displayValue(contactData.other_country)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Description Information Section */}
-          <div className="contact-details__section">
-            <h3 className="contact-details__section-title">
-              Description Information
-            </h3>
-            <div className="contact-field">
-              <label className="contact-field__label">Description</label>
-              <div className="contact-field__value">
-                {displayValue(contactData.description)}
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
+        {activeTab === "timeline" && (
+          <>
+            <History data={contactRedux?.contactHistory} />
+          </>
+        )}
       </div>
 
       {/* Connected Modal */}
@@ -533,14 +676,17 @@ const ContactDetailsPresentational = () => {
           value={selectedUser}
           onChange={(val) => setSelectedUser(val)}
           showSearch
-          optionLabelProp="label"  
+          optionLabelProp="label"
         >
           {assignDropdownValue.map((user) => (
-            <Select.Option key={user.value} label={user.label} value={user.value}>
+            <Select.Option
+              key={user.value}
+              label={user.label}
+              value={user.value}
+            >
               <div
                 style={{ display: "flex", alignItems: "center", gap: "8px" }}
               >
-                {/* Avatar Circle with initials */}
                 <div
                   style={{
                     width: 36,

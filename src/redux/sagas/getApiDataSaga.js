@@ -65,9 +65,11 @@ import { loginUserDetails } from "redux/reducers/login/loginActions";
 import {
   setContact,
   setContactById,
+  setContactHistory,
 } from "redux/reducers/contact/contactAction";
 import { setDeals, setIndividulDeal } from "redux/reducers/deals/dealAction";
 import { userDetails } from "redux/reducers/users/action";
+import { getCallHistory, getCallRecordings } from "redux/reducers/call/callAction";
 
 function getApi(apiName, url, extras) {
   return {
@@ -276,7 +278,16 @@ function* getApiDataSuccess(response, apiName, extras) {
       yield put(loginUserDetails(response || {}));
       break;
     case "GET_USER_DETAILS":
-      yield put(userDetails(response|| []));
+      yield put(userDetails(response || []));
+      break;
+    case "GET_CALL_RECORDINGS":
+      yield put(getCallRecordings(response || []));
+      break;
+    case "GET_CALL_HISTORY":
+      yield put(getCallHistory(response || []));
+      break;
+     case "GET_CONTACT_HISTORY":
+      yield put(setContactHistory(response?.data || []));
       break;
     default:
       break;

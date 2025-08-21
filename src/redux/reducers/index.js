@@ -36,6 +36,7 @@ import { EstimatesReducer } from "./estimates/estimatesReducer";
 import { taxInvoicesReducer } from "./tax-invoices/taxInvoicesReducer";
 import { contactReducer } from "./contact/contactReducer";
 import { dealReducer } from "./deals/dealReducer";
+import { callReducer } from "./call/callReducer";
 
 const persistConfig = {
   key: "root",
@@ -79,6 +80,7 @@ const allReducers = combineReducers({
   taxInvoicesRedux: taxInvoicesReducer,
   contactRedux: contactReducer,
   dealsRedux: dealReducer,
+  callRedux: callReducer
 });
 
 export default persistReducer(persistConfig, allReducers);

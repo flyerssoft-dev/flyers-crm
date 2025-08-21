@@ -12,4 +12,11 @@ function setContactById(data) {
   };
 }
 
-export { setContact, setContactById };
+function setContactHistory(data) {
+  return {
+    type: "GET_CONTACT_HISTORY",
+    payload: data,
+  };
+}
+
+export { setContact, setContactById,setContactHistory };
