@@ -430,12 +430,12 @@ const ContactDetailsPresentational = () => {
                       ) : (
                         <div style={{width: '100%', gap: '20px'}}>
                           <span>{displayValue(contactData.Status)}</span>
-                          {isEditingStatus === "hover" && (
+                          {/* {isEditingStatus === "hover" && ( */}
                             <EditOutlined
-                              style={{cursor: "pointer" }}
+                              style={{cursor: "pointer", marginLeft: '10px'}}
                               onClick={() => setIsEditingStatus(true)}
                             />
-                          )}
+                          {/* )} */}
                         </div>
                       )}
                     </div>
