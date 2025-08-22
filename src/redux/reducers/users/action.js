@@ -12,4 +12,11 @@ function setSelectedUser(data) {
 	};
 }
 
-export { setUsers, setSelectedUser };
+function userDetails(data) {
+	return {
+		type: 'GET_USER_DETAILS',
+		payload: data,
+	};
+}
+
+export { setUsers, setSelectedUser, userDetails };

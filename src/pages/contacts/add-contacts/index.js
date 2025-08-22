@@ -78,8 +78,15 @@ const AddContact = ({
   }, [editContact, form]);
 
   const handleSubmit = (values) => {
+
+     const accountMap = {};
+    globalRedux.accountBooks?.forEach((acc) => {
+      accountMap[acc.account_name] = acc.id;
+    });
     let data = {
       ...values,
+      account_id : values?.account_name,
+      account_name : globalRedux.accountBooks?.find((item) => item?.id === values?.account_name)?.account_name
     };
 
     if (!editContact) {
@@ -284,17 +291,17 @@ const AddContact = ({
             <Form.Item
               label="Phone"
               name="phone"
-              rules={[
-                {
-                  pattern: /^\d{10}$/,
-                  message: "Phone number must be exactly 10 digits",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     pattern: /^\d{10}$/,
+              //     message: "Phone number must be exactly 10 digits",
+              //   },
+              // ]}
             >
               <Input
                 style={{ width: "100%" }}
                 placeholder="Enter phone number"
-                maxLength={10}
+                // maxLength={10}
               />
             </Form.Item>
           </Col>

@@ -50,6 +50,7 @@ import LeadDetails from "pages/leads/lead-details";
 import ContactDetails from "pages/contacts/contact-details";
 import AccountDetails from "pages/accounts/account-details";
 import DealDetails from "pages/deals/deals-details";
+import CallList from "pages/call";
 
 // import * as FA from 'react-icons/fa';
 // import { GrVmMaintenance } from 'react-icons/gr';
@@ -196,6 +197,12 @@ const MENUS = [
     route: "/deals",
     key: "5",
   },
+   {
+    name: "Calls",
+    icon: <FI.FiUsers />,
+    route: "/calls",
+    key: "6",
+  },
   // {
   //   name: "Customers",
   //   icon: <FI.FiUsers />,
@@ -206,7 +213,7 @@ const MENUS = [
   // 	name: 'Users and Controls',
   // 	icon: <FI.FiUsers />,
   // 	route: '/users-controls',
-  // 	key: '6',
+  // 	key: '7',
   // },
   // {
   // 	name: 'Sales',
@@ -575,6 +582,10 @@ const ROUTES = [
     route: "deals/:dealId",
     Component: DealDetails,
   },
+  {
+    route:'/calls',
+    Component: CallList
+  }
 ];
 
 export { ACTIONS, MENUS, ROUTES, API_STATUS, SIDE_MENUS };
