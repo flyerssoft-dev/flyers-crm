@@ -122,7 +122,7 @@ const ContactDetailsPresentational = () => {
         contactRedux?.contactData?.first_name || ""
       } ${contactRedux?.contactData?.last_name || ""}`,
     };
-    const url = `${SERVER_IP}call-history`;
+    const url = `${SERVER_IP}contact-history`;
     dispatch(postApi(payload, "ADD_CONTACT_HISTORY", url));
   };
 
@@ -138,7 +138,7 @@ const ContactDetailsPresentational = () => {
 
   useEffect(() => {
     if (contactId) {
-      const url = `${SERVER_IP}call-history?contact_id=${contactId}`;
+      const url = `${SERVER_IP}contact-history?contact_id=${contactId}`;
       dispatch(getApi("GET_CONTACT_HISTORY", url));
     }
   }, [contactId]);
@@ -224,13 +224,13 @@ const ContactDetailsPresentational = () => {
       status: statusValue,
       description: `${contactRedux?.contactData?.Status} to ${statusValue}`,
     };
-    const urlHistory = `${SERVER_IP}call-history`;
+    const urlHistory = `${SERVER_IP}contact-history`;
     dispatch(postApi(payloadHistory, "ADD_CONTACT_HISTORY", urlHistory));
 
     const urlContact = `${SERVER_IP}contact/${contactId}`;
     dispatch(getApi("GET_CONTACT_BY_ID", urlContact));
 
-    const urlgetHistory = `${SERVER_IP}call-history?contact_id=${contactId}`;
+    const urlgetHistory = `${SERVER_IP}contact-history?contact_id=${contactId}`;
     dispatch(getApi("GET_CONTACT_HISTORY", urlgetHistory));
   };
 
