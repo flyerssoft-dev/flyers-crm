@@ -5,25 +5,10 @@ import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
-const initialUsers = [
-  {
-    key: 1,
-    name: 'FlyersSoft Admin',
-    email: 'crm@flyerssoft.com',
-    role: 'Manager',
-    profile: 'Super Admin',
-  },
-  {
-    key: 2,
-    name: 'Ajith Asirvatham',
-    email: 'ajith.asirvatham@flyerssoft.com',
-    role: 'Employee',
-    profile: 'Standard',
-  },
-];
 
-const UsersTab = () => {
-  const [users, setUsers] = useState(initialUsers);
+
+const UsersTab = ({usersValue}) => {
+  const [users, setUsers] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingUser, setEditingUser] = useState(null);
@@ -68,31 +53,31 @@ const UsersTab = () => {
   };
 
   const columnsUser = [
-    { title: 'Full Name', dataIndex: 'name' },
+    { title: 'Full Name', dataIndex: 'display_name' },
     { title: 'Email', dataIndex: 'email' },
-    { title: 'Role', dataIndex: 'role' },
+    { title: 'Department', dataIndex: 'department' },
     { title: 'Profile', dataIndex: 'profile' },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_, record) => (
-        <Space>
-          <Button icon={<EditOutlined />} onClick={() => showModal(record)} />
-          <Popconfirm title="Are you sure you want to delete this user?" onConfirm={() => handleDelete(record.key)}>
-            <Button danger icon={<DeleteOutlined />} />
-          </Popconfirm>
-        </Space>
-      )
-    }
+    // {
+    //   title: 'Actions',
+    //   key: 'actions',
+    //   render: (_, record) => (
+    //     <Space>
+    //       <Button icon={<EditOutlined />} onClick={() => showModal(record)} />
+    //       <Popconfirm title="Are you sure you want to delete this user?" onConfirm={() => handleDelete(record.key)}>
+    //         <Button danger icon={<DeleteOutlined />} />
+    //       </Popconfirm>
+    //     </Space>
+    //   )
+    // }
   ];
 
   return (
     <>
-      <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()} style={{ marginBottom: 16 }}>
+      {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()} style={{ marginBottom: 16 }}>
         Add User
-      </Button>
+      </Button> */}
 
-      <Table columns={columnsUser} dataSource={users} pagination={false} />
+      <Table columns={columnsUser} dataSource={usersValue} pagination={false} />
 
       <Modal
         title={editingUser ? 'Edit User' : 'Add New User'}

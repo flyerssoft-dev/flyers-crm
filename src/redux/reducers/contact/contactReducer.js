@@ -2,6 +2,8 @@ let initialState = {
   contact: [],
   contactData: {},
   contactHistory: [],
+  phoneNumbers: [],
+  assginedContacts:[],
 };
 
 const contactReducer = (state = initialState, action) => {
@@ -22,6 +24,16 @@ const contactReducer = (state = initialState, action) => {
       return {
         ...state,
         contactHistory: action.payload,
+      };
+    case "GET_PHONE_NUMBERS":
+      return {
+        ...state,
+        phoneNumbers: action.payload,
+      };
+    case "GET_USER_CONTACT":
+       return {
+        ...state,
+        assginedContacts: action.payload,
       };
     default:
       return state;
