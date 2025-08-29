@@ -166,42 +166,61 @@ const SIDE_MENUS = [
   // },
 ];
 
+export const ROLE = {
+  MANAGER: "manager",
+  EMPLOYEE: "employee",
+  MENTOR: "mentor",
+  TEAM_LEAD: "team_lead",
+  HR_ADMIN: "hr_admin",
+  IT_ADMIN: "it_admin",
+  ACCOUNT_MANAGER: "account_manager",
+  SUPER_ADMIN: "Super_Admin",
+  OPERATIONS_MANAGER: "operations_manager",
+  DESIGN_TEAM_LEAD: "design_team_lead",
+  VENDOR: "vendor",
+};
+
 const MENUS = [
-  {
-    name: "Dashboard",
-    icon: <MD.MdDashboard />,
-    route: "/",
-    key: "1",
-  },
+  // {
+  //   name: "Dashboard",
+  //   icon: <MD.MdDashboard />,
+  //   route: "/",
+  //   key: "1",
+  // },
   {
     name: "Leads",
     icon: <FI.FiUsers />,
     route: "/leads",
     key: "2",
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     name: "Contacts",
     icon: <FI.FiUsers />,
     route: "/contacts",
     key: "3",
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     name: "Accounts",
     icon: <FI.FiUsers />,
     route: "/accounts",
     key: "4",
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     name: "Deals",
     icon: <FI.FiUsers />,
     route: "/deals",
     key: "5",
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
   },
-   {
+  {
     name: "Calls",
     icon: <FI.FiUsers />,
     route: "/calls",
     key: "6",
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
   },
   // {
   //   name: "Customers",
@@ -209,12 +228,12 @@ const MENUS = [
   //   route: "/customers",
   //   key: "5",
   // },
-  //  {
-  // 	name: 'Users and Controls',
-  // 	icon: <FI.FiUsers />,
-  // 	route: '/users-controls',
-  // 	key: '7',
-  // },
+   {
+  	name: 'Users and Contacts',
+  	icon: <FI.FiUsers />,
+  	route: '/users-contacts',
+  	key: '7',
+  },
   // {
   // 	name: 'Sales',
   // 	icon: <FI.FiUsers />,
@@ -451,10 +470,6 @@ const ROUTES = [
     Component: SuppliersList,
   },
   {
-    route: "/leads",
-    Component: LeadsList,
-  },
-  {
     route: "/sales-order",
     Component: OrdersList,
   },
@@ -551,41 +566,54 @@ const ROUTES = [
     Component: Dashboard,
   },
   {
+    route: "/leads",
+    Component: LeadsList,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+  },
+  {
     route: "/accounts",
     Component: AccountList,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     route: "/contacts",
     Component: ContactList,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     route: "/deals",
     Component: DealList,
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
   },
   {
-    route: "/users-controls",
+    route: "/users-contacts",
     Component: UsersAndControlsMenu,
   },
   {
     route: "leads/:leadsId",
     Component: LeadDetails,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     route: "contact/:contactId",
     Component: ContactDetails,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     route: "account/:accountId",
     Component: AccountDetails,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
     route: "deals/:dealId",
     Component: DealDetails,
+    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
-    route:'/calls',
-    Component: CallList
-  }
+    route: "/calls",
+    Component: CallList,
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
+  },
 ];
 
 export { ACTIONS, MENUS, ROUTES, API_STATUS, SIDE_MENUS };

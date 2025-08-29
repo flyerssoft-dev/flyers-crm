@@ -63,9 +63,11 @@ import { setTaxInvoices } from "redux/reducers/tax-invoices/taxInvoicesAction";
 import { setReceipts } from "redux/reducers/receipts/receiptsActions";
 import { loginUserDetails } from "redux/reducers/login/loginActions";
 import {
+  assignedContacts,
   setContact,
   setContactById,
   setContactHistory,
+  setPhoneNumbers,
 } from "redux/reducers/contact/contactAction";
 import { setDeals, setIndividulDeal } from "redux/reducers/deals/dealAction";
 import { userDetails } from "redux/reducers/users/action";
@@ -289,6 +291,11 @@ function* getApiDataSuccess(response, apiName, extras) {
      case "GET_CONTACT_HISTORY":
       yield put(setContactHistory(response?.data || []));
       break;
+    case "GET_PHONE_NUMBERS":
+      yield put(setPhoneNumbers(response?.data || []));
+      break;
+    case "GET_USER_CONTACT":
+      yield put(assignedContacts(response?.data || []))
     default:
       break;
   }

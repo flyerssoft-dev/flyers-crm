@@ -27,8 +27,6 @@ const OrganizationList = () => {
     if (!loginRedux.isLogged) navigate("/login");
   }, [loginRedux.isLogged, navigate]);
 
-  console.log('loginRedux',loginRedux)
-
   useEffect(() => {
     dispatch(getApi("GET_ALL_ORGANIZATION"));
   }, [dispatch]);
@@ -48,7 +46,7 @@ const OrganizationList = () => {
       if (response?.data?.message) {
         dispatch(setLoginStatus(true));
         dispatch(setSelectedOrganization(response.data.message));
-        navigate('/');
+        navigate('/leads');
       } else {
         console.warn("No org data in response");
       }

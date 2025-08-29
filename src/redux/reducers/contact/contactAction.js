@@ -19,4 +19,17 @@ function setContactHistory(data) {
   };
 }
 
-export { setContact, setContactById,setContactHistory };
+function setPhoneNumbers(data) {
+  return {
+    type: "GET_PHONE_NUMBERS",
+    payload: data,
+  };
+}
+
+function assignedContacts(data) {
+  return {
+    type: "GET_USER_CONTACT",
+    payload: data,
+  };
+}
+export { setContact, setContactById,setContactHistory,setPhoneNumbers,assignedContacts };
