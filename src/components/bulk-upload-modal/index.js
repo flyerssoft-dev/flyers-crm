@@ -128,25 +128,44 @@ const [file, setFile] = useState(null);
   const handleSubmit = () => {
     const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
 
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-      alert(
-        `Validation failed:\n${errors
-          .map(
-            (err) =>
-              `Row ${err.row + 1}: Invalid ${err.field} (${err.value || "empty"})`
-          )
-          .join("\n")}`
+    // Collect invalid row indexes
+    const invalidRowIndexes = new Set(errors.map((err) => err.row));
+
+    // Filter out invalid and empty rows
+    const validRows = mappedRows.filter((row, index) => {
+      // Skip if row has validation errors
+      if (invalidRowIndexes.has(index)) return false;
+
+      // Skip if all fields are empty/null/undefined
+      const isEmpty = Object.values(row).every(
+        (val) => val === null || val === undefined || val === ""
       );
-      return;
+      return !isEmpty;
+    });
+
+    // Save only valid rows
+    setValidationErrors(errors);
+    setMappedData(validRows);
+
+    // Show skipped rows message
+    const skippedCount =
+      mappedRows.length - validRows.length;
+
+    if (skippedCount > 0) {
+      alert(
+        `${skippedCount} row(s) were skipped due to validation errors or being empty.\n` +
+        `${validRows.length} valid row(s) imported successfully.`
+      );
+    } else {
+      alert(`All ${validRows.length} rows imported successfully.`);
     }
 
-    setValidationErrors([]);
-    setMappedData(mappedRows);
-    onDataSubmit(mappedRows);
+    onDataSubmit(validRows);
     onClose?.();
     resetUpload();
   };
+
+
 
   const togglePreview = () => {
     const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
@@ -380,7 +399,7 @@ const [file, setFile] = useState(null);
                     type="primary"
                     onClick={handleSubmit}
                     disabled={!isAllFieldsMapped()}
-                  >
+                  > 
                     Import Data ({excelData.rows.length} rows)
                   </Button>
                 </div>

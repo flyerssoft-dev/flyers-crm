@@ -19,6 +19,7 @@ import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import ExcelUploader from "components/bulk-upload-modal";
 import { postApi } from "redux/sagas/postApiDataSaga";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 const ContactsListPresentational = ({
   filteredData,
@@ -267,8 +268,8 @@ const ContactsListPresentational = ({
         validationRules={{
           Email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
           "Secondary Email": (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
-          Mobile: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Phone: (v) => parsePhoneNumberFromString(v),
+          Mobile: (v) => parsePhoneNumberFromString(v),
           "Mailing Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
           "Other Zip Code": (v) => /^[0-9]{5,6}$/.test(v),
         }}
@@ -301,7 +302,7 @@ const ContactsListPresentational = ({
           value={selectedUser}
           onChange={(val) => setSelectedUser(val)}
           showSearch
-          optionLabelProp="label"  
+          optionLabelProp="label"
         >
           {assignDropdownValue.map((user) => (
             <Select.Option

@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import ExcelUploader from "components/bulk-upload-modal";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 const LeadsListPresentational = ({
   filteredData,
@@ -202,8 +203,8 @@ const LeadsListPresentational = ({
         ]}
         validationRules={{
           Email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
-          Mobile: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Phone: (v) =>  parsePhoneNumberFromString(v),
+          Mobile: (v) =>  parsePhoneNumberFromString(v),
           Website: (v) =>
             /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
               v

@@ -9,6 +9,7 @@ import AddAccount from "pages/accounts/add-account";
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import ExcelUploader from "components/bulk-upload-modal";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 const AccountsListPresentational = ({
   filteredData,
@@ -197,7 +198,7 @@ const AccountsListPresentational = ({
           "Description",
         ]}
          validationRules={{
-          Phone: (v) => /^\+?[0-9]{10,15}$/.test(v?.toString()),
+          Phone: (v) => parsePhoneNumberFromString(v),
           Website: (v) =>
             /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
               v
