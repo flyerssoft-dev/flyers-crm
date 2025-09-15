@@ -281,7 +281,7 @@ const AccountsListFunctional = React.memo(() => {
   };
 
   const filteredData = useMemo(() => {
-    return globalRedux?.accountBooks?.filter((item) =>
+    return globalRedux?.accountBooks?.data?.filter((item) =>
       Object.keys(columnFilters).every((key) =>
         item[key]
           ?.toLowerCase()
@@ -362,6 +362,8 @@ const AccountsListFunctional = React.memo(() => {
     dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
   };
 
+  console.log("filteredData", filteredData, currentPage * pageSize);
+
   return (
     <>
       <Row justify="space-between" style={{ marginBottom: 16 }}>
@@ -397,8 +399,7 @@ const AccountsListFunctional = React.memo(() => {
           },
           setSearchKey,
           getStartingValue: () => (currentPage - 1) * pageSize + 1,
-          getEndingValue: () =>
-            Math.min(currentPage * pageSize, filteredData.length),
+          getEndingValue: () => currentPage * pageSize,
           accountAddModal,
           setAccountAddModal,
           refreshList: getAccounts,
@@ -408,6 +409,7 @@ const AccountsListFunctional = React.memo(() => {
           drawerOpen,
           setDrawerOpen,
           onUploadData,
+          data: globalRedux?.accountBooks,
         }}
       />
     </>

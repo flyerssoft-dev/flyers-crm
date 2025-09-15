@@ -1,15 +1,40 @@
 import React from "react";
 import "./styles.scss";
 import { Download, FileText, Loader, Pause, Play, Radio } from "lucide-react";
+import { Select } from "antd";
+import { useSelector } from "react-redux";
+
+const { Option } = Select;
 
 function Recordings({
   recordings,
   playingRecording,
   transcriptions,
-  handlePlayRecording
-  }) {
+  handlePlayRecording,
+  usersValue,
+  handleSelectUser,
+  selectedUser
+}) {
+  const User = useSelector((state) => state.loginRedux);
   return (
     <div className="recordings-container">
+      <div className="dropdown-input">
+        {User?.role !== "employee" && (
+          <Select
+            placeholder="Select user "
+            onChange={(e) => handleSelectUser(e)}
+            className="dropdown-input-value"
+            allowClear
+            value={selectedUser}
+          >
+            {usersValue?.map((user) => (
+              <Option key={user.id} value={user.id}>
+                {user.display_name}
+              </Option>
+            ))}
+          </Select>
+        )}
+      </div>
       {recordings.length === 0 ? (
         <div className="empty-recordings">
           <Radio className="empty-icon" />
@@ -17,26 +42,27 @@ function Recordings({
         </div>
       ) : (
         recordings.map((recording) => (
-          <div key={recording.sid} className="recording-card">
+          <div key={recording.recordingSid} className="recording-card">
             <div className="recording-header">
               <div className="recording-info">
-                <h3>Call Recording</h3>
+                <h3>{recording?.employeeName}</h3>
                 <p className="meta">
-                  Duration: {recording.duration}s • Status: {recording.status}
+                  Duration: {recording.recordingDuration}s • Status:{" "}
+                  {recording.recordingStatus}
                 </p>
                 <p className="date">
-                  {new Date(recording.dateCreated).toLocaleString()}
+                  {new Date(recording.createdAt).toLocaleString()}
                 </p>
               </div>
               <div className="recording-actions">
                 <button
                   onClick={() => handlePlayRecording(recording)}
                   className={`action-btn play-btn ${
-                    playingRecording === recording.sid ? "playing" : ""
+                    playingRecording === recording.recordingSid ? "playing" : ""
                   }`}
                   title="Play recording"
                 >
-                  {playingRecording === recording.sid ? (
+                  {playingRecording === recording.recordingSid ? (
                     <Pause className="icon" />
                   ) : (
                     <Play className="icon" />

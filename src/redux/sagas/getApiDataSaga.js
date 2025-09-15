@@ -64,6 +64,7 @@ import { setReceipts } from "redux/reducers/receipts/receiptsActions";
 import { loginUserDetails } from "redux/reducers/login/loginActions";
 import {
   assignedContacts,
+  setCallNotes,
   setContact,
   setContactById,
   setContactHistory,
@@ -148,13 +149,13 @@ function* getApiDataSuccess(response, apiName, extras) {
       yield put(setSuppliers(response?.data || []));
       break;
     case "GET_LEADS":
-      yield put(setLeads(response?.data || []));
+      yield put(setLeads(response || []));
       break;
     case "GET_LEADS_BY_ID":
       yield put(setIndividulLeads(response?.data || []));
       break;
     case "GET_CONTACT":
-      yield put(setContact(response?.data || []));
+      yield put(setContact(response || []));
       break;
     case "GET_CONTACT_BY_ID":
       yield put(setContactById(response?.data || []));
@@ -193,7 +194,7 @@ function* getApiDataSuccess(response, apiName, extras) {
       yield put(setVoucherHead(response?.data || []));
       break;
     case ACTIONS.GET_ACCOUNT_BOOKS:
-      yield put(setAccountBooks(response?.data || []));
+      yield put(setAccountBooks(response || []));
       break;
     case "GET_ACCOUNT_BOOKS_BY_ID":
       yield put(setAccountBooksById(response?.data || []));
@@ -291,6 +292,8 @@ function* getApiDataSuccess(response, apiName, extras) {
      case "GET_CONTACT_HISTORY":
       yield put(setContactHistory(response?.data || []));
       break;
+    case "GET_CALL_NOTES":
+      yield put(setCallNotes(response?.data || []))
     case "GET_PHONE_NUMBERS":
       yield put(setPhoneNumbers(response?.data || []));
       break;

@@ -104,7 +104,6 @@ const ContactsListPresentational = ({
     setAssignModalOpen(false);
     setSelectedRowKeys([]);
   };
-
   return (
     <>
       <Row>
@@ -116,7 +115,7 @@ const ContactsListPresentational = ({
             columns={visibleColumns}
             bordered
             rowKey={(record) => record.id}
-            dataSource={filteredData}
+            dataSource={filteredData?.data}
             rowSelection={rowSelection}
             onRow={(record, rowIndex) => {
               return {
@@ -200,9 +199,9 @@ const ContactsListPresentational = ({
             footer={() => (
               <Row justify="space-between">
                 <Col span={12}>
-                  {!!filteredData?.length &&
+                  {!!filteredData?.data?.length &&
                     `Showing ${getStartingValue()} - ${getEndingValue()} of ${
-                      filteredData?.length
+                     filteredData?.meta?.total_items
                     } Data`}
                 </Col>
                 <Col span={12}>
@@ -211,7 +210,7 @@ const ContactsListPresentational = ({
                       pageSizeOptions={intialPageSizeOptions}
                       defaultPageSize={initialPageSize}
                       showSizeChanger={true}
-                      total={filteredData?.length}
+                      total={filteredData?.meta?.total_items}
                       onChange={handleTableChange}
                       responsive
                     />

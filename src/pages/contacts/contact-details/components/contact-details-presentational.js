@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Col, Modal, Button, Select, Tabs } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { Col, Modal, Button, Select, Tabs, Input } from "antd";
 import "../styles.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { SERVER_IP } from "assets/Config";
@@ -27,11 +27,14 @@ import { postApi } from "redux/sagas/postApiDataSaga";
 import History from "components/history-timeline";
 import { STATUS_VALUE } from "constants/app-constants";
 import { putApi } from "redux/sagas/putApiSaga";
+import NotesList from "./notes";
 
 const displayValue = (value) =>
   value && String(value).trim() !== "" ? value : "-";
 const formatDate = (value) =>
   value ? dayjs(value).format("DD-MM-YYYY HH:mm") : "-";
+
+const { TextArea } = Input;
 
 const ContactDetailsPresentational = () => {
   const { contactId } = useParams();
@@ -140,6 +143,17 @@ const ContactDetailsPresentational = () => {
     if (contactId) {
       const url = `${SERVER_IP}contact-history?contact_id=${contactId}`;
       dispatch(getApi("GET_CONTACT_HISTORY", url));
+    }
+  }, [contactId]);
+
+  const getAllNotes = useCallback(()=>{
+    const url = `${SERVER_IP}call-notes?contactId=${contactId}`;
+    dispatch(getApi("GET_CALL_NOTES", url));
+  });
+
+  useEffect(() => {
+    if (contactId) {
+      getAllNotes();
     }
   }, [contactId]);
 
@@ -265,6 +279,12 @@ const ContactDetailsPresentational = () => {
               }`}
             >
               Timeline
+            </div>
+            <div
+              onClick={() => setActiveTab("notes")}
+              className={`custom-tab ${activeTab === "notes" ? "active" : ""}`}
+            >
+              Notes
             </div>
           </div>
           <Button type="primary" onClick={() => setAssignModalOpen(true)}>
@@ -408,7 +428,7 @@ const ContactDetailsPresentational = () => {
                           <Select
                             value={statusValue}
                             onChange={(val) => setStatusValue(val)}
-                            style={{ width: '100%' }}
+                            style={{ width: "100%" }}
                           >
                             {STATUS_VALUE.map((type) => (
                               <Select.Option key={type} value={type}>
@@ -428,13 +448,13 @@ const ContactDetailsPresentational = () => {
                           />
                         </>
                       ) : (
-                        <div style={{width: '100%', gap: '20px'}}>
+                        <div style={{ width: "100%", gap: "20px" }}>
                           <span>{displayValue(contactData.Status)}</span>
                           {/* {isEditingStatus === "hover" && ( */}
-                            <EditOutlined
-                              style={{cursor: "pointer", marginLeft: '10px'}}
-                              onClick={() => setIsEditingStatus(true)}
-                            />
+                          <EditOutlined
+                            style={{ cursor: "pointer", marginLeft: "10px" }}
+                            onClick={() => setIsEditingStatus(true)}
+                          />
                           {/* )} */}
                         </div>
                       )}
@@ -542,6 +562,16 @@ const ContactDetailsPresentational = () => {
         {activeTab === "timeline" && (
           <>
             <History data={contactRedux?.contactHistory} />
+          </>
+        )}
+        {activeTab === "notes" && (
+          <>
+            <NotesList
+              contactId={contactData?.id}
+              contactName={contactData?.contactName}
+              data={contactRedux?.callNotes}
+              refreshList={getAllNotes}
+            />
           </>
         )}
       </div>

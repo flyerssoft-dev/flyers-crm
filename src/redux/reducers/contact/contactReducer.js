@@ -4,6 +4,7 @@ let initialState = {
   contactHistory: [],
   phoneNumbers: [],
   assginedContacts:[],
+  callNotes:[]
 };
 
 const contactReducer = (state = initialState, action) => {
@@ -34,6 +35,11 @@ const contactReducer = (state = initialState, action) => {
        return {
         ...state,
         assginedContacts: action.payload,
+      };
+    case "GET_CALL_NOTES":
+      return {
+        ...state,
+        callNotes: action.payload,
       };
     default:
       return state;

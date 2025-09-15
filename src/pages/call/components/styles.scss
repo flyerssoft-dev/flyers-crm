@@ -16,6 +16,16 @@
     }
   }
 
+  .dropdown-input{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    .dropdown-input-value {
+       width: 30%;
+    }
+  }
+
   .recording-card {
     background: #f9fafb; // gray-50
     padding: 1rem;

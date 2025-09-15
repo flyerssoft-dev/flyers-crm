@@ -103,7 +103,7 @@ const AddDeal = ({
 
   useEffect(() => {
     if (globalRedux?.accountBooks) {
-      const value = globalRedux.accountBooks.map((item) => ({
+      const value = globalRedux?.accountBooks?.data?.map((item) => ({
         label: item?.account_name,
         value: item?.id,
       }));
@@ -260,7 +260,7 @@ const AddDeal = ({
                   </>
                 )}
               >
-                {accountDropdownValue.map((type) => (
+                {accountDropdownValue?.map((type) => (
                   <Select.Option key={type?.value} value={type?.value}>
                     {type?.label}
                   </Select.Option>

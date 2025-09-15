@@ -555,3 +555,531 @@ $twitter-color: #1da1f2;
         }
     }
 }
+
+// Variables
+$primary-color: #22c55e;
+$primary-hover: #16a34a;
+$secondary-color: #6b7280;
+$background-light: #f9fafb;
+$background-white: #ffffff;
+$text-primary: #111827;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$border-color: #e5e7eb;
+$border-light: #f3f4f6;
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $background-light;
+  color: $text-primary;
+  line-height: 1.6;
+}
+
+// Main app container
+.notes-app {
+  display: flex;
+//   min-height: 100vh;
+  
+  .notes-container {
+    flex: 1;
+    max-width: 100%;
+    // margin: 0 auto;
+    padding: $spacing-lg;
+  }
+}
+
+// Header styles
+.notes-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  
+  .header-left {
+    position: relative;
+    
+    .dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      background: none;
+      border: none;
+      font-size: 24px;
+      font-weight: 600;
+      color: $text-primary;
+      cursor: pointer;
+      padding: $spacing-sm;
+      border-radius: $radius-sm;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background-color: $border-light;
+      }
+      
+      .dropdown-icon {
+        transition: transform 0.2s ease;
+      }
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: $background-white;
+      border: 1px solid $border-color;
+      border-radius: $radius-md;
+      box-shadow: $shadow-lg;
+      z-index: 10;
+      min-width: 160px;
+      
+      .dropdown-item {
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        
+        &:hover {
+          background-color: $background-light;
+        }
+        
+        &.active {
+          background-color: $primary-color;
+          color: white;
+        }
+        
+        &:first-child {
+          border-radius: $radius-md $radius-md 0 0;
+        }
+        
+        &:last-child {
+          border-radius: 0 0 $radius-md $radius-md;
+        }
+      }
+    }
+  }
+  
+  .new-note-btn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    // background: $primary-color;
+    color: white;
+    border: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: $primary-hover;
+    }
+  }
+}
+
+// Note creator styles
+.note-creator {
+  background: $background-white;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  
+  .note-input-container {
+    padding: $spacing-lg;
+    
+    .note-title-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: $spacing-md;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid $border-light;
+      
+      &::placeholder {
+        color: $text-muted;
+        font-weight: 400;
+      }
+    }
+    
+    .note-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: vertical;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 120px;
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+    }
+  }
+  
+  .note-actions {
+    background: $border-light;
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid $border-color;
+    
+    .action-buttons {
+      display: flex;
+      gap: $spacing-md;
+      
+      .action-btn {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        padding: $spacing-sm $spacing-md;
+        border: none;
+        border-radius: $radius-sm;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &.save-btn {
+          background: $primary-color;
+          color: white;
+          
+          &:hover:not(:disabled) {
+            background: $primary-hover;
+          }
+          
+          &:disabled {
+            background: $text-muted;
+            cursor: not-allowed;
+          }
+        }
+        
+        &.cancel-btn {
+          background: none;
+          color: $text-secondary;
+          
+          &:hover {
+            background: $border-color;
+          }
+        }
+        
+        &.attach-btn {
+          background: none;
+          color: $text-secondary;
+          
+          &:hover {
+            background: $border-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Notes list styles
+.notes-list {
+  .empty-state {
+    text-align: center;
+    padding: $spacing-xl * 2;
+    color: $text-muted;
+    
+    p {
+      margin-bottom: $spacing-lg;
+      font-size: 18px;
+    }
+    
+    .create-first-note-btn {
+      background: $primary-color;
+      color: white;
+      border: none;
+      padding: $spacing-md $spacing-lg;
+      border-radius: $radius-md;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background: $primary-hover;
+      }
+    }
+  }
+  
+  .note-item {
+    background: $background-white;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-sm;
+    transition: box-shadow 0.2s ease;
+    
+    &:hover {
+      box-shadow: $shadow-md;
+    }
+    
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-md;
+      
+      .note-author-info {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        
+        .author-avatar {
+          width: 40px;
+          height: 40px;
+          background: $primary-color;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 14px;
+        }
+        
+        .author-details {
+          display: flex;
+          flex-direction: column;
+          
+          .author-name {
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: 2px;
+          }
+          
+          .note-timestamp {
+            font-size: 14px;
+            color: $text-muted;
+          }
+        }
+      }
+      
+      .note-menu {
+        position: relative;
+        
+        .menu-trigger {
+          background: none;
+          border: none;
+          color: $text-secondary;
+          cursor: pointer;
+          padding: $spacing-xs;
+          border-radius: $radius-sm;
+          transition: background-color 0.2s ease;
+          
+          &:hover {
+            background: $border-light;
+          }
+        }
+        
+        .menu-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: $background-white;
+          border: 1px solid $border-color;
+          border-radius: $radius-md;
+          box-shadow: $shadow-lg;
+          z-index: 10;
+          min-width: 120px;
+          
+          .menu-item {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            width: 100%;
+            padding: $spacing-sm $spacing-md;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            color: $text-primary;
+            
+            &:hover {
+              background: $background-light;
+            }
+            
+            &.delete {
+              color: #ef4444;
+              
+              &:hover {
+                background: #fee2e2;
+              }
+            }
+            
+            &:first-child {
+              border-radius: $radius-md $radius-md 0 0;
+            }
+            
+            &:last-child {
+              border-radius: 0 0 $radius-md $radius-md;
+            }
+          }
+        }
+      }
+    }
+    
+    .note-content {
+      .note-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: $spacing-sm;
+        color: $text-primary;
+      }
+      
+      .note-text {
+        color: $text-secondary;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
+
+// Side panel styles
+.side-panel {
+  width: 320px;
+  background: $background-white;
+  border-left: 1px solid $border-color;
+  padding: $spacing-lg;
+  
+  .notification-item {
+    background: $background-light;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    
+    .notification-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-md;
+      
+      .notification-icon {
+        font-size: 20px;
+      }
+      
+      .notification-title {
+        font-weight: 600;
+        color: $text-primary;
+      }
+    }
+    
+    .notification-content {
+      .notification-subtitle {
+        font-weight: 600;
+        margin-bottom: $spacing-sm;
+        color: $text-primary;
+      }
+      
+      .notification-text {
+        color: $text-secondary;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: $spacing-md;
+      }
+      
+      .notification-actions {
+        display: flex;
+        gap: $spacing-sm;
+        
+        .notification-btn {
+          background: none;
+          border: 1px solid $border-color;
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $radius-sm;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            background: $border-light;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .notes-app {
+    .side-panel {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .notes-app {
+    .notes-container {
+      padding: $spacing-md;
+    }
+  }
+  
+  .notes-header {
+    flex-direction: column;
+    gap: $spacing-md;
+    align-items: stretch;
+    
+    .header-left .dropdown-trigger {
+      justify-content: center;
+    }
+  }
+  
+  .note-creator .note-actions .action-buttons {
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    
+    .action-btn {
+      flex: 1;
+      min-width: 100px;
+    }
+  }
+  
+  .note-item .note-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    
+    .note-menu {
+      align-self: flex-end;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .notes-app .notes-container {
+    padding: $spacing-sm;
+  }
+  
+  .note-creator .note-input-container,
+  .note-item {
+    padding: $spacing-md;
+  }
+}

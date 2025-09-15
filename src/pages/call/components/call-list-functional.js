@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CallListPresentional from "./call-list-presentational";
 import { SERVER_IP } from "assets/Config";
 import { getApi } from "redux/sagas/getApiDataSaga";
@@ -14,9 +14,12 @@ function CallListFunctional() {
   const [playingRecording, setPlayingRecording] = useState(false);
   const [audioElements, setAudioElements] = useState({});
   const [transcriptions, setTranscriptions] = useState({});
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+
+  const userRedux = useSelector((state) => state.userRedux);
 
   const getRecordings = () => {
-    const url = `${SERVER_IP}call/recordings`;
+    const url = `${SERVER_IP}call/recordings?employeeId=${selectedEmployee}`;
     dispatch(getApi("GET_CALL_RECORDINGS", url));
   };
 
@@ -25,10 +28,20 @@ function CallListFunctional() {
     dispatch(getApi("GET_CALL_HISTORY", url));
   };
 
+  const getuserDetails = useCallback(() => {
+    const page = 1;
+    const limit = 500;
+    let user_details_url = `${SERVER_IP}employeeDetails/getAllEmployeeDetails?page=${page}&limit=${limit}&sort=asc`;
+    dispatch(getApi("GET_USER_DETAILS", user_details_url));
+  }, [dispatch]);
+
   useEffect(() => {
     getRecordings();
     getCallHistory();
-  }, []);
+    getuserDetails();
+  }, [selectedEmployee]);
+
+  console.log("selectedEmployee", selectedEmployee);
 
   useEffect(() => {
     if (callRedux?.call_recordings) {
@@ -43,7 +56,7 @@ function CallListFunctional() {
   }, [callRedux?.call_history]);
 
   const handlePlayRecording = (recording) => {
-    const audioKey = recording.sid;
+    const audioKey = recording.recordingSid;
 
     // If already playing this recording, pause it
     if (playingRecording === audioKey) {
@@ -62,7 +75,7 @@ function CallListFunctional() {
     // Create new audio element if it doesn't exist
     if (!audioElements[audioKey]) {
       const audio = new Audio();
-      audio.src = `http://localhost:3002/api/recordings/${recording.sid}/download`;
+      audio.src = `${SERVER_IP}call/${recording.recordingSid}/download`;
       audio.preload = "metadata";
 
       audio.addEventListener("ended", () => {
@@ -124,7 +137,12 @@ function CallListFunctional() {
         playingRecording,
         transcriptions,
         handlePlayRecording,
-        callHistory
+        callHistory,
+        usersValue: userRedux?.userDetails?.message,
+        handleSelectUser: (value) => {
+          !value ? setSelectedEmployee("") : setSelectedEmployee(value);
+        },
+        selectedUser: selectedEmployee,
       }}
     />
   );

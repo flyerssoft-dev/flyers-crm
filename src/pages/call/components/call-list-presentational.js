@@ -13,6 +13,9 @@ function CallListPresentional({
   transcriptions,
   handlePlayRecording,
   callHistory,
+  usersValue,
+  handleSelectUser,
+  selectedUser,
 }) {
   return (
     <Card style={{ margin: 24 }}>
@@ -43,6 +46,9 @@ function CallListPresentional({
               playingRecording,
               transcriptions,
               handlePlayRecording,
+              usersValue,
+              handleSelectUser,
+              selectedUser,
             }}
           />
         </TabPane>

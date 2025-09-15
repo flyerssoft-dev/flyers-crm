@@ -612,7 +612,7 @@ const ROUTES = [
   {
     route: "/calls",
     Component: CallList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER ,ROLE.EMPLOYEE],
   },
 ];
 
