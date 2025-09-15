@@ -96,7 +96,6 @@ const DialPadComponent = () => {
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          zIndex: 2000,
         }}
         onClick={() => handleDial()}
         icon={<PhoneCallIcon />}
@@ -108,7 +107,11 @@ const DialPadComponent = () => {
               <input
                 type="text"
                 value={dialNumber}
-                readOnly
+                onChange={(e) => {
+                  // Allow digits, +, *, #
+                  const value = e.target.value.replace(/[^0-9+#*]/g, "");
+                  setDialNumber(value);
+                }}
                 className="dial-input"
               />
             </div>
