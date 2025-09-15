@@ -171,7 +171,7 @@ const AssignContactTab = ({ usersValue, phoneNumbers }) => {
             rules={[{ required: true, message: "Please select a user" }]}
           >
             <Select placeholder="Select user">
-              {usersValue.map((user) => (
+              {usersValue?.map((user) => (
                 <Option key={user.id} value={user.id}>
                   {user.display_name}
                 </Option>
@@ -187,7 +187,7 @@ const AssignContactTab = ({ usersValue, phoneNumbers }) => {
             ]}
           >
             <Select placeholder="Select phone">
-              {phoneNumbers.map((ph) => (
+              {phoneNumbers?.map((ph) => (
                 <Option key={ph.id} value={ph.id}>
                   {ph.phone_number}
                 </Option>
