@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { Device } from "@twilio/voice-sdk";
 import { SERVER_IP } from "assets/Config";
 import { store } from './../redux/store';
+import { useSelector } from "react-redux";
 
 export const useTwilioVoice = () => {
   const [device, setDevice] = useState(null);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const [callState, setCallState] = useState({
     isConnected: false,
     isConnecting: false,
@@ -135,9 +137,7 @@ export const useTwilioVoice = () => {
   // Make outbound call
   const makeCall = useCallback(
     async (phoneNumber) => {
-      console.log("ff", phoneNumber);
       if (!device || !phoneNumber) return;
-
       try {
         setCallState((prev) => ({
           ...prev,
@@ -145,9 +145,14 @@ export const useTwilioVoice = () => {
           callStatus: "connecting",
         }));
 
+        console.log('Test- to', phoneNumber)
+
         const call = await device.connect({
-          params: { To: phoneNumber },
+          params: { To: phoneNumber,  caller_id: loginRedux?.id,
+      caller_name: loginRedux?.display_name,},
         });
+
+        console.log('Test- call', call)
 
         setupCallEventListeners(call);
       } catch (error) {
@@ -163,6 +168,7 @@ export const useTwilioVoice = () => {
     },
     [device, setupCallEventListeners]
   );
+  console.log('cc', callState,device)
 
   // Answer incoming call
   const answerCall = useCallback(() => {

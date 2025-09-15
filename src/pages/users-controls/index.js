@@ -21,7 +21,7 @@ import AssignContactTab from "./components/assigne-contact-tab";
 const { TabPane } = Tabs;
 
 export default function UsersAndControlsPage() {
-  const [activeTab, setActiveTab] = useState("users");
+  const [activeTab, setActiveTab] = useState("assign");
   const dispatch = useDispatch();
 
   const userRedux = useSelector((state) => state.userRedux);
@@ -30,7 +30,7 @@ export default function UsersAndControlsPage() {
 
   const getuserDetails = useCallback(() => {
     const page = 1;
-    const limit = 50;
+    const limit = 500;
     let user_details_url = `${SERVER_IP}employeeDetails/getAllEmployeeDetails?page=${page}&limit=${limit}&sort=asc`;
     dispatch(getApi("GET_USER_DETAILS", user_details_url));
   }, [dispatch]);
@@ -48,7 +48,7 @@ export default function UsersAndControlsPage() {
   return (
     <Card style={{ margin: 24 }}>
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
-        <TabPane
+        {/* <TabPane
           key="users"
           tab={
             <Space>
@@ -58,7 +58,7 @@ export default function UsersAndControlsPage() {
           }
         >
           <UsersTab usersValue={userRedux?.userDetails?.message} />
-        </TabPane>
+        </TabPane> */}
 
         {/* <TabPane
 					key="profiles"
@@ -96,7 +96,7 @@ export default function UsersAndControlsPage() {
 					<ComplianceTab />
 				</TabPane> */}
         <TabPane
-          key="compliance"
+          key="assign"
           tab={
             <Space>
               <SafetyCertificateOutlined />

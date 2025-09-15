@@ -35,6 +35,7 @@ const AccountsListPresentational = ({
   drawerOpen,
   setDrawerOpen,
   onUploadData,
+  data
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ const AccountsListPresentational = ({
   const visibleColumns = columns
     .filter((col) => col.visible)
     .sort((a, b) => a.order - b.order);
+
+
+  console.log('${getStartingValue()} - ${getEndingValue()}', `${getStartingValue()} - ${getEndingValue()}`)
 
   return (
     <>
@@ -141,7 +145,7 @@ const AccountsListPresentational = ({
                 <Col span={12}>
                   {!!filteredData?.length &&
                     `Showing ${getStartingValue()} - ${getEndingValue()} of ${
-                      filteredData?.length
+                      data?.meta?.total_items
                     } Data`}
                 </Col>
                 <Col span={12}>
@@ -150,7 +154,7 @@ const AccountsListPresentational = ({
                       pageSizeOptions={intialPageSizeOptions}
                       defaultPageSize={initialPageSize}
                       showSizeChanger={true}
-                      total={filteredData?.length}
+                      total={data?.meta?.total_items}
                       onChange={handleTableChange}
                       responsive
                     />

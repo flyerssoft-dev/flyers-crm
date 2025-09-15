@@ -19,6 +19,13 @@ function setContactHistory(data) {
   };
 }
 
+function setCallNotes(data) {
+  return {
+    type: "GET_CALL_NOTES",
+    payload: data,
+  };
+}
+
 function setPhoneNumbers(data) {
   return {
     type: "GET_PHONE_NUMBERS",
@@ -32,4 +39,4 @@ function assignedContacts(data) {
     payload: data,
   };
 }
-export { setContact, setContactById,setContactHistory,setPhoneNumbers,assignedContacts };
+export { setContact, setContactById,setContactHistory,setPhoneNumbers,assignedContacts ,setCallNotes};

@@ -49,7 +49,7 @@ const ContactListFunctional = React.memo(() => {
   }, [getContacts]);
 
   useEffect(() => {
-    const value = globalRedux.accountBooks.map((item) => ({
+    const value = globalRedux?.accountBooks?.data?.map((item) => ({
       label: item?.account_name,
       value: item?.id,
     }));
@@ -115,10 +115,9 @@ const ContactListFunctional = React.memo(() => {
       visible: true,
       order: 4,
       render: (name) => {
-        const account = globalRedux.accountBooks?.find(
+        const account = globalRedux.accountBooks?.data?.find(
           (item) => item?.id === name
         );
-        console.log("account", account, accountDropdownValue);
         return <span>{account?.account_name || name || "-"}</span>;
       },
     },
@@ -314,13 +313,13 @@ const ContactListFunctional = React.memo(() => {
 
   const getEndingValue = () => {
     if (currentPage === 1)
-      return contactRedux?.contact.length < pageSize
-        ? contactRedux?.contact.length
+      return contactRedux?.contact.data.length < pageSize
+        ? contactRedux?.contact.data.length
         : pageSize;
     else {
       let end = currentPage * pageSize;
-      return end > contactRedux?.contact.length
-        ? contactRedux?.contact.length
+      return end > contactRedux?.contact.data.length
+        ? contactRedux?.contact.data.length
         : end;
     }
   };
@@ -405,8 +404,8 @@ const ContactListFunctional = React.memo(() => {
         initialPageSize,
         handleTableChange,
         setSearchKey,
-        getStartingValue,
-        getEndingValue,
+        getStartingValue: () => (currentPage - 1) * pageSize + 1,
+        getEndingValue: () => currentPage * pageSize,
         contactAddModal,
         setContactAddModal,
         refreshList: getContacts,

@@ -80,13 +80,13 @@ const AddContact = ({
   const handleSubmit = (values) => {
 
      const accountMap = {};
-    globalRedux.accountBooks?.forEach((acc) => {
+    globalRedux.accountBooks?.data?.forEach((acc) => {
       accountMap[acc.account_name] = acc.id;
     });
     let data = {
       ...values,
       account_id : values?.account_name,
-      account_name : globalRedux.accountBooks?.find((item) => item?.id === values?.account_name)?.account_name
+      account_name : globalRedux.accountBooks?.data?.find((item) => item?.id === values?.account_name)?.account_name
     };
 
     if (!editContact) {
@@ -116,7 +116,7 @@ const AddContact = ({
 
   useEffect(() => {
     if (globalRedux?.accountBooks) {
-      const value = globalRedux.accountBooks.map((item) => ({
+      const value = globalRedux?.accountBooks?.data?.map((item) => ({
         label: item?.account_name,
         value: item?.id,
       }));
@@ -254,7 +254,7 @@ const AddContact = ({
                   </>
                 )}
               >
-                {accountDropdownValue.map((type) => (
+                {accountDropdownValue?.map((type) => (
                   <Select.Option key={type?.value} value={type?.value}>
                     {type?.label}
                   </Select.Option>
@@ -348,7 +348,7 @@ const AddContact = ({
           <Col span={12}>
             <Form.Item label="Status" name="Status">
               <Select>
-                {STATUS_VALUE.map((type) => (
+                {STATUS_VALUE?.map((type) => (
                   <Select.Option key={type} value={type}>
                     {type}
                   </Select.Option>
@@ -494,7 +494,7 @@ const AddContact = ({
                 rules={[{ required: true, message: "Please select a rating" }]}
               >
                 <Select placeholder="Select Rating">
-                  {RATING.map((r) => (
+                  {RATING?.map((r) => (
                     <Select.Option key={r} value={r}>
                       {r}
                     </Select.Option>
