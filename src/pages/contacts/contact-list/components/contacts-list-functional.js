@@ -352,13 +352,12 @@ const ContactListFunctional = React.memo(() => {
     // }));
     // let account_url = `${SERVER_IP}account/multiple-accounts`;
     // dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
-
     const accountMap = {};
-    globalRedux.accountBooks?.forEach((acc) => {
-      accountMap[acc.account_name] = acc.id;
+    globalRedux?.accountBooks?.data?.forEach((acc) => {
+      accountMap[acc.account_name] = acc?.id;
     });
 
-    const value = data.map((item) => ({
+    const value = data?.map((item) => ({
       contact_owner_name: item?.["Contact Owner"],
       first_name: item?.["First Name"],
       last_name: item?.["Last Name"],
