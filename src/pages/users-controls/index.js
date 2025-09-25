@@ -48,7 +48,7 @@ export default function UsersAndControlsPage() {
   return (
     <Card style={{ margin: 24 }}>
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
-        {/* <TabPane
+        <TabPane
           key="users"
           tab={
             <Space>
@@ -58,7 +58,7 @@ export default function UsersAndControlsPage() {
           }
         >
           <UsersTab usersValue={userRedux?.userDetails?.message} />
-        </TabPane> */}
+        </TabPane>
 
         {/* <TabPane
 					key="profiles"

@@ -182,9 +182,8 @@ const AccountsListPresentational = ({
       />
 
       <ExcelUploader
-        requiredFields={["Account Owner", "Account Name", "Phone"]}
+        requiredFields={["Account Name", "Phone"]}
         formFields={[
-          "Account Owner",
           "Account Name",
           "Phone",
           "Website",

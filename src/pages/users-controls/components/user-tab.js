@@ -73,11 +73,11 @@ const UsersTab = ({usersValue}) => {
 
   return (
     <>
-      {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()} style={{ marginBottom: 16 }}>
+      <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()} style={{ marginBottom: 16 }}>
         Add User
-      </Button> */}
+      </Button>
 
-      <Table columns={columnsUser} dataSource={usersValue} pagination={false} />
+      <Table columns={columnsUser} dataSource={[]} pagination={false} />
 
       <Modal
         title={editingUser ? 'Edit User' : 'Add New User'}

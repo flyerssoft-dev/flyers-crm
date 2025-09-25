@@ -38,6 +38,7 @@ const AddContact = ({
 }) => {
   const [form] = Form.useForm();
   const globalRedux = useSelector((state) => state.globalRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const dispatch = useDispatch();
   const { TextArea } = Input;
   const [form1] = Form.useForm();
@@ -86,7 +87,8 @@ const AddContact = ({
     let data = {
       ...values,
       account_id : values?.account_name,
-      account_name : globalRedux.accountBooks?.data?.find((item) => item?.id === values?.account_name)?.account_name
+      account_name : globalRedux.accountBooks?.data?.find((item) => item?.id === values?.account_name)?.account_name,
+      contact_owner_id: loginRedux?.id,
     };
 
     if (!editContact) {
@@ -191,6 +193,9 @@ const AddContact = ({
         form={form}
         name="add-Contact"
         layout="vertical"
+        initialValues={{
+          contact_owner_name: loginRedux?.display_name,
+        }}
         onFinish={handleSubmit}
       >
         <div style={{ fontWeight: "bold", marginBottom: 16 }}>
@@ -200,7 +205,7 @@ const AddContact = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Contact Owner" name="contact_owner_name">
-              <Input placeholder="Enter contact owner name" />
+              <Input disabled />
             </Form.Item>
           </Col>
           <Col span={12}>

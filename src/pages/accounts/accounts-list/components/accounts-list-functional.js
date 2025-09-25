@@ -26,6 +26,7 @@ const intialPageSizeOptions = [10, 15, 20];
 
 const AccountsListFunctional = React.memo(() => {
   const globalRedux = useSelector((state) => state.globalRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [accountAddModal, setAccountAddModal] = useState(false);
   const [searchKey, setSearchKey] = useState("");
@@ -335,8 +336,8 @@ const AccountsListFunctional = React.memo(() => {
 
   const onUploadData = (data) => {
     const AccountValue = data.map((item) => ({
-      account_owner_name: item?.["Account Owner"],
-
+      account_owner_name: loginRedux?.display_name,
+      account_owner_id: loginRedux?.id,
       account_name: item?.["Account Name"],
       phone: item?.Phone,
 

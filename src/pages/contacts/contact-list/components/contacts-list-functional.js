@@ -18,6 +18,7 @@ const intialPageSizeOptions = [10, 15, 20];
 const ContactListFunctional = React.memo(() => {
   const contactRedux = useSelector((state) => state.contactRedux);
   const globalRedux = useSelector((state) => state.globalRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [contactAddModal, setContactAddModal] = useState(false);
   const [searchKey, setSearchKey] = useState("");
@@ -345,20 +346,14 @@ const ContactListFunctional = React.memo(() => {
   }, [setContactAddModal, setEditContact]);
 
   const onUploadData = (data) => {
-    // const AccountValue = data.map((item) => ({
-    //   account_owner_name: item?.["Contact Owner"],
-    //   account_name: item?.["Account Name"],
-    //   phone: item?.Phone,
-    // }));
-    // let account_url = `${SERVER_IP}account/multiple-accounts`;
-    // dispatch(postApi(AccountValue, "ADD_BULK_ACCOUNT_DATA", account_url));
     const accountMap = {};
     globalRedux?.accountBooks?.data?.forEach((acc) => {
       accountMap[acc.account_name] = acc?.id;
     });
 
     const value = data?.map((item) => ({
-      contact_owner_name: item?.["Contact Owner"],
+      contact_owner_name: loginRedux?.display_name,
+      contact_owner_id: loginRedux?.id,
       first_name: item?.["First Name"],
       last_name: item?.["Last Name"],
       account_id: accountMap[item?.["Account Name"]],

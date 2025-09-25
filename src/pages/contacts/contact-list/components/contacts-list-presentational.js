@@ -239,7 +239,6 @@ const ContactsListPresentational = ({
       <ExcelUploader
         requiredFields={["Last Name"]}
         formFields={[
-          "Contact Owner",
           "First Name",
           "Last Name",
           "Account Name",

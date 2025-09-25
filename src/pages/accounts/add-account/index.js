@@ -36,6 +36,7 @@ const AddAccount = ({
 }) => {
   const [form] = Form.useForm();
   const globalRedux = useSelector((state) => state.globalRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
   const dispatch = useDispatch();
   const [sameAsBilling, setSameAsBilling] = useState(false);
 
@@ -50,6 +51,7 @@ const AddAccount = ({
   const handleSubmit = (values) => {
     const payload = {
       ...values,
+      account_owner_id: loginRedux?.id,
       orgId: globalRedux?.selectedOrganization?.id,
     };
 
@@ -127,7 +129,6 @@ const AddAccount = ({
     });
     setSameAsBilling(false);
   };
-
   return (
     <Drawer
       placement="right"
@@ -144,6 +145,9 @@ const AddAccount = ({
         layout="vertical"
         name="add-account"
         onFinish={handleSubmit}
+        initialValues={{
+          account_owner_name: loginRedux?.display_name,
+        }}
         scrollToFirstError={{
           behavior: "smooth",
           block: "center",
@@ -164,8 +168,9 @@ const AddAccount = ({
               rules={[
                 { required: true, message: "Please enter account owner name" },
               ]}
+              
             >
-              <Input />
+              <Input disabled />
             </Form.Item>
           </Col>
           <Col span={12}>
