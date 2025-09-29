@@ -39,4 +39,11 @@ function assignedContacts(data) {
     payload: data,
   };
 }
-export { setContact, setContactById,setContactHistory,setPhoneNumbers,assignedContacts ,setCallNotes};
+
+function getAllContacts(data) {
+  return {
+    type: "GET_CONTACT_ALL",
+    payload: data,
+  };
+}
+export { setContact, setContactById,setContactHistory,setPhoneNumbers,assignedContacts ,setCallNotes,getAllContacts};

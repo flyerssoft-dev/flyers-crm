@@ -10,6 +10,8 @@ import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import ExcelUploader from "components/bulk-upload-modal";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import { CheckPermission, checkPermission } from "hooks/usePermission";
+import { Actions, Feature } from "constants/app-constants";
 
 const AccountsListPresentational = ({
   filteredData,
@@ -35,7 +37,7 @@ const AccountsListPresentational = ({
   drawerOpen,
   setDrawerOpen,
   onUploadData,
-  data
+  data,
 }) => {
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
@@ -55,9 +57,6 @@ const AccountsListPresentational = ({
     .filter((col) => col.visible)
     .sort((a, b) => a.order - b.order);
 
-
-  console.log('${getStartingValue()} - ${getEndingValue()}', `${getStartingValue()} - ${getEndingValue()}`)
-
   return (
     <>
       <Row>
@@ -70,7 +69,7 @@ const AccountsListPresentational = ({
             bordered
             rowKey={(record) => record.id}
             dataSource={filteredData}
-            rowSelection={rowSelection}
+            rowSelection={ CheckPermission(Feature.ACCOUNT,Actions.DELETE) ? rowSelection : undefined}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
@@ -94,7 +93,7 @@ const AccountsListPresentational = ({
                             }
                           />
                         </Col>
-                        {selectedRowKeys?.length === 1 ? (
+                        {selectedRowKeys?.length === 1  ? (
                           <Col>
                             <Popconfirm
                               title={`Are you sure to delete this Account?`}
@@ -123,15 +122,19 @@ const AccountsListPresentational = ({
                   </Row>
                 </Col>
                 <Col style={{ display: "flex", gap: "10px" }}>
-                  <Button type="primary" onClick={handleAddAccount}>
-                    Create Account
-                  </Button>
+                  {CheckPermission(Feature.ACCOUNT, Actions.CREATE) && (
+                    <Button type="primary" onClick={handleAddAccount}>
+                      Create Account
+                    </Button>
+                  )}
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
                   </Col>
-                  <Col onClick={() => setDrawerOpen(true)}>
-                    <Button type="primary" icon={<UploadOutlined />} />
-                  </Col>
+                  {CheckPermission(Feature.ACCOUNT, Actions.UPLOAD) && (
+                    <Col onClick={() => setDrawerOpen(true)}>
+                      <Button type="primary" icon={<UploadOutlined />} />
+                    </Col>
+                  )}
                 </Col>
               </Row>
             )}
@@ -200,7 +203,7 @@ const AccountsListPresentational = ({
           "Shipping Country",
           "Description",
         ]}
-         validationRules={{
+        validationRules={{
           Phone: (v) => parsePhoneNumberFromString(v),
           Website: (v) =>
             /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(

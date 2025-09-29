@@ -7,10 +7,16 @@ import { SERVER_IP } from "assets/Config";
 import HighlightComponent from "components/HighlightComponent";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { generatePagination } from "helpers";
-import { API_STATUS, CUSTOMER_TYPE } from "constants/app-constants";
+import {
+  Actions,
+  API_STATUS,
+  CUSTOMER_TYPE,
+  Feature,
+} from "constants/app-constants";
 import LeadsListPresentational from "./leads-list-presentational";
 import { useNavigate } from "react-router-dom";
 import { postApi } from "redux/sagas/postApiDataSaga";
+import { CheckPermission } from "hooks/usePermission";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -66,6 +72,8 @@ const LeadsListFunctional = React.memo(() => {
     setEditLead(null);
     setLeadAddModal(true);
   };
+
+  const canUpdateLeads = CheckPermission(Feature.LEADS, Actions.UPDATE);
 
   const leadColumns = [
     {
@@ -238,27 +246,32 @@ const LeadsListFunctional = React.memo(() => {
       visible: false,
       order: 24,
     },
-    {
-      title: "Action",
-      key: "action",
-      align: "center",
-      render: (_, row) => (
-        <Row justify="center">
-          <Col
-            className="edit_icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDrawer(row);
-            }}
-          >
-            <EditOutlined />
-          </Col>
-        </Row>
-      ),
-      visible: true,
-      default: true,
-      order: 25,
-    },
+
+    ...(canUpdateLeads
+      ? [
+          {
+            title: "Action",
+            key: "action",
+            align: "center",
+            render: (_, row) => (
+              <Row justify="center">
+                <Col
+                  className="edit_icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDrawer(row);
+                  }}
+                >
+                  <EditOutlined />
+                </Col>
+              </Row>
+            ),
+            visible: true,
+            default: true,
+            order: 25,
+          },
+        ]
+      : []),
   ];
 
   const handleTableChange = (currentPage, pageSize) => {

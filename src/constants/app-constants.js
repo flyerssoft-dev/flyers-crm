@@ -180,6 +180,23 @@ export const ROLE = {
   VENDOR: "vendor",
 };
 
+
+export const Feature = {
+  LEADS: "leads",
+  CONTACTS: "contact",  
+  ACCOUNT: "account",
+  DEALS: "deals",
+  CALL: "call",
+}; 
+
+export const Actions = {
+  CREATE: "Create",
+  READ: "Read",
+  UPDATE: "Update",
+  DELETE: "Delete",  
+  UPLOAD: "Upload",
+};
+
 const MENUS = [
   // {
   //   name: "Dashboard",
@@ -209,9 +226,9 @@ const MENUS = [
     roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
   },
   {
-    name: "Deals",
+    name: "Pipelines",
     icon: <FI.FiUsers />,
-    route: "/deals",
+    route: "/pipeline",
     key: "5",
     roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
   },
@@ -228,11 +245,11 @@ const MENUS = [
   //   route: "/customers",
   //   key: "5",
   // },
-   {
-  	name: 'Users and Contacts',
-  	icon: <FI.FiUsers />,
-  	route: '/users-contacts',
-  	key: '7',
+  {
+    name: "Users and Contacts",
+    icon: <FI.FiUsers />,
+    route: "/users-contacts",
+    key: "7",
   },
   // {
   // 	name: 'Sales',
@@ -568,51 +585,82 @@ const ROUTES = [
   {
     route: "/leads",
     Component: LeadsList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "leads",
+      action: "Read",
+    },
   },
   {
     route: "/accounts",
     Component: AccountList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "account",
+      action: "Read",
+    },
   },
   {
     route: "/contacts",
     Component: ContactList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "contact",
+      action: "Read",
+    },
   },
   {
-    route: "/deals",
+    route: "/pipeline",
     Component: DealList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
+    credential: {
+      feature: "deals",
+      action: "Read",
+    },
   },
   {
     route: "/users-contacts",
     Component: UsersAndControlsMenu,
+    credential: {
+      feature: "call",
+      action: "Read",
+    },
   },
   {
     route: "leads/:leadsId",
     Component: LeadDetails,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "leads",
+      action: "Read",
+    },
   },
   {
     route: "contact/:contactId",
     Component: ContactDetails,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "contact",
+      action: "Read",
+    },
   },
   {
     route: "account/:accountId",
     Component: AccountDetails,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "account",
+      action: "Read",
+    },
   },
   {
-    route: "deals/:dealId",
+    route: "pipeline/:dealId",
     Component: DealDetails,
-    roles: [ROLE.SUPER_ADMIN, ROLE.EMPLOYEE, ROLE.MANAGER],
+    credential: {
+      feature: "deals",
+      action: "Read",
+    },
   },
   {
     route: "/calls",
     Component: CallList,
-    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER ,ROLE.EMPLOYEE],
+    credential: {
+      feature: "call",
+      action: "Read",
+    },
   },
 ];
 
@@ -903,15 +951,13 @@ export const ACCOUNT_TYPE = [
 ];
 
 export const DEAL_STAGE = [
-  "Qualification",
-  "Needs Analysis",
-  "Value Proposition",
-  "Identify Decision Makers",
+  "Technical/Demo",
+  "RFP",
   "Proposal/Price Quote",
   "Negotiation/Review",
+  "On Hold",
   "Closed Won",
   "Closed Lost",
-  "Closed Lost to Competition",
 ];
 
 export const STATUS_VALUE = [
