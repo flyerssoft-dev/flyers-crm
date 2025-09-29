@@ -1,10 +1,13 @@
+import { all } from "redux-saga/effects";
+
 let initialState = {
   contact: [],
   contactData: {},
   contactHistory: [],
   phoneNumbers: [],
   assginedContacts:[],
-  callNotes:[]
+  callNotes:[],
+  allContacts: []
 };
 
 const contactReducer = (state = initialState, action) => {
@@ -40,6 +43,11 @@ const contactReducer = (state = initialState, action) => {
       return {
         ...state,
         callNotes: action.payload,
+      };
+    case "GET_CONTACT_ALL":
+      return {
+        ...state,
+        allContacts: action.payload,
       };
     default:
       return state;

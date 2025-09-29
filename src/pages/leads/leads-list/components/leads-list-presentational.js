@@ -14,6 +14,8 @@ import {
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import ExcelUploader from "components/bulk-upload-modal";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import { CheckPermission } from "hooks/usePermission";
+import { Actions, Feature } from "constants/app-constants";
 
 const LeadsListPresentational = ({
   filteredData,
@@ -43,6 +45,10 @@ const LeadsListPresentational = ({
   const globalRedux = useSelector((state) => state.globalRedux);
   const dispatch = useDispatch();
 
+  const deleteLead = CheckPermission(Feature.LEADS, Actions.DELETE);
+  const createDeal = CheckPermission(Feature.LEADS, Actions.CREATE);
+  const uploadLead = CheckPermission(Feature.LEADS, Actions.UPLOAD);
+
   const [columns, setColumns] = useState(column);
   const [isColumnModalOpen, setIsColumnModalOpen] = useState(false);
 
@@ -70,7 +76,7 @@ const LeadsListPresentational = ({
             bordered
             rowKey={(record) => record.id}
             dataSource={filteredData?.data}
-            rowSelection={rowSelection}
+            rowSelection={deleteLead ? rowSelection : undefined}
             title={() => (
               <Row style={{ justifyContent: "space-between" }}>
                 <Col span={8}>
@@ -115,15 +121,19 @@ const LeadsListPresentational = ({
                   </Row>
                 </Col>
                 <Col style={{ display: "flex", gap: "10px" }}>
-                  <Button type="primary" onClick={handleAddLead}>
-                    Create Lead
-                  </Button>
+                  {createDeal && (
+                    <Button type="primary" onClick={handleAddLead}>
+                      Create Lead
+                    </Button>
+                  )}
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
                   </Col>
-                  <Col onClick={() => setDrawerOpen(true)}>
-                    <Button type="primary" icon={<UploadOutlined />} />
-                  </Col>
+                  {uploadLead && (
+                    <Col onClick={() => setDrawerOpen(true)}>
+                      <Button type="primary" icon={<UploadOutlined />} />
+                    </Col>
+                  )}
                 </Col>
               </Row>
             )}
@@ -203,8 +213,8 @@ const LeadsListPresentational = ({
         ]}
         validationRules={{
           Email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-          Phone: (v) =>  parsePhoneNumberFromString(v),
-          Mobile: (v) =>  parsePhoneNumberFromString(v),
+          Phone: (v) => parsePhoneNumberFromString(v),
+          Mobile: (v) => parsePhoneNumberFromString(v),
           Website: (v) =>
             /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(
               v

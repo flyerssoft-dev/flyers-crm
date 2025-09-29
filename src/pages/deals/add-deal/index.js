@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { use, useCallback, useEffect, useRef, useState } from "react";
 import {
   Row,
   Col,
@@ -37,16 +37,21 @@ const AddDeal = ({
 }) => {
   const [form] = Form.useForm();
   const globalRedux = useSelector((state) => state.globalRedux);
+  const loginRedux = useSelector((state) => state.loginRedux);
+  const contactRedux = useSelector((state) => state.contactRedux);
   const dispatch = useDispatch();
   const { TextArea } = Input;
 
   const [form1] = Form.useForm();
   const [accountDropdownValue, setAccountDropDownValue] = useState([]);
+  const [contactDropdownValue, setContactDropDownValue] = useState([]);
   const [accountSearchvalue, setAccountSearchValue] = useState();
+  const [contactSearchvalue, setContactSearchValue] = useState();
   const [addNewButtonVisible, setAddNewButtonVisible] = useState(false);
   const [addNewModalVisible, setAddnewModalVisible] = useState(false);
 
   const originalAccountList = useRef([]);
+    const originalContactList = useRef([]);
 
   const renderLabelWithTooltip = (label, tooltip) => (
     <span>
@@ -61,6 +66,17 @@ const AddDeal = ({
     const url = `${SERVER_IP}account`;
     dispatch(getApi("GET_ACCOUNT_BOOKS", url));
   }, [dispatch]);
+
+  const getContacts = useCallback(() => {
+    const url = `${SERVER_IP}contact/all`;
+    dispatch(getApi("GET_CONTACT_ALL", url));
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    getAccounts?.();
+    getContacts?.();
+  }, [getAccounts, getContacts]);
 
   useEffect(() => {
     if (editDeal) {
@@ -77,7 +93,18 @@ const AddDeal = ({
   }, [editDeal, form]);
 
   const handleSubmit = (values) => {
-    const data = { ...values, amount: `${values?.amount}` };
+    const data = {
+      ...values,
+      amount: `${values?.amount}`,
+      deal_owner_id: loginRedux?.id,
+      account_id : values?.account_name,
+      account_name : globalRedux.accountBooks?.data?.find((item) => item?.id === values?.account_name)?.account_name,
+      contact_id: values?.contact_name,
+      contact_name: contactRedux?.allContacts?.data?.find((item) => item?.id === values?.contact_name)?.first_name + " " + contactRedux?.allContacts?.data?.find((item) => item?.id === values?.contact_name)?.last_name,
+      closing_date: values?.closing_date
+        ? dayjs(values.closing_date).format("YYYY-MM-DD")
+        : null,
+    };
     if (!editDeal) {
       dispatch(postApi(data, "ADD_DEAL", `${SERVER_IP}deals`));
     } else {
@@ -101,6 +128,18 @@ const AddDeal = ({
     globalRedux.apiStatus.ADD_DEAL === API_STATUS.PENDING ||
     globalRedux.apiStatus.EDIT_DEAL === API_STATUS.PENDING;
 
+  useEffect(() => {
+    if (contactRedux?.allContacts?.data) {
+      const value = contactRedux?.allContacts?.data?.map((item) => ({
+        label: item?.first_name + " " + item?.last_name,
+        value: item?.id,
+      }));
+      originalContactList.current = value;
+      setContactDropDownValue(value);
+    }
+  }, [contactRedux?.allContacts?.data]);
+
+  
   useEffect(() => {
     if (globalRedux?.accountBooks) {
       const value = globalRedux?.accountBooks?.data?.map((item) => ({
@@ -143,6 +182,14 @@ const AddDeal = ({
     setAddNewButtonVisible(!exactMatch && value.trim() !== "");
   };
 
+  const handleContactSearch = (value) => {
+    setContactSearchValue(value);
+    const filtered = originalContactList.current.filter((type) =>
+      type.label.toLowerCase().includes(value.toLowerCase())
+    );
+    setContactDropDownValue(filtered);
+  };
+
   // Debounce function
   const debounce = (func, delay) => {
     let timer;
@@ -153,6 +200,7 @@ const AddDeal = ({
   };
 
   const debouncedSearch = useCallback(debounce(handleTypeSearch, 300), []);
+  const debouncedContactSearch = useCallback(debounce(handleContactSearch, 300), []);
 
   const handleNewAcountName = () => {
     setAddnewModalVisible(true);
@@ -165,6 +213,7 @@ const AddDeal = ({
 
   const handleDrawerClose = () => {
     setAccountDropDownValue(originalAccountList.current);
+    setContactDropDownValue(originalContactList.current);
     setAccountSearchValue("");
     setAddNewButtonVisible(false);
     setDealAddModal(false);
@@ -186,6 +235,9 @@ const AddDeal = ({
         name="add-deal"
         layout="vertical"
         onFinish={handleSubmit}
+        initialValues={{
+          deal_owner_name: loginRedux?.display_name,
+        }}
       >
         <div style={{ fontWeight: "bold", marginBottom: 16 }}>
           Lead Information
@@ -194,7 +246,7 @@ const AddDeal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Deal Owner" name="deal_owner_name">
-              <Input placeholder="Enter owner name" />
+              <Input placeholder="Enter owner name"  disabled/>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -242,7 +294,7 @@ const AddDeal = ({
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          padding: "10px 16px",
+                          padding: "10px 16px", 
                           backgroundColor: "#f6f8fa",
                           borderTop: "1px solid #e8e8e8",
                           cursor: "pointer",
@@ -288,7 +340,26 @@ const AddDeal = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Contact Name" name="contact_name">
-              <Input />
+              <Select
+                showSearch
+                placeholder="Select Contact"
+                onSearch={debouncedContactSearch}
+                filterOption={false}
+                onChange={(value) =>
+                  form.setFieldsValue({ contact_name: value })
+                }
+                 dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                  </>
+                )}
+              >
+                {contactDropdownValue?.map((type) => (
+                  <Select.Option key={type?.value} value={type?.value}>
+                    {type?.label}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>

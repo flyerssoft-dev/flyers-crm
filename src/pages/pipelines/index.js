@@ -1,57 +1,52 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./pipeline.scss";
 import { Col, Row } from "antd";
+import moment from "moment";
+import { useDispatch } from "react-redux";
+import { putApi } from "redux/sagas/putApiSaga";
+import { SERVER_IP } from "assets/Config";
 
-const initialData = {
-  stages: [
-    {
-      id: "stage-1",
-      title: "Technical/Demo",
-      deals: [
-        {
-          id: "deal-1",
-          name: "Deal for Sutharsan",
-          contact: "Sutharsan Parthasaarat",
-          amount: "₹0.00",
-          date: "Oct 03",
-        },
-        {
-          id: "deal-2",
-          name: "Deal for Navya",
-          contact: "Navya Raghuram",
-          amount: "₹0.00",
-          date: "Tomorrow",
-        },
-      ],
-    },
-    {
-      id: "stage-2",
-      title: "RFP",
-      deals: [
-        {
-          id: "deal-3",
-          name: "Deal for Pradeep",
-          contact: "Pradeep Kumar",
-          amount: "₹0.00",
-          date: "Sep 08",
-        },
-      ],
-    },
-    { id: "stage-3", title: "Proposal/Price Quote", deals: [] },
-    { id: "stage-4", title: "Negotiation/Review", deals: [] },
-    { id: "stage-5", title: "On Hold", deals: [] },
-    { id: "stage-6", title: "Closed Won", deals: [] },
-    { id: "stage-7", title: "Closed Lost", deals: [] },
-  ],
-};
+const stageList = [
+  "Technical/Demo",
+  "RFP",
+  "Proposal/Price Quote",
+  "Negotiation/Review",
+  "On Hold",
+  "Closed Won",
+  "Closed Lost",
+];
 
-export default function Pipelines() {
-  const [data, setData] = useState(initialData);
+export default function Pipelines({ dealData,  refreshList , navigate }) {
+  const [data, setData] = useState({ stages: [] });
+  const dispatch = useDispatch();
+
+  // Build stages dynamically from dealData
+  useEffect(() => {
+    if (dealData && Array.isArray(dealData)) {
+      const stages = stageList.map((stageName, i) => ({
+        id: `stage-${i + 1}`,
+        title: stageName,
+        deals: dealData
+          .filter((d) => d.stage === stageName)
+          .map((d) => ({
+            id: d.id,
+            name: d.deal_name,
+            contact: d.contact_name,
+            amount: `₹${d.amount}.00`,
+            date: d.closing_date || "—",
+          })),
+      }));
+      setData({ stages });
+    }
+  }, [dealData]);
+
 
   const onDragEnd = (result) => {
-    const { source, destination } = result;
+    const { source, destination ,draggableId } = result;
+
+    console.log("Drag Result:", result);
     if (!destination) return;
 
     const sourceStageIndex = data.stages.findIndex(
@@ -64,16 +59,17 @@ export default function Pipelines() {
     const sourceStage = { ...data.stages[sourceStageIndex] };
     const destStage = { ...data.stages[destStageIndex] };
 
+    
     const sourceDeals = Array.from(sourceStage.deals);
     const [movedDeal] = sourceDeals.splice(source.index, 1);
-
+    
     if (sourceStage.id === destStage.id) {
       sourceDeals.splice(destination.index, 0, movedDeal);
       sourceStage.deals = sourceDeals;
-
+      
       const newStages = [...data.stages];
       newStages[sourceStageIndex] = sourceStage;
-
+      
       setData({ stages: newStages });
     } else {
       const destDeals = Array.from(destStage.deals);
@@ -85,6 +81,13 @@ export default function Pipelines() {
       const newStages = [...data.stages];
       newStages[sourceStageIndex] = sourceStage;
       newStages[destStageIndex] = destStage;
+
+      const payload = {
+        stage: destStage.title,
+      };
+
+      dispatch(putApi(payload, "MOVE_DEAL", `${SERVER_IP}deals/${draggableId}`));
+      refreshList()
 
       setData({ stages: newStages });
     }
@@ -106,7 +109,14 @@ export default function Pipelines() {
                     >
                       <div className="stage-header">
                         <h2>{stage.title}</h2>
-                        <p>₹0.00 • {stage.deals.length} Deals</p>
+                        <p>
+                          ₹
+                          {stage.deals.reduce(
+                            (sum, d) => sum + parseFloat(d.amount.replace("₹", "").replace(".00", "")),
+                            0
+                          )}
+                          .00 • {stage.deals.length} Deals
+                        </p>
                       </div>
 
                       <div className="stage-body">
@@ -127,6 +137,7 @@ export default function Pipelines() {
                                 className={`deal-card ${
                                   snapshot.isDragging ? "dragging" : ""
                                 }`}
+                                onClick={() => navigate(`/pipeline/${deal.id}`)}
                               >
                                 <p className="deal-title">{deal.name}</p>
                                 <p className="deal-contact">{deal.contact}</p>
@@ -145,7 +156,7 @@ export default function Pipelines() {
                                       color: "#0288d1",
                                     }}
                                   >
-                                    {deal.date}
+                                    {moment(deal.date).format("DD MMM")}
                                   </span>
                                 </div>
                               </div>

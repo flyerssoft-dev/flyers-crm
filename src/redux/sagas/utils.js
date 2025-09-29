@@ -12,6 +12,7 @@ const sendPostRequest = async (data) => {
 			timeout: timeoutInMs,
 			headers: {
 				Authorization: `Bearer ${store.getState().loginRedux.accessToken}`,
+				app_name:'CRM'
 			},
 		});
 		return response;

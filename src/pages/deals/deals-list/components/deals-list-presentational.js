@@ -13,6 +13,8 @@ import {
 import { DisplayedColumns } from "pages/accounts/components/DisplayedColumn";
 import AddDeal from "pages/deals/add-deal";
 import Pipelines from "pages/pipelines";
+import { Actions, Feature } from "constants/app-constants";
+import { CheckPermission } from "hooks/usePermission";
 
 const DealListPresentational = ({
   filteredData,
@@ -39,8 +41,11 @@ const DealListPresentational = ({
   const dispatch = useDispatch();
 
   const [columns, setColumns] = useState(column);
-  const [view, setView] = useState("list");
+  const [view, setView] = useState("pipeline");
   const [isColumnModalOpen, setIsColumnModalOpen] = useState(false);
+
+  const canCreateDeal = CheckPermission(Feature.DEALS, Actions.CREATE);
+const canDeleteDeal = CheckPermission(Feature.DEALS, Actions.DELETE);
 
   const handleSaveColumns = (updatedColumns) => {
     setColumns(updatedColumns);
@@ -106,22 +111,23 @@ const DealListPresentational = ({
           </Row>
         </Col>
         <Col style={{ display: "flex", gap: "10px" }}>
-          <Button type="primary" onClick={handleAddDeal}>
+         {canCreateDeal && <Button type="primary" onClick={handleAddDeal}>
             Create Deal
-          </Button>
+          </Button>}
           <Col onClick={() => setIsColumnModalOpen(true)}>
             <Button type="primary" icon={<PlusCircleOutlined />} />
           </Col>
-          <Button
-            icon={<UnorderedListOutlined />}
-            type={view === "list" ? "primary" : "default"}
-            onClick={() => setView("list")}
-            style={{ marginLeft: 8 }}
-          />
+          
           <Button
             icon={<ApartmentOutlined />}
             type={view === "pipeline" ? "primary" : "default"}
             onClick={() => setView("pipeline")}
+            style={{ marginLeft: 8 }}
+          />
+          <Button
+            icon={<UnorderedListOutlined />}
+            type={view === "list" ? "primary" : "default"}
+            onClick={() => setView("list")}
             style={{ marginLeft: 8 }}
           />
         </Col>
@@ -146,11 +152,11 @@ const DealListPresentational = ({
               bordered
               rowKey={(record) => record.id}
               dataSource={filteredData}
-              rowSelection={rowSelection}
+              rowSelection={canDeleteDeal?rowSelection : undefined}
               onRow={(record, rowIndex) => {
                 return {
                   onClick: (event) => {
-                    navigate(`/deals/${record.id}`);
+                    navigate(`/pipeline/${record.id}`);
                   },
                 };
               }}
@@ -187,7 +193,7 @@ const DealListPresentational = ({
           </Col>
         </Row>
       ) : (
-        <Pipelines />
+        <Pipelines dealData={filteredData}   refreshList={refreshList} navigate={navigate}/>
       )}
 
       <AddDeal

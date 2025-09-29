@@ -64,6 +64,7 @@ import { setReceipts } from "redux/reducers/receipts/receiptsActions";
 import { loginUserDetails } from "redux/reducers/login/loginActions";
 import {
   assignedContacts,
+  getAllContacts,
   setCallNotes,
   setContact,
   setContactById,
@@ -156,6 +157,9 @@ function* getApiDataSuccess(response, apiName, extras) {
       break;
     case "GET_CONTACT":
       yield put(setContact(response || []));
+      break;
+    case "GET_CONTACT_ALL":
+      yield put(getAllContacts(response || []));
       break;
     case "GET_CONTACT_BY_ID":
       yield put(setContactById(response?.data || []));

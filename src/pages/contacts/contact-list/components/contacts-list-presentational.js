@@ -20,6 +20,8 @@ import { PlusCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import ExcelUploader from "components/bulk-upload-modal";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import { CheckPermission } from "hooks/usePermission";
+import { Actions, Feature } from "constants/app-constants";
 
 const ContactsListPresentational = ({
   filteredData,
@@ -116,7 +118,7 @@ const ContactsListPresentational = ({
             bordered
             rowKey={(record) => record.id}
             dataSource={filteredData?.data}
-            rowSelection={rowSelection}
+            rowSelection={CheckPermission(Feature.CONTACTS,Actions.DELETE) || CheckPermission(Feature.CONTACTS,Actions.UPDATE) ?rowSelection : undefined}
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
@@ -179,15 +181,15 @@ const ContactsListPresentational = ({
                   </Row>
                 </Col>
                 <Col style={{ display: "flex", gap: "10px" }}>
-                  <Button type="primary" onClick={handleAddContact}>
+                 {CheckPermission(Feature.CONTACTS,Actions.CREATE) && <Button type="primary" onClick={handleAddContact}>
                     Create Contact
-                  </Button>
+                  </Button>}
                   <Col onClick={() => setIsColumnModalOpen(true)}>
                     <Button type="primary" icon={<PlusCircleOutlined />} />
                   </Col>
-                  <Col onClick={() => setDrawerOpen(true)}>
+                 {CheckPermission(Feature.CONTACTS,Actions.UPLOAD) && <Col onClick={() => setDrawerOpen(true)}>
                     <Button type="primary" icon={<UploadOutlined />} />
-                  </Col>
+                  </Col>}
                 </Col>
               </Row>
             )}

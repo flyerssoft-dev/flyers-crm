@@ -25,9 +25,10 @@ import {
 import { useTwilioVoice } from "hooks/useTwilioVoice";
 import { postApi } from "redux/sagas/postApiDataSaga";
 import History from "components/history-timeline";
-import { STATUS_VALUE } from "constants/app-constants";
+import { Actions, Feature, STATUS_VALUE } from "constants/app-constants";
 import { putApi } from "redux/sagas/putApiSaga";
 import NotesList from "./notes";
+import { CheckPermission } from "hooks/usePermission";
 
 const displayValue = (value) =>
   value && String(value).trim() !== "" ? value : "-";
@@ -146,7 +147,7 @@ const ContactDetailsPresentational = () => {
     }
   }, [contactId]);
 
-  const getAllNotes = useCallback(()=>{
+  const getAllNotes = useCallback(() => {
     const url = `${SERVER_IP}call-notes?contactId=${contactId}`;
     dispatch(getApi("GET_CALL_NOTES", url));
   });
@@ -287,9 +288,11 @@ const ContactDetailsPresentational = () => {
               Notes
             </div>
           </div>
-          <Button type="primary" onClick={() => setAssignModalOpen(true)}>
-            Assign Contact
-          </Button>
+          {CheckPermission(Feature.CONTACTS, Actions.UPDATE) && (
+            <Button type="primary" onClick={() => setAssignModalOpen(true)}>
+              Assign Contact
+            </Button>
+          )}
         </div>
 
         {activeTab === "contactDetails" && (

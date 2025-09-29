@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getApi } from "redux/sagas/getApiDataSaga";
 import { SERVER_IP } from "assets/Config";
 import HighlightComponent from "components/HighlightComponent";
-import { API_STATUS } from "constants/app-constants";
+import { Actions, API_STATUS, Feature } from "constants/app-constants";
 import AccountsListPresentational from "./accounts-list-presentational";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
@@ -17,6 +17,8 @@ import "jspdf-autotable";
 import { useNavigate } from "react-router-dom";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { postApi } from "redux/sagas/postApiDataSaga";
+import { Check } from "lucide-react";
+import { CheckPermission } from "hooks/usePermission";
 
 // ✅ Attach autoTable manually
 // jsPDF.API.autoTable = autoTable;
@@ -67,6 +69,8 @@ const AccountsListFunctional = React.memo(() => {
     ),
     filterIcon: () => <span style={{ color: "#1890ff" }}>🔍</span>,
   });
+
+  const canUpdateAccount = CheckPermission(Feature.ACCOUNT, Actions.UPDATE);
 
   const accountColumns = [
     {
@@ -244,28 +248,34 @@ const AccountsListFunctional = React.memo(() => {
       visible: false,
       order: 17,
     },
-    {
-      title: "Action",
-      key: "action",
-      align: "center",
-      render: (_, row) => (
-        <Row justify="center">
-          <Col
-            className="edit_icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDrawer(row);
-            }}
-          >
-            <EditOutlined />
-          </Col>
-        </Row>
-      ),
-      visible: true,
-      default: true,
-      order: 18,
-    },
+    ...(canUpdateAccount
+    ? [
+        {
+          title: "Action",
+          key: "action",
+          align: "center",
+          render: (_, row) => (
+            <Row justify="center">
+              <Col
+                className="edit_icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDrawer(row);
+                }}
+              >
+                <EditOutlined />
+              </Col>
+            </Row>
+          ),
+          visible: true,
+          default: true,
+          order: 18,
+        },
+      ]
+    : []),
   ];
+
+
 
   const getAccounts = useCallback(() => {
     const url = `${SERVER_IP}account?page=${currentPage}&limit=${pageSize}&sort=asc&search=${searchKey}`;

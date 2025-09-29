@@ -5,9 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getApi } from "redux/sagas/getApiDataSaga";
 import { SERVER_IP } from "assets/Config";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
-import { API_STATUS } from "constants/app-constants";
+import { Actions, API_STATUS, Feature } from "constants/app-constants";
 import DealListPresentational from "./deals-list-presentational";
 import { useNavigate } from "react-router-dom";
+import { render } from "less";
+import moment from "moment";
+import { CheckPermission } from "hooks/usePermission";
 
 const initialPageSize = 10;
 const intialPageSizeOptions = [10, 15, 20];
@@ -57,6 +60,8 @@ const DealListFunctional = React.memo(() => {
     setDealAddModal(true);
   };
 
+  const canUpdateDeals = CheckPermission(Feature.DEALS, Actions.UPDATE);
+
   const dealColumns = [
     {
       title: "Deal Owner Name",
@@ -87,6 +92,7 @@ const DealListFunctional = React.memo(() => {
       key: "closing_date",
       visible: true,
       order: 4,
+      render: (date) => (date ? moment(date).format("DD MMM") : "—"),
     },
     {
       title: "Account Name",
@@ -130,27 +136,31 @@ const DealListFunctional = React.memo(() => {
       visible: false,
       order: 10,
     },
-    {
-      title: "Action",
-      key: "action",
-      align: "center",
-      render: (_, row) => (
-        <Row justify="center">
-          <Col
-            className="edit_icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDrawer(row);
-            }}
-          >
-            <EditOutlined />
-          </Col>
-        </Row>
-      ),
-      visible: true,
-      default: true,
-      order: 11,
-    },
+    ...(canUpdateDeals
+      ? [
+          {
+            title: "Action",
+            key: "action",
+            align: "center",
+            render: (_, row) => (
+              <Row justify="center">
+                <Col
+                  className="edit_icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDrawer(row);
+                  }}
+                >
+                  <EditOutlined />
+                </Col>
+              </Row>
+            ),
+            visible: true,
+            default: true,
+            order: 11,
+          },
+        ]
+      : []),
   ];
 
   const handleTableChange = (currentPage, pageSize) => {
