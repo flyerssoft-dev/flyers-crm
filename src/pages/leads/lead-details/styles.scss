@@ -1,0 +1,538 @@
+$primary-color: #6366f1;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$border-color: #e5e7eb;
+$background-white: #ffffff;
+$background-gray: #f9fafb;
+$email-color: #3b82f6;
+$hover-color: #f3f4f6;
+$active-bg: #eff6ff;
+$section-bg: #fafbfc;
+$link-color: #3b82f6;
+$skype-color: #00aff0;
+$twitter-color: #1da1f2;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin transition-smooth {
+    transition: all 0.2s ease-in-out;
+}
+
+@mixin button-reset {
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.lead_container {
+    padding: 24px;
+    background-color: #f0f2f5;
+    height: calc(100vh - 65px);
+    overflow-y: auto;
+
+
+
+    .lead-overview {
+        background: $background-white;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        // max-width: 800px;
+        // margin: 0 auto;
+
+        &__header {
+            @include flex-center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: $background-gray;
+            border-bottom: 1px solid $border-color;
+        }
+
+        &__controls {
+            @include flex-center;
+            gap: 16px;
+        }
+
+        &__content {
+            padding: 24px;
+        }
+    }
+
+    // Control button
+    .control-btn {
+        @include button-reset;
+        @include flex-center;
+        @include transition-smooth;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        background: $background-white;
+        border: 1px solid $border-color;
+
+        &:hover {
+            background: $hover-color;
+            border-color: $text-secondary;
+        }
+
+        &--pause {
+            color: $text-secondary;
+        }
+    }
+
+    // Tab navigation
+    .tab-navigation {
+        @include flex-center;
+        background: $background-white;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .tab-btn {
+        @include button-reset;
+        @include transition-smooth;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: $text-secondary;
+        background: transparent;
+
+        &:hover {
+            background: $hover-color;
+        }
+
+        &--active {
+            background: $active-bg;
+            color: $primary-color;
+            font-weight: 600;
+        }
+
+        &:not(:last-child) {
+            border-right: 1px solid $border-color;
+        }
+    }
+
+    // Last update
+    .last-update {
+        font-size: 13px;
+        color: $text-muted;
+        font-weight: 400;
+    }
+
+    // Lead fields
+    .lead-field {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid $border-color;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &__label {
+            font-size: 14px;
+            font-weight: 500;
+            color: $text-secondary;
+            text-align: left;
+            padding-right: 8px;
+        }
+
+        &__value {
+            font-size: 14px;
+            color: $text-primary;
+            // @include flex-center;
+            justify-content: flex-start;
+            gap: 8px;
+
+            &--email {
+                color: $email-color;
+                cursor: pointer;
+                @include transition-smooth;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &--phone {
+                @include flex-center;
+                justify-content: flex-start;
+                gap: 8px;
+            }
+        }
+    }
+
+    // Phone icon
+    .phone-icon {
+        color: $text-muted;
+        @include transition-smooth;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 768px) {
+        .lead-overview {
+            margin: 16px;
+
+            &__header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            &__controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            &__content {
+                padding: 16px;
+            }
+        }
+
+        .lead-field {
+            grid-template-columns: 1fr;
+            gap: 8px;
+
+            &__label {
+                text-align: left;
+                padding-right: 0;
+                font-weight: 600;
+            }
+        }
+
+        .last-update {
+            align-self: flex-end;
+        }
+    }
+
+    // Hover effects and micro-interactions
+    .lead-overview {
+        @include transition-smooth;
+
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    // Focus states for accessibility
+    .control-btn:focus,
+    .tab-btn:focus {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+    }
+
+    // Animation for tab switching
+    .tab-btn {
+        position: relative;
+
+        &--active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: $primary-color;
+            animation: slideIn 0.3s ease-out;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: scaleX(0);
+        }
+
+        to {
+            transform: scaleX(1);
+        }
+    }
+
+
+
+    // lead details
+    // Main component
+    .lead-details {
+        background: $background-white;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        // max-width: 1200px;
+        margin-top: 24px;
+
+        &__header {
+            padding: 16px 24px;
+            background: $section-bg;
+            border-bottom: 1px solid $border-color;
+        }
+
+        &__toggle {
+            @include button-reset;
+            @include flex-center;
+            @include transition-smooth;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: $text-secondary;
+            padding: 8px 12px;
+            border-radius: 6px;
+
+            &:hover {
+                background: $hover-color;
+                color: $text-primary;
+            }
+        }
+
+        &__content {
+            padding: 24px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        &__section {
+            margin-bottom: 32px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &__section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid $primary-color;
+            display: inline-block;
+        }
+
+        &__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        &__column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    }
+
+    // Lead fields
+    .lead-field {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 30px;
+        align-items: start;
+
+        &__label {
+            font-size: 13px;
+            font-weight: 500;
+            color: $text-secondary;
+            text-align: left;
+            padding-top: 2px;
+        }
+
+        &__value {
+            font-size: 14px;
+            color: $text-primary;
+            line-height: 1.4;
+
+            &--email {
+                color: $email-color;
+                cursor: pointer;
+                @include transition-smooth;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &--phone {
+                @include flex-center;
+                justify-content: flex-start;
+                gap: 8px;
+            }
+
+            &--link {
+                @include flex-center;
+                justify-content: flex-start;
+                gap: 8px;
+                color: $link-color;
+                cursor: pointer;
+                @include transition-smooth;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &--skype {
+                @include flex-center;
+                justify-content: flex-start;
+                gap: 8px;
+                color: $skype-color;
+                cursor: pointer;
+                @include transition-smooth;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &--twitter {
+                color: $twitter-color;
+                cursor: pointer;
+                @include transition-smooth;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &--with-date {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        &__date {
+            font-size: 12px;
+            color: $text-muted;
+            font-weight: 400;
+        }
+
+        &--map {
+            grid-template-columns: 140px 1fr;
+            align-items: center;
+        }
+    }
+
+    // Icons
+    .phone-icon,
+    .link-icon {
+        color: $text-muted;
+        @include transition-smooth;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
+
+    .skype-icon {
+        font-size: 14px;
+    }
+
+    // Locate Map Button
+    .locate-map-btn {
+        @include button-reset;
+        @include flex-center;
+        @include transition-smooth;
+        gap: 8px;
+        padding: 8px 16px;
+        background: $background-gray;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: $text-secondary;
+
+        &:hover {
+            background: $hover-color;
+            border-color: $primary-color;
+            color: $primary-color;
+        }
+    }
+
+    // Animations
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 1024px) {
+        .lead-details {
+            &__grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .lead-details {
+            margin: 16px;
+
+            &__content {
+                padding: 16px;
+            }
+
+            &__section {
+                margin-bottom: 24px;
+            }
+
+            &__grid {
+                gap: 16px;
+            }
+        }
+
+        .lead-field {
+            grid-template-columns: 1fr;
+            gap: 8px;
+
+            &__label {
+                text-align: left;
+                font-weight: 600;
+                color: $text-primary;
+            }
+
+            &--map {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .locate-map-btn {
+            justify-self: start;
+        }
+    }
+
+    // Focus states for accessibility
+    .lead-details__toggle:focus,
+    .locate-map-btn:focus {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+    }
+
+    // Hover effects
+    .lead-details {
+        @include transition-smooth;
+
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+}

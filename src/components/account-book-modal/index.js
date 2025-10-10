@@ -87,17 +87,17 @@ const AccountBookModal = ({ value = null, onChange, categoryIdValue }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}subcategory/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}subcategory/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_CATEGORY', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}subcategory/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}subcategory/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_ACCOUNT_BOOK', url));
 		} else {
 			dispatch(postApi(data, 'ADD_ACCOUNT_BOOK'));
@@ -107,7 +107,7 @@ const AccountBookModal = ({ value = null, onChange, categoryIdValue }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			subcategoryName: values?.subcategoryName || '',
 			remarks: values?.remarks || '',
 		};
@@ -115,9 +115,9 @@ const AccountBookModal = ({ value = null, onChange, categoryIdValue }) => {
 	};
 
 	const getAccountBooks = useCallback(() => {
-		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?._id}&categoryId=${categoryIdValue}`;
+		let url = `${SERVER_IP}accbook/?orgId=${globalRedux?.selectedOrganization?.id}&categoryId=${categoryIdValue}`;
 		dispatch(getApi('GET_ACCOUNT_BOOKS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id, categoryIdValue]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, categoryIdValue]);
 
 	useEffect(() => {
 		getAccountBooks();

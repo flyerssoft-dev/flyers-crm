@@ -215,7 +215,7 @@ const DashboardPresentational = ({ dashboardData, tableData, loginRedux }) => {
 				</Col>
 			</Row>
 
-			<Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} />
+			{/* <Tour open={tourOpen} onClose={() => setTourOpen(false)} steps={steps} /> */}
 		</>
 	);
 };

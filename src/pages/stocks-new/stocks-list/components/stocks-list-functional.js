@@ -38,11 +38,11 @@ const StocksListFunctional = React.memo(() => {
 			getApi(
 				ACTIONS.GET_STOCKS,
 				isStock
-					? `${SERVER_IP}item?orgId=${globalRedux?.selectedOrganization?._id}`
-					: `${SERVER_IP}stock?orgId=${globalRedux?.selectedOrganization?._id}`
+					? `${SERVER_IP}item?orgId=${globalRedux?.selectedOrganization?.id}`
+					: `${SERVER_IP}stock?orgId=${globalRedux?.selectedOrganization?.id}`
 			)
 		);
-	}, [dispatch, globalRedux?.selectedOrganization?._id, isStock]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id, isStock]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {

@@ -116,7 +116,7 @@ const Files = () => {
 
 				// Make a separate POST request for each file
 				const response = await axios.post(
-					`${SERVER_IP}/project/${selectedProjectId}/upload?orgId=${globalRedux?.selectedOrganization?._id}`,
+					`${SERVER_IP}/project/${selectedProjectId}/upload?orgId=${globalRedux?.selectedOrganization?.id}`,
 					formData,
 					{
 						headers: {
@@ -172,7 +172,7 @@ const Files = () => {
 		try {
 			const formData = new FormData();
 			formData.append('files', fileList[0]?.originFileObj);
-			const response = await axios.delete(`${SERVER_IP}/project/${selectedProjectId}/upload?orgId=${globalRedux?.selectedOrganization?._id}`, {
+			const response = await axios.delete(`${SERVER_IP}/project/${selectedProjectId}/upload?orgId=${globalRedux?.selectedOrganization?.id}`, {
 				headers: {
 					Authorization: store.getState().loginRedux.token,
 				},

@@ -12,9 +12,6 @@ const NoAccess = () => {
 				height: '100%',
 				padding: 20,
 			}}>
-			<Col span={24} className="error" style={{ fontSize: '1rem', textAlign: 'center' }}>
-				Please check the URL
-			</Col>
 			<Col span={24}>
 				<LottieComponent width={'60%'} file={LottieFile.UnderConstruction} />
 			</Col>

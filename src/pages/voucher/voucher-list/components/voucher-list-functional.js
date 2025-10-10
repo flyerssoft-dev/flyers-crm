@@ -41,8 +41,8 @@ const VoucherListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getVouchers = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_VOUCHERS, `${SERVER_IP}voucher?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_VOUCHERS, `${SERVER_IP}voucher?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getVouchers();
@@ -363,7 +363,7 @@ const VoucherListFunctional = React.memo(() => {
 										okText="Delete"
 										cancelText="No"
 										onConfirm={() => {
-											let url = `${SERVER_IP}voucher/${record._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+											let url = `${SERVER_IP}voucher/${record._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 											dispatch(deleteApi('DELETE_VOUCHER', url));
 										}}>
 										<DeleteOutlined />

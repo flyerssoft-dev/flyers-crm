@@ -89,9 +89,9 @@ const AddInvoiceFunctional = ({ state, setState, refreshList, editData }) => {
 	}, [dispatch, globalRedux.selectedOrganization._id]);
 
 	const getCustomers = useCallback(() => {
-		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CUSTOMERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if (state?.visible) {
@@ -151,7 +151,7 @@ const AddInvoiceFunctional = ({ state, setState, refreshList, editData }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 			invoiceType: 'retail_invoice',
 			taxableTotal: parseFloat(totalAmount).toFixed(2),

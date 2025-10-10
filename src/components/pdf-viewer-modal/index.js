@@ -12,7 +12,7 @@ const { Title } = Typography;
 
 const PdfViewerModal = ({ selectedFile, open, onClose, previewUrlFromProps, download = true, handleDownload = null }) => {
 	const globalRedux = useSelector((state) => state?.globalRedux);
-	const orgId = globalRedux?.selectedOrganization?._id;
+	const orgId = globalRedux?.selectedOrganization?.id;
 
 	const [loading, setLoading] = useState(true);
 

@@ -36,8 +36,8 @@ const EstimatesListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getEstimates = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_ESTIMATES, `${SERVER_IP}order?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_ESTIMATES, `${SERVER_IP}order?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {
@@ -188,7 +188,7 @@ const EstimatesListFunctional = React.memo(() => {
 							cancelText="No"
 							placement="rightTop"
 							onConfirm={() => {
-								let url = `${SERVER_IP}estimate/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+								let url = `${SERVER_IP}estimate/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 								dispatch(deleteApi('DELETE_ESTIMATE', url));
 							}}>
 							<Col className="delete_icon">

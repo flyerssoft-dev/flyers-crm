@@ -1,0 +1,233 @@
+.recordings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .empty-recordings {
+    text-align: center;
+    color: #6b7280; // gray-500
+    padding: 2rem 0;
+
+    .empty-icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 0.75rem;
+      opacity: 0.5;
+    }
+  }
+
+  .dropdown-input{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    .dropdown-input-value {
+       width: 30%;
+    }
+  }
+
+  .recording-card {
+    background: #f9fafb; // gray-50
+    padding: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .recording-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .recording-info {
+        flex: 1;
+
+        h3 {
+          font-weight: 500;
+          color: #111827; // gray-900
+        }
+
+        .meta {
+          font-size: 0.875rem;
+          color: #6b7280; // gray-500
+        }
+
+        .date {
+          font-size: 0.75rem;
+          color: #9ca3af; // gray-400
+        }
+      }
+
+      .recording-actions {
+        display: flex;
+        gap: 0.5rem;
+
+        .action-btn {
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+          transform: scale(1);
+          border: none;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+
+          .icon {
+            width: 1rem;
+            height: 1rem;
+          }
+
+          &.play-btn {
+            background: #3b82f6; // blue-500
+            color: white;
+
+            &:hover {
+              background: #2563eb; // blue-600
+            }
+
+            &.playing {
+              background: #ef4444; // red-500
+              &:hover {
+                background: #dc2626; // red-600
+              }
+            }
+          }
+
+          &.transcribe-btn {
+            background: #f97316; // orange-500
+            color: white;
+
+            &:hover {
+              background: #ea580c; // orange-600
+            }
+
+            &.done {
+              background: #a855f7; // purple-500
+              &:hover {
+                background: #9333ea; // purple-600
+              }
+            }
+
+            &.loading {
+              background: #9ca3af; // gray-400
+              cursor: not-allowed;
+            }
+
+            .spin {
+              animation: spin 1s linear infinite;
+            }
+          }
+
+          &.download-btn {
+            background: #22c55e; // green-500
+            color: white;
+
+            &:hover {
+              background: #16a34a; // green-600
+            }
+          }
+        }
+      }
+    }
+
+    .transcription-box {
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: white;
+      border: 1px solid #e5e7eb; // gray-200
+      border-radius: 0.5rem;
+
+      .transcription-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        .icon {
+          width: 1rem;
+          height: 1rem;
+          margin-right: 0.5rem;
+          color: #a855f7; // purple-500
+        }
+
+        span {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: #374151; // gray-700
+        }
+      }
+
+      p {
+        font-size: 0.875rem;
+        color: #4b5563; // gray-600
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.call-history-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; // space-y-3
+
+  .empty-history {
+    text-align: center;
+    color: #6b7280; // gray-500
+    padding: 2rem 0;
+
+    .empty-icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 0.75rem;
+      opacity: 0.5;
+    }
+  }
+
+  .call-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #f9fafb; // gray-50
+    border-radius: 0.75rem;
+
+    .call-info {
+      h3 {
+        font-weight: 500;
+        color: #111827; // gray-900
+      }
+
+      .meta {
+        font-size: 0.875rem;
+        color: #6b7280; // gray-500
+      }
+
+      .date {
+        font-size: 0.75rem;
+        color: #9ca3af; // gray-400
+      }
+    }
+
+    .call-duration {
+      text-align: right;
+
+      p {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #111827; // gray-900
+      }
+    }
+  }
+}
+

@@ -245,7 +245,7 @@ const InvoiceToPrint = forwardRef((props, ref) => {
 														<div>CGST</div>
 														<div>SGST</div>
 													</div>
-													<div style={{ textAlign: 'right' }}>Round off</div>
+													<div style={{ display: 'flex', justifyContent: 'flex-end' }}>Round off</div>
 												</div>
 											</td>
 											<td style={{ borderRightWidth: 0, borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -255,7 +255,7 @@ const InvoiceToPrint = forwardRef((props, ref) => {
 														<div>724.24</div>
 														<div>724.20</div>
 													</div>
-													<div style={{ textAlign: 'right' }}>-0.30</div>
+													<div style={{ display: 'flex', justifyContent: 'flex-end' }}>-0.30</div>
 												</div>
 											</td>
 										</tr>

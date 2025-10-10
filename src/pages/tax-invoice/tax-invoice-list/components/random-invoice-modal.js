@@ -21,10 +21,10 @@ const RandomInvoiceModal = ({ visible, onCancel, onSubmit, confirmLoading }) => 
 
 	useEffect(() => {
 		if (visible) {
-			const url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?._id}&type=${CUSTOMER_TYPE[0]}`;
+			const url = `${SERVER_IP}customer?orgId=${globalRedux?.selectedOrganization?.id}&type=${CUSTOMER_TYPE[0]}`;
 			dispatch(getApi('GET_CUSTOMERS', url));
 		}
-	}, [visible, dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [visible, dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if (enableCustomer) {
@@ -54,7 +54,7 @@ const RandomInvoiceModal = ({ visible, onCancel, onSubmit, confirmLoading }) => 
 				: [];
 
 			const payload = {
-				orgId: globalRedux?.selectedOrganization?._id,
+				orgId: globalRedux?.selectedOrganization?.id,
 				invoiceDate: values.invoiceDate.format('YYYY-MM-DD'),
 				numberOfInvoices,
 				...(enableCustomer ? { customersManual } : {}),

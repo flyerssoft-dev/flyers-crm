@@ -46,6 +46,14 @@ function setAccountBooks(data) {
 	};
 }
 
+
+function setAccountBooksById(data) {
+	return {
+		type: ACTIONS.SET_ACCOUNT_BOOKS_BY_ID,
+		payload: data,
+	};
+}
+
 function setSalesPerson(data) {
 	return {
 		type: ACTIONS.SET_SALES_PERSONS,
@@ -187,4 +195,5 @@ export {
 	setTaxes,
 	setUnits,
 	setSizes,
+	setAccountBooksById
 };

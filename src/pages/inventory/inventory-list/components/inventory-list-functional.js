@@ -43,8 +43,8 @@ const InventoryListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getOrders = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_INVENTORIES, `${SERVER_IP}inventory?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_INVENTORIES, `${SERVER_IP}inventory?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {
@@ -208,7 +208,7 @@ const InventoryListFunctional = React.memo(() => {
 							cancelText="No"
 							placement="rightTop"
 							onConfirm={() => {
-								let url = `${SERVER_IP}inventory/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+								let url = `${SERVER_IP}inventory/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 								dispatch(deleteApi('DELETE_INVENTORY', url));
 							}}>
 							<Col className="delete_icon">

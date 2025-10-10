@@ -16,14 +16,14 @@ const AddCredential = ({ handleClose, editCredential, setCredentialAddModal }) =
 	const addCredential = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		dispatch(postApi(data, 'ADD_CREDENTIAL'));
 	};
 
 	const handleEdit = (values) => {
 		let data = { ...values };
-		const url = `${SERVER_IP}credential/${editCredential._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		const url = `${SERVER_IP}credential/${editCredential._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_CREDENTIAL', url));
 	};
 

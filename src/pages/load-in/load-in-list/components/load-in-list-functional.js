@@ -34,8 +34,8 @@ const LoadInFunctional = React.memo((props) => {
 	const dispatch = useDispatch();
 
 	const getLoadIn = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_LOAD_IN, `${SERVER_IP}load?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_LOAD_IN, `${SERVER_IP}load?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const handleGetStudents = (classId) => {
 		setSelectedClass(classId);
@@ -46,11 +46,11 @@ const LoadInFunctional = React.memo((props) => {
 			if (selectedClass) {
 				const {
 					data: { data },
-				} = await sendGetRequest(null, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?._id}&classId=${selectedClass}`);
+				} = await sendGetRequest(null, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?.id}&classId=${selectedClass}`);
 				setTableData(data);
 			}
 		},
-		[setTableData, globalRedux?.selectedOrganization?._id]
+		[setTableData, globalRedux?.selectedOrganization?.id]
 	);
 
 	const filteredData = useMemo(() => {

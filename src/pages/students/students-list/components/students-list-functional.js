@@ -32,9 +32,9 @@ const StudentListFunctional = React.memo((props) => {
 
 	const getStudents = useCallback(
 		() => () => {
-			dispatch(getApi(ACTIONS.GET_STUDENTS, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?._id}`));
+			dispatch(getApi(ACTIONS.GET_STUDENTS, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?.id}`));
 		},
-		[dispatch, globalRedux?.selectedOrganization?._id]
+		[dispatch, globalRedux?.selectedOrganization?.id]
 	);
 
 	useEffect(() => {
@@ -180,7 +180,7 @@ const StudentListFunctional = React.memo((props) => {
 								cancelText="No"
 								placement="rightTop"
 								onConfirm={() => {
-									let url = `${SERVER_IP}student/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}student/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_STUDENT', url));
 								}}>
 								<CloseOutlined />

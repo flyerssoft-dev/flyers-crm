@@ -1,4 +1,4 @@
-@import url('https://cdn.syncfusion.com/ej2/material.css');
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 
 $theme-color: #006fd9;
 $theme-color-hover: #bae4ce;
@@ -14,8 +14,10 @@ body {
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
 }
 
-h1, h2, h3 {
-	font-family: 'Roboto' !important;
+h1,
+h2,
+h3 {
+  font-family: "Roboto" !important;
 }
 
 // Table customization
@@ -70,7 +72,8 @@ h1, h2, h3 {
     border: 4px solid transparent;
     border-radius: 7px;
     background-color: rgba(0, 0, 0, 0.15);
-    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.05), inset 1px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.05),
+      inset 1px 1px 0 rgba(0, 0, 0, 0.05);
   }
   &::-webkit-scrollbar-button {
     display: none;
@@ -191,13 +194,27 @@ h1, h2, h3 {
 .card_container {
   .card {
     padding: 20px;
-    &:nth-child(1) .facility_container_card { background: radial-gradient(#1fe4f5, #3fbafe); }
-    &:nth-child(2) .facility_container_card { background: radial-gradient(#fbc1cc, #fa99b2); }
-    &:nth-child(3) .facility_container_card { background: radial-gradient(#76b2fe, #b69efe); }
-    &:nth-child(4) .facility_container_card { background: radial-gradient(#60efbc, #58d5c9); }
-    &:nth-child(5) .facility_container_card { background: radial-gradient(#f588d8, #c0a3e5); }
-    &:nth-child(6) .facility_container_card { background: radial-gradient(#1fe4f5, #3fbafe); }
-    &:nth-child(7) .facility_container_card { background: radial-gradient(#76b2fe, #b69efe); }
+    &:nth-child(1) .facility_container_card {
+      background: radial-gradient(#1fe4f5, #3fbafe);
+    }
+    &:nth-child(2) .facility_container_card {
+      background: radial-gradient(#fbc1cc, #fa99b2);
+    }
+    &:nth-child(3) .facility_container_card {
+      background: radial-gradient(#76b2fe, #b69efe);
+    }
+    &:nth-child(4) .facility_container_card {
+      background: radial-gradient(#60efbc, #58d5c9);
+    }
+    &:nth-child(5) .facility_container_card {
+      background: radial-gradient(#f588d8, #c0a3e5);
+    }
+    &:nth-child(6) .facility_container_card {
+      background: radial-gradient(#1fe4f5, #3fbafe);
+    }
+    &:nth-child(7) .facility_container_card {
+      background: radial-gradient(#76b2fe, #b69efe);
+    }
   }
   &_card {
     border-radius: 10px;
@@ -222,7 +239,7 @@ h1, h2, h3 {
 .ant-form-horizontal.required_in_right .ant-form-item-required,
 .ant-form-vertical.required_in_right .ant-form-item-required {
   &::after {
-    content: '*';
+    content: "*";
     color: #ff4d4f;
     font-size: 14px;
     margin-right: 4px;
@@ -234,12 +251,32 @@ h1, h2, h3 {
 }
 
 // Utility classes
-.bold { font-weight: 700; }
-.space-between { display: flex; justify-content: space-between !important; }
-.textAlignRight { text-align: right !important; input { text-align: right !important; } }
-.error { border-color: red !important; .ant-select-selector { border-color: red !important; } }
-.link-style { color: skyblue; text-decoration: underline; }
-.inwords { text-transform: capitalize; }
+.bold {
+  font-weight: 700;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between !important;
+}
+.textAlignRight {
+  text-align: right !important;
+  input {
+    text-align: right !important;
+  }
+}
+.error {
+  border-color: red !important;
+  .ant-select-selector {
+    border-color: red !important;
+  }
+}
+.link-style {
+  color: skyblue;
+  text-decoration: underline;
+}
+.inwords {
+  text-transform: capitalize;
+}
 
 // Icons
 .edit_icon,
@@ -253,8 +290,13 @@ h1, h2, h3 {
   color: #fff;
   cursor: pointer;
 }
-.edit_icon { background-color: #006fd9; margin-right: 5px; }
-.delete_icon { background-color: #eb5353; }
+.edit_icon {
+  background-color: #006fd9;
+  margin-right: 5px;
+}
+.delete_icon {
+  background-color: #eb5353;
+}
 
 // Login card
 .app_container {
@@ -266,7 +308,7 @@ h1, h2, h3 {
   .login_card {
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	-webkit-backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
     backdrop-filter: blur(3.5px);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -307,18 +349,18 @@ $secondaryGradient2: linear-gradient(135deg, #a51105 0%, #d52b1e 98.96%);
 
 // Fade-in animation
 .fade-in {
-	animation: fadeIn 0.6s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 @keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: scale(0.95);
-	}
-	to {
-		opacity: 1;
-		transform: scale(1);
-	}
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 h4 {

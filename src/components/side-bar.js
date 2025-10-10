@@ -11,11 +11,11 @@ export const LogoComponent = ({ style = {}, collapsed = false }) => (
 	<Link to="/" className="logo_class" style={{ color: '#000', ...style }}>
 		{collapsed ? (
 			<>
-				Z<span style={{ color: '#006fd9' }}>B</span>
+				F<span style={{ color: '#006fd9' }}>CRM</span>
 			</>
 		) : (
 			<>
-				Zopay <span style={{ color: '#006fd9', paddingLeft: 5 }}>Books</span>
+				Flyers <span style={{ color: '#006fd9', paddingLeft: 5 }}>CRM</span>
 			</>
 		)}
 	</Link>

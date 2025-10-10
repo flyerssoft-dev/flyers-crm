@@ -29,7 +29,7 @@ const AddSalesPerson = ({ handleClose, editSalesPerson, setSalesPersonAddModal }
 			displayName: values.displayName,
 			email: values.email,
 			mobile: values.mobile,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		dispatch(postApi(data, 'ADD_SALES_PERSON'));
@@ -37,9 +37,9 @@ const AddSalesPerson = ({ handleClose, editSalesPerson, setSalesPersonAddModal }
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
-		let url = `${SERVER_IP}salesperson/${editSalesPerson._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}salesperson/${editSalesPerson._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(putApi(data, 'EDIT_SALES_PERSON', url));
 	};
 

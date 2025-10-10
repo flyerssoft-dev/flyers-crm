@@ -28,7 +28,7 @@ const FeesBalanceFunctional = React.memo((props) => {
 	const dispatch = useDispatch();
 
 	const getStudents = () => {
-		dispatch(getApi(ACTIONS.GET_STUDENTS, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?._id}`));
+		dispatch(getApi(ACTIONS.GET_STUDENTS, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?.id}`));
 	};
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ const FeesBalanceFunctional = React.memo((props) => {
 			await setLoading(true);
 			const {
 				data: { data },
-			} = await sendGetRequest(null, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?._id}&classId=${selectedClass}`);
+			} = await sendGetRequest(null, `${SERVER_IP}student?orgId=${globalRedux?.selectedOrganization?.id}&classId=${selectedClass}`);
 			setTableData(data);
 			await setLoading(false);
 		}
@@ -77,7 +77,7 @@ const FeesBalanceFunctional = React.memo((props) => {
 
 	const handleEdit = (values) => {
 		let data = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			batchId: globalRedux?.activeBatch,
 			categoryId: '62913099d2abfb4a1432729a',
 			feesAmount: values?.outstandingBalance,
@@ -165,7 +165,7 @@ const FeesBalanceFunctional = React.memo((props) => {
 		// 						okText="Delete"
 		// 						cancelText="No"
 		// 						onConfirm={() => {
-		// 							let url = `${SERVER_IP}invoice/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		// 							let url = `${SERVER_IP}invoice/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		// 							dispatch(deleteApi('DELETE_INVOICE', url));
 		// 						}}>
 		// 						<IoCloseSharp style={{ color: 'red' }} />

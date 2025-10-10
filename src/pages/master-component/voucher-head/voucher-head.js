@@ -31,9 +31,9 @@ const VoucherHead = React.memo((props) => {
 	const [editVoucherHead, setEditVoucher] = useState(null);
 
 	const getVoucherHeads = useCallback(() => {
-		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}voucherhead/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_VOUCHERS_HEAD', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const handleDrawer = (rowData) => {
 		setEditVoucher(rowData);
@@ -152,7 +152,7 @@ const VoucherHead = React.memo((props) => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}voucherhead/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}voucherhead/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_VOUCHER', url));
 								}}
 								placement="rightTop">
@@ -229,7 +229,7 @@ const VoucherHead = React.memo((props) => {
 								</Col>
 
 								<Col md={8}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination current={currentPage} pageSizeOptions={intialPageSizeOptions} defaultPageSize={initialPageSize} showSizeChanger={true} total={filteredData?.length} onChange={handleTableChange} responsive />
 									</div>
 								</Col>

@@ -68,17 +68,17 @@ const UnitModal = ({ value = null, onChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}unit/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_UNIT', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}unit/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}unit/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_UNIT', url));
 		} else {
 			dispatch(postApi(data, 'ADD_UNIT'));
@@ -88,16 +88,16 @@ const UnitModal = ({ value = null, onChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			unitName: values?.unitName || '',
 		};
 		setEditData(data);
 	};
 
 	const getUnits = useCallback(() => {
-		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}unit?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_UNITS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if ((units || [])?.length > 0) {

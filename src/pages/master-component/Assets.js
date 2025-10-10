@@ -26,9 +26,9 @@ const Assets = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getAssets = useCallback(() => {
-		let url = `${SERVER_IP}asset?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}asset?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_ASSETS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getAssets();
@@ -122,7 +122,7 @@ const Assets = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}asset/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}asset/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_ASSETS', url));
 								}}
 								placement="rightTop">
@@ -198,7 +198,7 @@ const Assets = React.memo(() => {
 									</div>
 								</Col>
 								<Col md={8}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

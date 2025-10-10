@@ -62,12 +62,12 @@ const Routes = () => {
 			<Suspense fallback={null}>
 				<Switch>
 					<Route element={<PageLayout />}>
-						{ROUTES.map(({ route, Component }, index) => (
+						{ROUTES.map(({ route, Component , credential}, index) => (
 							<Route
 								key={index}
 								path={route}
 								element={
-									<ProtectedRoute>
+									<ProtectedRoute credential={credential}>
 										<Component />
 									</ProtectedRoute>
 								}

@@ -9,7 +9,7 @@ import ExportGstJsonListPresentational from './export-gst-json-list-presentation
 
 const ExportGstJsonListFunctional = () => {
 	const token = useSelector((state) => state?.loginRedux?.token);
-	const orgId = useSelector((state) => state?.globalRedux?.selectedOrganization?._id);
+	const orgId = useSelector((state) => state?.globalRedux?.selectedOrganization?.id);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedGstType, setSelectedGstType] = useState('gstr1');

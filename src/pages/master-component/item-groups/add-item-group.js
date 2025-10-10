@@ -28,13 +28,13 @@ const AddItemGroup = ({ itemGroupAddModal, setItemGroupAddModal, editItemGroups,
 	const handleSubmit = (values) => {
 		const payload = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 
 		if (!editItemGroups) {
 			dispatch(postApi(payload, 'ADD_ITEM_GROUP'));
 		} else {
-			const url = `${SERVER_IP}itemgroup/${editItemGroups._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			const url = `${SERVER_IP}itemgroup/${editItemGroups._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(payload, 'EDIT_ITEM_GROUP', url));
 		}
 	};

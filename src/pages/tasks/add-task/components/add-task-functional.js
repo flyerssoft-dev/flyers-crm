@@ -32,14 +32,14 @@ const AddTaskFunctional = ({ state, setState, refreshList, editData }) => {
 	);
 
 	const getProjects = useCallback(() => {
-		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_PROJECTS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getUsers = useCallback(() => {
-		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_USERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getProjects();
@@ -68,7 +68,7 @@ const AddTaskFunctional = ({ state, setState, refreshList, editData }) => {
 
 	const handleSubmit = (values) => {
 		const request = {
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			...values,
 		};
 		editData ? dispatch(putApi(request, 'EDIT_TASK', `${SERVER_IP}task/${editData?._id}`)) : dispatch(postApi(request, 'ADD_TASK'));

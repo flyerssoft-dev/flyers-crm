@@ -5,7 +5,7 @@ const API_ENDPOINTS = {
 	SEND_OTP: `${SERVER_IP}auth/requestotp`,
 	VERIFY_OTP: `${SERVER_IP}auth/verifyotp`,
 	REGISTER: `${SERVER_IP}auth/sign-up`,
-	GET_ALL_ORGANIZATION: `${SERVER_IP}organization`,
+	GET_ALL_ORGANIZATION: `${SERVER_IP}organization?page=1&limit=10&sort=asc`,
 	ADD_ORDER: `${SERVER_IP}order`,
 	ADD_ESTIMATE: `${SERVER_IP}order`,
 	ADD_PURCHASE: `${SERVER_IP}purchase`,
@@ -37,7 +37,7 @@ const API_ENDPOINTS = {
 	ADD_INVOICE: `${SERVER_IP}invoice`,
 	ADD_TICKET: `${SERVER_IP}ticket`,
 	ADD_ORGANIZATION: `${SERVER_IP}organization`,
-	ADD_ACCOUNT_BOOK: `${SERVER_IP}accbook`,
+	ADD_ACCOUNT_BOOK: `${SERVER_IP}account`,
 	ADD_SALES_PERSON: `${SERVER_IP}salesperson`,
 
 	// Item Group APIS
@@ -65,6 +65,7 @@ const API_ENDPOINTS = {
 	ADD_BATCH: `${SERVER_IP}batch`,
 	ADD_CLASS: `${SERVER_IP}class`,
 	ADD_BATCH_BALANCE: `${SERVER_IP}batchbalance`,
+	PROFILE_API:`${SERVER_IP}employeeDetails/me`
 };
 
 export default API_ENDPOINTS;

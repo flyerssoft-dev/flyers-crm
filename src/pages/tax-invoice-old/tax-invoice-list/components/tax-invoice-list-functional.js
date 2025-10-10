@@ -45,8 +45,8 @@ const TaxInvoiceListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getTaxInvoices = useCallback(() => {
-		dispatch(getApi(ACTIONS.GET_TAX_INVOICES, `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?._id}`));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+		dispatch(getApi(ACTIONS.GET_TAX_INVOICES, `${SERVER_IP}invoice?orgId=${globalRedux?.selectedOrganization?.id}`));
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const filteredData = useMemo(() => {
 		if (searchKey === '') {
@@ -221,7 +221,7 @@ const TaxInvoiceListFunctional = React.memo(() => {
 									cancelText="No"
 									placement="rightTop"
 									onConfirm={() => {
-										let url = `${SERVER_IP}invoice/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+										let url = `${SERVER_IP}invoice/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 										dispatch(deleteApi('DELETE_TAX_INVOICE', url));
 									}}>
 									<Col className="delete_icon">

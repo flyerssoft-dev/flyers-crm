@@ -85,17 +85,17 @@ const ProjectModal = ({ value = null, onChange }) => {
 	};
 
 	const handleRemove = (id) => {
-		let url = `${SERVER_IP}project/${id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project/${id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(deleteApi('DELETE_PROJECT', url));
 	};
 
 	const handleSubmit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 		};
 		if (editData) {
-			let url = `${SERVER_IP}project/${editData._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+			let url = `${SERVER_IP}project/${editData._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 			dispatch(putApi(data, 'EDIT_PROJECT', url));
 		} else {
 			dispatch(postApi(data, 'ADD_PROJECT'));
@@ -105,7 +105,7 @@ const ProjectModal = ({ value = null, onChange }) => {
 	const handleEdit = (values) => {
 		let data = {
 			...values,
-			orgId: globalRedux?.selectedOrganization?._id,
+			orgId: globalRedux?.selectedOrganization?.id,
 			displayName: values?.displayName || '',
 			title: values?.title || '',
 			description: values?.description || '',
@@ -114,9 +114,9 @@ const ProjectModal = ({ value = null, onChange }) => {
 	};
 
 	const getProjects = useCallback(() => {
-		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}project/?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_PROJECTS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		if ((projects || [])?.length > 0) {

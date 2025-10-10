@@ -27,9 +27,9 @@ const SizeListFunctional = React.memo(() => {
 	const dispatch = useDispatch();
 
 	const getSizes = useCallback(() => {
-		let url = `${SERVER_IP}size?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}size?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_SIZES', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getSizes();
@@ -124,7 +124,7 @@ const SizeListFunctional = React.memo(() => {
 								okText="Delete"
 								cancelText="No"
 								onConfirm={() => {
-									let url = `${SERVER_IP}size/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}size/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_SIZE', url));
 								}}
 								placement="rightTop">

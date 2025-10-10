@@ -27,14 +27,14 @@ const Credentials = React.memo(() => {
 	const [editCredential, setEditAsset] = useState(null);
 
 	const getCredential = useCallback(() => {
-		let url = `${SERVER_IP}credential?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}credential?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_CREDENTIALS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	const getUsers = useCallback(() => {
-		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?._id}`;
+		let url = `${SERVER_IP}user?orgId=${globalRedux?.selectedOrganization?.id}`;
 		dispatch(getApi('GET_USERS', url));
-	}, [dispatch, globalRedux?.selectedOrganization?._id]);
+	}, [dispatch, globalRedux?.selectedOrganization?.id]);
 
 	useEffect(() => {
 		getCredential();
@@ -154,7 +154,7 @@ const Credentials = React.memo(() => {
 								cancelText="No"
 								placement="rightTop"
 								onConfirm={() => {
-									let url = `${SERVER_IP}credential/${row._id}?orgId=${globalRedux?.selectedOrganization?._id}`;
+									let url = `${SERVER_IP}credential/${row._id}?orgId=${globalRedux?.selectedOrganization?.id}`;
 									dispatch(deleteApi('DELETE_CREDENTIAL', url));
 								}}>
 								<CloseOutlined />
@@ -230,7 +230,7 @@ const Credentials = React.memo(() => {
 								</Col>
 
 								<Col md={8}>
-									<div style={{ textAlign: 'right' }}>
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 										<Pagination
 											pageSizeOptions={intialPageSizeOptions}
 											defaultPageSize={initialPageSize}

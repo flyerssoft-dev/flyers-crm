@@ -281,7 +281,7 @@ const PaymentsListPresentational = ({
 						// 					`Showing ${getStartingValue()} - ${getEndingValue()} of ${filteredData?.length} Data`}
 						// 			</Col>
 						// 			<Col md={8}>
-						// 				<div style={{ textAlign: 'right' }}>
+						// 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 						// 					<Pagination
 						// 						pageSizeOptions={intialPageSizeOptions}
 						// 						defaultPageSize={initialPageSize}

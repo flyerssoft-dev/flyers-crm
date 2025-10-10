@@ -39,7 +39,7 @@ const StockSerial = ({ selectedRow }) => {
 				...tableData,
 				loading: true,
 			}));
-			const res = await sendGetRequest(null, `${SERVER_IP}stock?orgId=${globalRedux?.selectedOrganization?._id}&itemId=${itemId}`);
+			const res = await sendGetRequest(null, `${SERVER_IP}stock?orgId=${globalRedux?.selectedOrganization?.id}&itemId=${itemId}`);
 			console.log('🚀 ~ file: stock-serial-component.js:49 ~ getStockSerial ~ res:', res?.data?.data);
 			await setTableData(tableData => ({
 				data: res?.data?.data,
