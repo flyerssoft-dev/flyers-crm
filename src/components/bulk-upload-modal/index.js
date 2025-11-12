@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
-import { Drawer, Button, Tooltip } from "antd"; // Tooltip imported here
-import styles from "./ExcelUploader.module.scss";
+import { Drawer, Button, Tooltip } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { BsFileSpreadsheet } from "react-icons/bs";
+import styles from "./ExcelUploader.module.scss";
 
 const ExcelUploader = ({
   requiredFields,
@@ -13,7 +13,7 @@ const ExcelUploader = ({
   onClose,
   validationRules = {},
 }) => {
-const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
   const [excelData, setExcelData] = useState(null);
   const [columnMapping, setColumnMapping] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +23,7 @@ const [file, setFile] = useState(null);
   const [mappedData, setMappedData] = useState([]);
   const fileInputRef = useRef(null);
 
+  // --- Drag & Drop ---
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -34,17 +35,19 @@ const [file, setFile] = useState(null);
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileUpload(e.dataTransfer.files[0]);
+    if (e?.dataTransfer?.files && e?.dataTransfer?.files[0]) {
+      handleFileUpload(e?.dataTransfer?.files[0]);
     }
   };
 
+  // --- File Input ---
   const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFileUpload(e.target.files[0]);
+    if (e?.target?.files && e?.target?.files[0]) {
+      handleFileUpload(e?.target?.files[0]);
     }
   };
 
+  // --- Core Upload Logic ---
   const handleFileUpload = async (uploadedFile) => {
     if (!uploadedFile.name.match(/\.(xlsx|xls)$/)) {
       alert("Please upload a valid Excel file (.xlsx or .xls)");
@@ -60,24 +63,37 @@ const [file, setFile] = useState(null);
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
 
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      if (jsonData.length > 0) {
-        const headers = jsonData[0];
-        const rows = jsonData.slice(1);
+      // Convert everything to text values
+      const rawData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        raw: false,
+      });
+
+      if (rawData.length > 0) {
+        const headers = rawData[0].map((h) =>
+          h != null ? String(h).trim() : ""
+        );
+        const rows = rawData.slice(1).map((row) =>
+          row.map((cell) => (cell != null ? String(cell).trim() : ""))
+        );
+
         setExcelData({ headers, rows });
 
+        // Auto-map headers to form fields
         const autoMapping = {};
         formFields.forEach((field) => {
           const match = headers.find(
             (header) =>
-              header.toLowerCase().includes(field.toLowerCase()) ||
-              field.toLowerCase().includes(header.toLowerCase())
+              typeof header === "string" &&
+              (header.toLowerCase().includes(field.toLowerCase()) ||
+                field.toLowerCase().includes(header.toLowerCase()))
           );
           if (match) autoMapping[field] = match;
         });
         setColumnMapping(autoMapping);
 
-        const { mappedRows, errors } = generateMappedDataWithMapping(autoMapping);
+        const { mappedRows, errors } =
+          generateMappedDataWithMapping(autoMapping);
         setMappedData(mappedRows);
         setValidationErrors(errors);
       }
@@ -89,6 +105,7 @@ const [file, setFile] = useState(null);
     }
   };
 
+  // --- Mapping + Validation ---
   const handleMappingChange = (field, selectedHeader) => {
     const updatedMapping = {
       ...columnMapping,
@@ -105,7 +122,6 @@ const [file, setFile] = useState(null);
     if (!excelData) return { mappedRows: [], errors: [] };
 
     const errors = [];
-
     const mappedRows = excelData.rows.map((row, rowIndex) => {
       const mappedRow = {};
       Object.entries(mapping).forEach(([field, selectedHeader]) => {
@@ -125,36 +141,28 @@ const [file, setFile] = useState(null);
     return { mappedRows, errors };
   };
 
+  // --- Submit ---
   const handleSubmit = () => {
     const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
 
-    // Collect invalid row indexes
     const invalidRowIndexes = new Set(errors.map((err) => err.row));
 
-    // Filter out invalid and empty rows
     const validRows = mappedRows.filter((row, index) => {
-      // Skip if row has validation errors
       if (invalidRowIndexes.has(index)) return false;
-
-      // Skip if all fields are empty/null/undefined
       const isEmpty = Object.values(row).every(
         (val) => val === null || val === undefined || val === ""
       );
       return !isEmpty;
     });
 
-    // Save only valid rows
     setValidationErrors(errors);
     setMappedData(validRows);
 
-    // Show skipped rows message
-    const skippedCount =
-      mappedRows.length - validRows.length;
+    const skippedCount = mappedRows.length - validRows.length;
 
     if (skippedCount > 0) {
       alert(
-        `${skippedCount} row(s) were skipped due to validation errors or being empty.\n` +
-        `${validRows.length} valid row(s) imported successfully.`
+        `${skippedCount} row(s) were skipped due to validation errors or being empty.\n${validRows.length} valid row(s) imported successfully.`
       );
     } else {
       alert(`All ${validRows.length} rows imported successfully.`);
@@ -165,8 +173,7 @@ const [file, setFile] = useState(null);
     resetUpload();
   };
 
-
-
+  // --- UI Helpers ---
   const togglePreview = () => {
     const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
     setMappedData(mappedRows);
@@ -195,11 +202,12 @@ const [file, setFile] = useState(null);
     return map;
   };
 
-  const hasFieldError = (field) => {
-    return validationErrors.some((err) => err.field === field);
-  };
+  const hasFieldError = (field) =>
+    validationErrors.some((err) => err.field === field);
 
   const errorMap = getErrorMap();
+
+  // --- Render ---
   return (
     <Drawer
       title="Excel Data Importer"
@@ -297,9 +305,9 @@ const [file, setFile] = useState(null);
                             }
                           >
                             <option value="">Select column...</option>
-                            {excelData.headers.map((header) => (
-                              <option key={header} value={header}>
-                                {header}
+                            {excelData.headers.map((header, idx) => (
+                              <option key={idx} value={header}>
+                                {header || "(Empty Header)"}
                               </option>
                             ))}
                           </select>
@@ -372,7 +380,7 @@ const [file, setFile] = useState(null);
                       </div>
                       {excelData.rows.length > 5 && (
                         <div className={styles.tableFooter}>
-                          Showing first 5 rows of {excelData.rows.length} total
+                          Showing first {excelData.rows.length}  rows of {excelData.rows.length} total
                           rows
                         </div>
                       )}
@@ -399,7 +407,7 @@ const [file, setFile] = useState(null);
                     type="primary"
                     onClick={handleSubmit}
                     disabled={!isAllFieldsMapped()}
-                  > 
+                  >
                     Import Data ({excelData.rows.length} rows)
                   </Button>
                 </div>
