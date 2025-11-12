@@ -7,7 +7,12 @@ import { SERVER_IP } from "assets/Config";
 import HighlightComponent from "components/HighlightComponent";
 import { resetApiStatus } from "redux/reducers/globals/globalActions";
 import { generatePagination } from "helpers";
-import { Actions, API_STATUS, CUSTOMER_TYPE, Feature } from "constants/app-constants";
+import {
+  Actions,
+  API_STATUS,
+  CUSTOMER_TYPE,
+  Feature,
+} from "constants/app-constants";
 import ContactsListPresentational from "./contacts-list-presentational";
 import { useNavigate } from "react-router-dom";
 import { postApi } from "redux/sagas/postApiDataSaga";
@@ -40,7 +45,7 @@ const ContactListFunctional = React.memo(() => {
 
   const getuserDetails = useCallback(() => {
     const page = 1;
-    const limit = 50;
+    const limit = 500;
     let user_details_url = `${SERVER_IP}employeeDetails/getAllEmployeeDetails?page=${page}&limit=${limit}&sort=asc`;
     dispatch(getApi("GET_USER_DETAILS", user_details_url));
   }, [dispatch]);
@@ -169,116 +174,137 @@ const ContactListFunctional = React.memo(() => {
       order: 10,
     },
     {
+      title: "Company Size",
+      dataIndex: "company_size",
+      key: "company_size",
+      visible: false,
+      order: 11,
+    },
+    {
+      title: "Website",
+      dataIndex: "website",
+      key: "website",
+      visible: false,
+      order: 12,
+    },
+    {
+      title: "Industry",
+      dataIndex: "industry",
+      key: "industry",
+      visible: false,
+      order: 13,
+    },
+    {
       title: "Secondary Email",
       dataIndex: "secondary_email",
       key: "secondary_email",
       visible: false,
-      order: 11,
+      order: 14,
     },
     {
       title: "Time Zone",
       dataIndex: "time_zone",
       key: "time_zone",
       visible: false,
-      order: 12,
+      order: 15,
     },
     {
       title: "Status",
       dataIndex: "Status",
       key: "Status",
       visible: false,
-      order: 13,
+      order: 16,
     },
     {
       title: "Mailing Street",
       dataIndex: "mailing_street",
       key: "mailing_street",
       visible: false,
-      order: 14,
+      order: 17,
     },
     {
       title: "Other Street",
       dataIndex: "other_street",
       key: "other_street",
       visible: false,
-      order: 15,
+      order: 18,
     },
     {
       title: "Mailing City",
       dataIndex: "mailing_city",
       key: "mailing_city",
       visible: false,
-      order: 16,
+      order: 19,
     },
     {
       title: "Other City",
       dataIndex: "other_city",
       key: "other_city",
       visible: false,
-      order: 17,
+      order: 20,
     },
     {
       title: "Mailing State",
       dataIndex: "mailing_state",
       key: "mailing_state",
       visible: false,
-      order: 18,
+      order: 21,
     },
     {
       title: "Other State",
       dataIndex: "other_state",
       key: "other_state",
       visible: false,
-      order: 19,
+      order: 22,
     },
     {
       title: "Mailing Zip Code",
       dataIndex: "mailing_zip_code",
       key: "mailing_zip_code",
       visible: false,
-      order: 20,
+      order: 23,
     },
     {
       title: "Other Zip Code",
       dataIndex: "other_zip_code",
       key: "other_zip_code",
       visible: false,
-      order: 21,
+      order: 24,
     },
     {
       title: "Mailing Country",
       dataIndex: "mailing_country",
       key: "mailing_country",
       visible: false,
-      order: 22,
+      order: 25,
     },
     {
       title: "Other Country",
       dataIndex: "other_country",
       key: "other_country",
       visible: false,
-      order: 23,
+      order: 26,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       visible: false,
-      order: 24,
+      order: 27,
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
       visible: false,
-      order: 25,
+      order: 28,
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
       visible: false,
-      order: 26,
+      order: 29,
     },
 
     ...(canUpdateAccount
@@ -302,7 +328,7 @@ const ContactListFunctional = React.memo(() => {
             ),
             visible: true,
             default: true,
-            order: 27,
+            order: 30,
           },
         ]
       : []),
@@ -372,6 +398,9 @@ const ContactListFunctional = React.memo(() => {
       department: item?.["Department"],
       mobile: item?.mobile,
       linkedin_profile: item?.["LinkedIn Profile"],
+      company_size: `${item?.["Company Size"]}` || null,
+      website: item?.["Website"],
+      industry: item?.["Industry"],
       time_zone: item?.["Time Zone"],
       Status: item?.["Status"],
       secondary_email: item?.["Secondary Email"],
@@ -389,6 +418,31 @@ const ContactListFunctional = React.memo(() => {
     }));
     let url = `${SERVER_IP}contact/multiple-records`;
     dispatch(postApi(value, "ADD_BULK_CONTACT_DATA", url));
+  };
+
+  const handleApplyFilters = (filters) => {
+    console.log("Applied filters:", filters);
+    const queryString = filters
+      .map((f) => {
+        if (f.field === "created_time" && typeof f.value === "object") {
+          const { from, to } = f.value || {};
+          return [
+            from ? `created_from=${encodeURIComponent(from)}` : "",
+            to ? `created_to=${encodeURIComponent(to)}` : "",
+          ]
+            .filter(Boolean)
+            .join("&");
+        }
+
+        return `${encodeURIComponent(
+          f.field.replace(/\s+/g, "")
+        )}=${encodeURIComponent(f.value ?? true)}`;
+      })
+      .filter(Boolean)
+      .join("&");
+
+    let url = `${SERVER_IP}contact?page=${currentPage}&limit=${pageSize}&sort=asc&${queryString}`;
+    dispatch(getApi("GET_CONTACT", url));
   };
 
   return (
@@ -418,6 +472,7 @@ const ContactListFunctional = React.memo(() => {
         setDrawerOpen,
         onUploadData,
         setSelectedRowKeys,
+        handleApplyFilters,
       }}
     />
   );
