@@ -167,7 +167,7 @@ const SIDE_MENUS = [
 ];
 
 export const ROLE = {
-  MANAGER: "manager",
+  MANAGER: "Sales Manager",
   EMPLOYEE: "employee",
   MENTOR: "mentor",
   TEAM_LEAD: "team_lead",
@@ -250,6 +250,7 @@ const MENUS = [
     icon: <FI.FiUsers />,
     route: "/users-contacts",
     key: "7",
+    roles: [ROLE.SUPER_ADMIN, ROLE.MANAGER],
   },
   // {
   // 	name: 'Sales',
