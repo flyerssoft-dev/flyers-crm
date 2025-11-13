@@ -63,7 +63,6 @@ const ExcelUploader = ({
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
 
-      // Convert everything to text values
       const rawData = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
         raw: false,
@@ -79,7 +78,6 @@ const ExcelUploader = ({
 
         setExcelData({ headers, rows });
 
-        // Auto-map headers to form fields
         const autoMapping = {};
         formFields.forEach((field) => {
           const match = headers.find(
@@ -141,19 +139,14 @@ const ExcelUploader = ({
     return { mappedRows, errors };
   };
 
-  // --- Submit ---
+  // --- ✅ Updated Submit Function ---
   const handleSubmit = () => {
     const { mappedRows, errors } = generateMappedDataWithMapping(columnMapping);
 
     const invalidRowIndexes = new Set(errors.map((err) => err.row));
 
-    const validRows = mappedRows.filter((row, index) => {
-      if (invalidRowIndexes.has(index)) return false;
-      const isEmpty = Object.values(row).every(
-        (val) => val === null || val === undefined || val === ""
-      );
-      return !isEmpty;
-    });
+    // ✅ Keep all rows (even empty ones), skip only invalid ones
+    const validRows = mappedRows.filter((_, index) => !invalidRowIndexes.has(index));
 
     setValidationErrors(errors);
     setMappedData(validRows);
@@ -162,7 +155,7 @@ const ExcelUploader = ({
 
     if (skippedCount > 0) {
       alert(
-        `${skippedCount} row(s) were skipped due to validation errors or being empty.\n${validRows.length} valid row(s) imported successfully.`
+        `${skippedCount} row(s) were skipped due to validation errors.\n${validRows.length} valid row(s) imported successfully.`
       );
     } else {
       alert(`All ${validRows.length} rows imported successfully.`);
@@ -380,8 +373,8 @@ const ExcelUploader = ({
                       </div>
                       {excelData.rows.length > 5 && (
                         <div className={styles.tableFooter}>
-                          Showing first {excelData.rows.length}  rows of {excelData.rows.length} total
-                          rows
+                          Showing first {excelData.rows.length} rows of{" "}
+                          {excelData.rows.length} total rows
                         </div>
                       )}
                     </div>
