@@ -79,15 +79,16 @@ const AddContact = ({
   }, [editContact, form]);
 
   const handleSubmit = (values) => {
-
-     const accountMap = {};
+    const accountMap = {};
     globalRedux.accountBooks?.data?.forEach((acc) => {
       accountMap[acc.account_name] = acc.id;
     });
     let data = {
       ...values,
-      account_id : values?.account_name,
-      account_name : globalRedux.accountBooks?.data?.find((item) => item?.id === values?.account_name)?.account_name,
+      account_id: values?.account_name,
+      account_name: globalRedux.accountBooks?.data?.find(
+        (item) => item?.id === values?.account_name
+      )?.account_name,
       contact_owner_id: loginRedux?.id,
     };
 
@@ -337,19 +338,31 @@ const AddContact = ({
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item label="Company Size" name="company_size">
+              <Input />
+            </Form.Item>
+          </Col>
           <Col span={12}>
             <Form.Item label="Secondary Email" name="secondary_email">
               <Input />
             </Form.Item>
           </Col>
-          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item label="Website" name="website">
+              <Input />
+            </Form.Item>
+          </Col>
           <Col span={12}>
             <Form.Item label="Time Zone" name="time_zone">
               <Input />
             </Form.Item>
           </Col>
-          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item label="Industry" name="industry">
+              <Input />
+            </Form.Item>
+          </Col>
           <Col span={12}>
             <Form.Item label="Status" name="Status">
               <Select>

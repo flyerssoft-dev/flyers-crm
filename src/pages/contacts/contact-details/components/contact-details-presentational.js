@@ -196,6 +196,9 @@ const ContactDetailsPresentational = () => {
     other_zip_code: contactRedux?.contactData?.other_zip_code,
     other_country: contactRedux?.contactData?.other_country,
     description: contactRedux?.contactData?.description,
+    website: contactRedux?.contactData?.website,
+    industry: contactRedux?.contactData?.industry,
+    company_size: contactRedux?.contactData?.company_size
   };
 
   const getUserName = (id) => {
@@ -349,6 +352,12 @@ const ContactDetailsPresentational = () => {
                       {displayValue(contactData.mobile)}
                     </div>
                   </div>
+                   <div className="contact-field">
+                    <label className="contact-field__label">Company Size</label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.company_size)}
+                    </div>
+                  </div>
                   <div className="contact-field">
                     <label className="contact-field__label">Created By</label>
                     <div className="contact-field__value">
@@ -394,6 +403,22 @@ const ContactDetailsPresentational = () => {
                     </label>
                     <div className="contact-field__value contact-field__value--skype">
                       {displayValue(contactData.linkedIn_profile)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Website
+                    </label>
+                    <div className="contact-field__value contact-field__value--skype">
+                      {displayValue(contactData.website)}
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label className="contact-field__label">
+                      Industry
+                    </label>
+                    <div className="contact-field__value">
+                      {displayValue(contactData.industry)}
                     </div>
                   </div>
                   <div className="contact-field">
