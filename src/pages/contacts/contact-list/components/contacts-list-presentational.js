@@ -22,6 +22,7 @@ import { postApi } from "redux/sagas/postApiDataSaga";
 import parsePhoneNumberFromString from "libphonenumber-js";
 import { CheckPermission } from "hooks/usePermission";
 import { Actions, Feature } from "constants/app-constants";
+import FilterPanel from "components/FilterPanel";
 
 const ContactsListPresentational = ({
   filteredData,
@@ -48,6 +49,7 @@ const ContactsListPresentational = ({
   setDrawerOpen,
   onUploadData,
   setSelectedRowKeys,
+  handleApplyFilters
 }) => {
   const userRedux = useSelector((state) => state.userRedux);
   const dispatch = useDispatch();
@@ -94,7 +96,6 @@ const ContactsListPresentational = ({
 
   const handleAssign = () => {
     if (!selectedUser) return;
-    console.log("selectedUser", selectedUser);
     const payload = {
       followed_by_id: selectedUser,
       followed_by_name: getUserName(selectedUser)?.display_name,
@@ -106,6 +107,9 @@ const ContactsListPresentational = ({
     setAssignModalOpen(false);
     setSelectedRowKeys([]);
   };
+
+
+  console.log('getStartingValue',getStartingValue(), getEndingValue() , filteredData?.meta?.total_items)
   return (
     <>
       <Row>
@@ -190,6 +194,8 @@ const ContactsListPresentational = ({
                  {CheckPermission(Feature.CONTACTS,Actions.UPLOAD) && <Col onClick={() => setDrawerOpen(true)}>
                     <Button type="primary" icon={<UploadOutlined />} />
                   </Col>}
+
+                    <FilterPanel onApply={handleApplyFilters} refreshList={refreshList}/>
                 </Col>
               </Row>
             )}
@@ -250,6 +256,9 @@ const ContactsListPresentational = ({
           "Department",
           "Mobile",
           "LinkedIn Profile",
+          "Company Size",
+          "Website",
+          "Industry",
           "Secondary Email",
           "Time Zone",
           "Status",
